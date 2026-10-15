@@ -27,13 +27,13 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 </head>
 <body>
 <header>
-<div><h1>⚔️ MONSTER MAYHEM</h1><p>Ultimate Edition · survive, earn XP, evolve your loadout</p></div>
-<div class="stats"><span class="pill">🪙 Gold: <b id="gold">0</b></span><span class="pill">🏆 Score: <b id="score">0</b></span><span class="pill">👑 Best: <b id="best">0</b></span><span class="pill">❤️ HP: <b id="hp">100</b></span><span class="pill">✨ XP: <b id="xp">0</b></span><span class="pill">🛡️ Shield: <b id="shieldHud">0/0</b></span></div>
+<div><h1>⚔️ MONSTER MAYHEM</h1><p>Ultimate Edition · one currency: gold · survive, gear up, evolve your loadout</p></div>
+<div class="stats"><span class="pill">🪙 Gold: <b id="gold">0</b></span><span class="pill">🏆 Score: <b id="score">0</b></span><span class="pill">👑 Best: <b id="best">0</b></span><span class="pill">❤️ HP: <b id="hp">100</b></span><span class="pill">🛡️ Shield: <b id="shieldHud">0/0</b></span></div>
 </header>
 <main>
 <section class="gamewrap">
 <canvas id="game" width="1100" height="700"></canvas>
-<div class="gamecontrols"><button id="pauseBtn">⏸ Pause</button><button id="saveBtn">💾 Save Progress</button><button id="loadBtn">📂 Load Save</button><button id="newBtn">↻ New Run</button></div><div class="help">Move: <b>WASD / Arrow keys</b> · Aim: <b>Mouse</b> · Fire: <b>Left click / Space</b> · Switch gun/melee: <b>Q</b> · Secret Shop: <b>10,000 score OR 4 bosses</b><br>Your melee weapon circles you automatically; right-click for a focused swing. Earn XP from enemies and spend it in Upgrades. Shields absorb damage, then recharge after 10 seconds.</div>
+<div class="gamecontrols"><button id="pauseBtn">⏸ Pause</button><button id="saveBtn">💾 Save Progress</button><button id="loadBtn">📂 Load Save</button><button id="newBtn">↻ New Run</button><button id="rulesBtn">📖 Rules</button></div><div class="help">Move: <b>WASD / Arrow keys</b> · Aim: <b>Mouse</b> · Fire: <b>Left click / Space</b> · Switch gun/melee: <b>Q</b> · Secret Shop: <b>10,000 score OR 4 bosses</b><br>Your melee weapon circles you automatically; right-click for a focused swing. Spend gold in Upgrades. Shields absorb damage, then recharge after 10 seconds.</div>
 </section>
 <aside class="shop">
 <div class="shophead"><h2>🛒 Arsenal & Skins</h2><p>Purchase once, then equip whenever you want. Your gold is only charged on a successful purchase.</p>
@@ -42,6 +42,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 <div class="items" id="items"></div><div class="notice" id="notice" role="status">Welcome! Pistol and Normal skin are unlocked.</div>
 </aside>
 </main>
+<div class="overlay" id="rulesOverlay" style="z-index:8"><div class="modal" style="max-width:680px;text-align:left;max-height:85vh;overflow:auto"><h2 style="font-size:28px">📖 HOW TO PLAY</h2><p><b>Movement:</b> WASD or arrow keys. <b>Aim:</b> Mouse. <b>Shoot:</b> Left-click or Space. <b>Focused melee swing:</b> Right-click. <b>Switch focus:</b> Q.</p><p><b>One currency: GOLD.</b> Defeat enemies and collect gold drops. Spend gold to buy guns, melee weapons, skins, shields, and upgrades. There is no XP.</p><p><b>Loadout:</b> You always have one gun and one melee weapon equipped. Melee also spins around you automatically, and right-click performs a focused swing.</p><p><b>Shields:</b> A shield absorbs damage before your health. If one hit breaks it, any excess damage carries over to your health. A depleted shield fully recharges after 10 seconds.</p><p><b>Enemies:</b> Different enemy types have different behavior. Enemies become tougher as the run progresses and as your equipped gear gets stronger. Their gold rewards are based on enemy type, not their scaled stats.</p><p><b>Bosses:</b> Each regular enemy type has a matching boss variant. Bosses appear periodically and pay more gold. Defeat four bosses or reach 10,000 score to unlock the Secret Shop.</p><p><b>Survive:</b> Collect green healing drops, shoot gold chests to open them, save your run, and try to beat your high score.</p><div style="text-align:right"><button class="action" id="closeRulesBtn">Got it!</button></div></div></div>
 <div class="overlay" id="overlay"><div class="modal"><h2 id="modalTitle">GAME OVER</h2><p id="finalscore"></p><p id="modalHint">Ready to try for a new record?</p><button class="action" id="restart">Play Again</button><button class="action" id="resumeBtn" style="display:none;background:#267b5a">Resume</button><button class="action" id="saveModalBtn" style="display:none">Save Progress</button></div></div>
 <script>
 (()=> {
@@ -168,14 +169,24 @@ const shields=[
  {name:'Eclipse Aegis',hp:1650,cost:145000,color:'#1e1b4b',accent:'#f472b6',desc:'A dark ring edged with eclipse light.'},
  {name:'Worldguard',hp:1950,cost:185000,color:'#166534',accent:'#fde047',desc:'An immense legendary barrier.'},
  {name:'Infinity Dome',hp:2400,cost:240000,color:'#4338ca',accent:'#67e8f9',desc:'A cosmic shield that glows at the edges.'},
- {name:'Last Star',hp:3000,cost:320000,color:'#f5f3ff',accent:'#f0abfc',desc:'The strongest regular shield; a tiny star in a halo.'}
+ {name:'Last Star',hp:3000,cost:320000,color:'#f5f3ff',accent:'#f0abfc',desc:'The strongest regular shield; a tiny star in a halo.'},
+ {name:'Volt Runner',hp:430,cost:39000,color:'#22d3ee',accent:'#67e8f9',desc:'A lightweight electric shield built for fast movement.'},
+ {name:'Berserker Crest',hp:720,cost:68000,color:'#ef4444',accent:'#fca5a5',desc:'A fierce crimson barrier with aggressive energy arcs.'},
+ {name:'Mirror Guard',hp:900,cost:85000,color:'#e2e8f0',accent:'#ffffff',desc:'A mirrored shield with bright reflective facets.'},
+ {name:'Thorn Bastion',hp:1050,cost:99000,color:'#65a30d',accent:'#d9f99d',desc:'A jagged green barrier inspired by living thorns.'},
+ {name:'Phantom Veil',hp:1250,cost:125000,color:'#64748b',accent:'#c4b5fd',desc:'A ghostly translucent ring with violet edges.'},
+ {name:'Dragon Ward',hp:1550,cost:155000,color:'#b91c1c',accent:'#fb923c',desc:'A scaled, fiery barrier forged for boss encounters.'},
+ {name:'Event Horizon',hp:2050,cost:205000,color:'#312e81',accent:'#c4b5fd',desc:'A dark gravity well with a bright purple rim.'},
+ {name:'Solar Crown',hp:2650,cost:285000,color:'#f59e0b',accent:'#fef3c7',desc:'A radiant crown-like shield with golden flares.'},
+ {name:'Abyssal Fortress',hp:3600,cost:410000,color:'#111827',accent:'#8b5cf6',desc:'A massive secret-grade barrier with cosmic seams.'},
+ {name:'Prismatic Reactor',hp:4200,cost:520000,color:'#06b6d4',accent:'#f0abfc',desc:'A high-capacity shield powered by a shifting prism core.'},
+ {name:'Omega Sanctuary',hp:5000,cost:700000,color:'#7c3aed',accent:'#fef08a',desc:'An ultra-late-game shield with a star-bright central core.'}
 ];
 const colors=['#e5e7eb','#38bdf8','#facc15','#a78bfa','#22d3ee','#fb7185','#f97316','#94a3b8','#f472b6','#34d399','#c084fc','#fb923c'];
-const xpRewards={red:5,yellow:8,blue:16,pistol:12,melee:14,redBoss:180,yellowBoss:210,blueBoss:360,purpleBoss:300,brownBoss:330};
 let unlocked={guns:new Set([0]),melee:new Set([0]),skins:new Set([0]),shields:new Set([0]),secret:new Set()},equipped={guns:0,melee:0,skins:0,shields:0};
-let xp=0,levels={guns:{},melee:{},skins:{},shields:{}},shieldHp=70,shieldCooldown=0;
+let levels={guns:{},melee:{},skins:{},shields:{}},shieldHp=70,shieldCooldown=0;
 let bestScore=Number(localStorage.getItem('monsterMayhemBest')||0),highScores=JSON.parse(localStorage.getItem('monsterMayhemHighScores')||'[]'),bossesDefeated=0,healLoot=[];
-let activeTab='guns',gold=0,score=0,hp=100,maxHp=100,px=0,py=0,bullets=[],enemyBullets=[],enemies=[],loot=[],chests=[],keys=new Set(),mouse={x:W/2,y:H/2,down:false},gameOver=false,paused=false,last=performance.now(),spawnT=0,chestT=0,bossT=0,shootT=0,meleeT=0,swingAnim=0,weaponMode='gun',playerMoving=false,gameTime=0,playerBladeAngle=0;
+let activeTab='guns',gold=0,score=0,hp=100,maxHp=100,px=0,py=0,bullets=[],enemyBullets=[],enemies=[],loot=[],chests=[],keys=new Set(),mouse={x:W/2,y:H/2,down:false},gameOver=false,paused=false,last=performance.now(),spawnT=0,chestT=0,bossT=0,shootT=0,meleeT=0,swingAnim=0,weaponMode='gun',playerMoving=false,gameTime=0,playerBladeAngle=0,playerDisruptUntil=0;
 function say(s){$('notice').textContent=s}
 function currentList(tab){if(tab==='guns')return guns.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret);if(tab==='melee')return melee.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret);if(tab==='secret')return secretWeapons;if(tab==='shields')return shields;return skins}
 function itemLabel(tab,i){return currentList(tab)[i].name}
@@ -185,13 +196,13 @@ function select(tab,i){
  say('Equipped '+itemLabel(tab,i)+'.');renderShop();
 }
 function levelOf(kind,index=equipped[kind]){return Number(levels[kind]?.[index]||0)}
-function levelCost(kind,index=equipped[kind]){return Math.floor(35*Math.pow(levelOf(kind,index)+1,1.55)*(kind==='shields'?1.25:1))}
+function levelCost(kind,index=equipped[kind]){return Math.floor(180*Math.pow(levelOf(kind,index)+1,1.62)*(kind==='shields'?1.45:kind==='skins'?1.25:1))}
 function itemLevelBoost(kind,index=equipped[kind]){return 1+levelOf(kind,index)*.075}
 function shieldMax(){return Math.round((shields[equipped.shields]?.hp||70)*itemLevelBoost('shields'))}
-function upgradeEquipped(kind){const index=equipped[kind],cost=levelCost(kind,index);if(xp<cost){say('Need '+(cost-xp)+' more XP to upgrade your '+kind.slice(0,-1)+'.');return}xp-=cost;levels[kind][index]=levelOf(kind,index)+1;if(kind==='shields'){shieldHp=shieldMax();shieldCooldown=0}say(shields&&kind==='shields'?'Upgraded '+shields[index].name+' to level '+levels[kind][index]+'!':'Upgraded '+(kind==='guns'?guns[index].name:kind==='melee'?melee[index].name:skins[index].name)+' to level '+levels[kind][index]+'!');updateHUD();renderShop()}
+function upgradeEquipped(kind){const index=equipped[kind],cost=levelCost(kind,index);if(gold<cost){say('Need '+(cost-gold)+' more gold to upgrade your '+kind.slice(0,-1)+'.');return}gold-=cost;levels[kind][index]=levelOf(kind,index)+1;if(kind==='shields'){shieldHp=shieldMax();shieldCooldown=0}say('Upgraded '+(kind==='guns'?guns[index].name:kind==='melee'?melee[index].name:kind==='shields'?shields[index].name:skins[index].name)+' to level '+levels[kind][index]+' for '+cost+' gold!');updateHUD();renderShop()}
 function renderUpgrades(root){
- const intro=document.createElement('div');intro.className='notice';intro.textContent='✨ Spend XP earned from defeating enemies. XP rewards are fixed by enemy type, even as enemies scale up. Each upgrade improves the equipped item.';root.append(intro);
- for(const kind of ['guns','melee','skins','shields']){const index=equipped[kind],item=kind==='guns'?guns[index]:kind==='melee'?melee[index]:kind==='skins'?skins[index]:shields[index],lvl=levelOf(kind,index),cost=levelCost(kind,index);const card=document.createElement('div');card.className='item';const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent=({guns:'🔫 Equipped Gun',melee:'⚔️ Equipped Melee',skins:'✨ Equipped Skin',shields:'🛡️ Equipped Shield'})[kind]+' · '+item.name;desc.className='desc';desc.textContent='Level '+lvl+' · '+({guns:'+7.5% damage per level',melee:'+7.5% damage and reach per level',skins:'+7.5% combat bonus per level',shields:'+7.5% shield capacity per level'})[kind];price.className='price';price.textContent='Upgrade cost: '+cost+' XP · You have '+xp+' XP';info.append(name,desc,price);const btn=document.createElement('button');btn.className='action';btn.textContent='UPGRADE';btn.disabled=xp<cost;btn.addEventListener('click',()=>upgradeEquipped(kind));card.append(info,btn);root.append(card)}
+ const intro=document.createElement('div');intro.className='notice';intro.textContent='🪙 Gold is the only currency. Spend it to upgrade your equipped gun, melee weapon, skin, or shield. Every upgrade improves the selected item.';root.append(intro);
+ for(const kind of ['guns','melee','skins','shields']){const index=equipped[kind],item=kind==='guns'?guns[index]:kind==='melee'?melee[index]:kind==='skins'?skins[index]:shields[index],lvl=levelOf(kind,index),cost=levelCost(kind,index);const card=document.createElement('div');card.className='item';const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent=({guns:'🔫 Equipped Gun',melee:'⚔️ Equipped Melee',skins:'✨ Equipped Skin',shields:'🛡️ Equipped Shield'})[kind]+' · '+item.name;desc.className='desc';desc.textContent='Level '+lvl+' · '+({guns:'+7.5% damage per level',melee:'+7.5% damage and reach per level',skins:'+7.5% combat bonus per level',shields:'+7.5% shield capacity per level'})[kind];price.className='price';price.textContent='Upgrade cost: '+cost+' gold · You have '+Math.floor(gold)+' gold';info.append(name,desc,price);const btn=document.createElement('button');btn.className='action';btn.textContent='UPGRADE';btn.disabled=gold<cost;btn.addEventListener('click',()=>upgradeEquipped(kind));card.append(info,btn);root.append(card)}
 }
 function buyOrEquip(tab,i){
  const list=currentList(tab),item=list[i],actual=item._index??i;
@@ -226,29 +237,57 @@ function renderShop(){
 document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
  activeTab=btn.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));renderShop();
 }));
-function updateHUD(){$('gold').textContent=Math.floor(gold);$('score').textContent=Math.floor(score);$('hp').textContent=Math.ceil(hp)+'/'+maxHp;$('xp').textContent=Math.floor(xp);$('shieldHud').textContent=Math.ceil(shieldHp)+'/'+shieldMax()+(shieldCooldown>0?' ⏳'+shieldCooldown.toFixed(1)+'s':'');bestScore=Math.max(bestScore,Math.floor(score));$('best').textContent=bestScore;localStorage.setItem('monsterMayhemBest',String(bestScore))}
+function updateHUD(){$('gold').textContent=Math.floor(gold);$('score').textContent=Math.floor(score);$('hp').textContent=Math.ceil(hp)+'/'+maxHp;$('shieldHud').textContent=Math.ceil(shieldHp)+'/'+shieldMax()+(shieldCooldown>0?' ⏳'+shieldCooldown.toFixed(1)+'s':'');bestScore=Math.max(bestScore,Math.floor(score));$('best').textContent=bestScore;localStorage.setItem('monsterMayhemBest',String(bestScore))}
+const enemyDefs={
+ red:{label:'Runner',color:'#ef4444',hp:40,speed:86,dmg:10,r:13,value:20,behavior:'chase'},
+ yellow:{label:'Brute',color:'#facc15',hp:125,speed:31,dmg:18,r:19,value:35,behavior:'chase'},
+ blue:{label:'Tank',color:'#3b82f6',hp:145,speed:30,dmg:20,r:17,value:65,behavior:'chase'},
+ pistol:{label:'Pistol Fiend',color:'#a855f7',hp:66,speed:44,dmg:12,r:14,value:48,behavior:'shoot'},
+ melee:{label:'Blade Stalker',color:'#92400e',hp:88,speed:69,dmg:17,r:15,value:52,behavior:'blade'},
+ swarmling:{label:'Swarmling',color:'#fb7185',hp:22,speed:102,dmg:6,r:9,value:12,behavior:'chase'},
+ stalker:{label:'Stalker',color:'#14b8a6',hp:58,speed:77,dmg:13,r:12,value:38,behavior:'dash'},
+ burst:{label:'Burst Caster',color:'#8b5cf6',hp:82,speed:39,dmg:11,r:14,value:58,behavior:'burst'},
+ sniper:{label:'Sniper',color:'#f472b6',hp:72,speed:25,dmg:29,r:13,value:72,behavior:'sniper'},
+ mortar:{label:'Mortar Beast',color:'#f97316',hp:130,speed:24,dmg:23,r:18,value:90,behavior:'mortar'},
+ shieldbearer:{label:'Shieldbearer',color:'#64748b',hp:160,speed:28,dmg:15,r:18,value:78,behavior:'shield'},
+ regenerator:{label:'Regenerator',color:'#22c55e',hp:95,speed:36,dmg:12,r:15,value:66,behavior:'regen'},
+ bulwark:{label:'Bulwark',color:'#0ea5e9',hp:120,speed:32,dmg:13,r:16,value:82,behavior:'support'},
+ splitter:{label:'Splitter',color:'#84cc16',hp:72,speed:49,dmg:12,r:14,value:50,behavior:'split'},
+ disruptor:{label:'Disruptor',color:'#e879f9',hp:78,speed:42,dmg:14,r:14,value:68,behavior:'disrupt'},
+ leech:{label:'Leech',color:'#be123c',hp:68,speed:64,dmg:11,r:13,value:57,behavior:'leech'},
+ bomber:{label:'Bomber',color:'#fb923c',hp:48,speed:93,dmg:38,r:13,value:54,behavior:'bomber'},
+ summoner:{label:'Summoner',color:'#c084fc',hp:155,speed:22,dmg:9,r:17,value:115,behavior:'summon'},
+ runner:{label:'Red Comet',color:'#f43f5e',hp:50,speed:115,dmg:13,r:12,value:28,behavior:'dash'},
+ brute:{label:'War Brute',color:'#ca8a04',hp:190,speed:26,dmg:24,r:21,value:75,behavior:'chase'}
+};
+const enemyTypes=Object.keys(enemyDefs);
 function spawnEnemy(type){
  const a=Math.random()*Math.PI*2,r=500+Math.random()*230;
- const baseStats={red:[40,55,10,13,20],yellow:[20,120,7,10,25],blue:[120,32,18,16,60],pistol:[65,42,12,14,45],melee:[85,66,18,15,50],redBoss:[900,48,30,29,900],yellowBoss:[520,105,23,22,950],blueBoss:[2100,25,48,35,1800],purpleBoss:[1250,42,34,30,1700],brownBoss:[1650,53,42,32,1750]}[type]||[40,55,10,13,20];
- // Enemies scale slowly with run progress and survival time, but XP rewards remain tied to enemy type.
- const difficulty=1+Math.min(1.5,score/26000)+Math.min(.9,gameTime/360)*.3;const stats=[baseStats[0]*difficulty,baseStats[1]*(1+Math.min(.45,(difficulty-1)*.18)),baseStats[2]*(1+Math.min(1.1,(difficulty-1)*.48)),baseStats[3],baseStats[4]];
- const weapon=(type==='pistol'||type==='purpleBoss')?'pistol':(type==='melee'||type==='brownBoss')?'melee':'none';
- const isBoss=type.endsWith('Boss');
- enemies.push({x:px+Math.cos(a)*r,y:py+Math.sin(a)*r,type,hp:stats[0],max:stats[0],speed:stats[1],dmg:stats[2],r:stats[3],value:stats[4],xpReward:xpRewards[type]||5,weapon,shotT:1,aimJitter:.13+Math.random()*.12,swingT:1,bladeAngle:Math.random()*Math.PI*2,lastBladeHit:-10,lastPlayerBladeHit:-10,isBoss});
+ const isBoss=type.endsWith('Boss'),baseType=isBoss?type.slice(0,-4):type,def=enemyDefs[baseType]||enemyDefs.red;
+ const power=Math.min(1.8,(guns[equipped.guns].dmg/24)*.045+(melee[equipped.melee].dmg/35)*.025+(shieldMax()/70)*.018+(equipped.guns+equipped.melee)*.003);
+ const difficulty=1+Math.min(2.8,score/18000)+Math.min(1.25,gameTime/240)*.45+power;
+ const bossMult=isBoss?10:1;
+ const hpScale=difficulty*bossMult,speedScale=1+Math.min(.65,(difficulty-1)*.12),dmgScale=1+Math.min(1.8,(difficulty-1)*.42);
+ let weapon=['shoot','burst','sniper','mortar'].includes(def.behavior)?'pistol':def.behavior==='blade'?'melee':'none';
+ enemies.push({x:px+Math.cos(a)*r,y:py+Math.sin(a)*r,type,baseType,hp:def.hp*hpScale,max:def.hp*hpScale,speed:def.speed*speedScale*(isBoss?1.12:1),dmg:def.dmg*dmgScale*(isBoss?1.5:1),r:def.r*(isBoss?1.65:1),value:Math.round(def.value*(isBoss?22:1)),weapon,behavior:def.behavior,shotT:1,aimJitter:.10+Math.random()*.2,swingT:1,bladeAngle:Math.random()*Math.PI*2,lastBladeHit:-10,lastPlayerBladeHit:-10,isBoss,regenT:1,summonT:5,dashT:1,splitDone:false,disruptT:0});
 }
-
-function drop(e){gold+=e.value;score+=e.value;xp+=e.xpReward||5;if(e.isBoss){bossesDefeated++;say('Boss defeated! '+bossesDefeated+'/4 bosses toward the Secret Shop.');if(score>=10000||bossesDefeated>=4){activeTab='secret';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab==='secret'));say('SECRET SHOP UNLOCKED!');}renderShop()}if(equipped.skins===11)hp=Math.min(maxHp,hp+2);loot.push({x:e.x,y:e.y,v:Math.max(8,Math.floor(e.value*.25)),r:8,type:'gold'});if(Math.random()<.22)healLoot.push({x:e.x+12,y:e.y-8,v:18+Math.floor(Math.random()*18),r:9})}
+function drop(e){
+ gold+=e.value;score+=e.value;
+ if(e.behavior==='split'&&!e.splitDone){for(let i=0;i<2;i++)enemies.push({x:e.x+(Math.random()-.5)*30,y:e.y+(Math.random()-.5)*30,type:'swarmling',baseType:'swarmling',hp:enemyDefs.swarmling.hp,max:enemyDefs.swarmling.hp,speed:enemyDefs.swarmling.speed,dmg:enemyDefs.swarmling.dmg,r:enemyDefs.swarmling.r,value:enemyDefs.swarmling.value,weapon:'none',behavior:'chase',shotT:1,lastBladeHit:-10,lastPlayerBladeHit:-10,isBoss:false,regenT:1,summonT:5,dashT:1,splitDone:true})}
+ if(e.isBoss){bossesDefeated++;say('Boss defeated! '+bossesDefeated+'/4 bosses toward the Secret Shop.');if(score>=10000||bossesDefeated>=4){activeTab='secret';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab==='secret'));say('SECRET SHOP UNLOCKED!');}renderShop()}
+ if(equipped.skins===11)hp=Math.min(maxHp,hp+2);loot.push({x:e.x,y:e.y,v:Math.max(5,Math.floor(e.value*.25)),r:8,type:'gold'});if(Math.random()<.22)healLoot.push({x:e.x+12,y:e.y-8,v:18+Math.floor(Math.random()*18),r:9});
+}
 function fire(){
  if(gameOver)return;
  const g=guns[equipped.guns],skin=skins[equipped.skins],now=performance.now();
- if(now-shootT<g.rate*skin.rate/Math.pow(itemLevelBoost('guns'),.55))return;shootT=now;
+ if(now-shootT<g.rate*skin.rate/Math.pow(itemLevelBoost('guns'),.55)*(gameTime<playerDisruptUntil?1.75:1))return;shootT=now;
  const ang=Math.atan2(mouse.y-H/2,mouse.x-W/2);
  for(let i=0;i<g.count;i++){let a=ang+(Math.random()-.5)*g.spread;bullets.push({x:px,y:py,vx:Math.cos(a)*g.speed,vy:Math.sin(a)*g.speed,dmg:g.dmg*skin.dmg*itemLevelBoost('guns')*itemLevelBoost('skins'),life:1.6,rocket:/Rocket|Grenade|Mortar|Cannon|Meteor|BFG|Black Hole|WORLDENDER|APOCALYPSE|INFINITY|ECLIPSE DRIVER|QUASAR STORM|NEBULA BREAKER|CELESTIAL ENGINE/i.test(g.name)})}
 }
 function swing(){
  const m=melee[equipped.melee],skin=skins[equipped.skins],now=performance.now();if(now-meleeT<m.rate/Math.pow(itemLevelBoost('melee'),.35))return;meleeT=now;
  const ang=Math.atan2(mouse.y-H/2,mouse.x-W/2);
- enemies.forEach(e=>{const dx=e.x-px,dy=e.y-py,d=Math.hypot(dx,dy),a=Math.atan2(dy,dx),diff=Math.atan2(Math.sin(a-ang),Math.cos(a-ang));if(d<m.range*itemLevelBoost('melee')+e.r&&Math.abs(diff)<1.05)e.hp-=m.dmg*skin.dmg*itemLevelBoost('melee')*itemLevelBoost('skins')});
+ enemies.forEach(e=>{const dx=e.x-px,dy=e.y-py,d=Math.hypot(dx,dy),a=Math.atan2(dy,dx),diff=Math.atan2(Math.sin(a-ang),Math.cos(a-ang));if(d<m.range*itemLevelBoost('melee')+e.r&&Math.abs(diff)<1.05)e.hp-=m.dmg*skin.dmg*itemLevelBoost('melee')*itemLevelBoost('skins')*(e.supported?.72:1)});
  swingAnim=.24;
 }
 function takeDamage(amount){let remaining=amount;if(shieldHp>0){const absorbed=Math.min(shieldHp,remaining);shieldHp-=absorbed;remaining-=absorbed;if(shieldHp<=0){shieldHp=0;shieldCooldown=10;say('Shield broken! Recharging for 10 seconds.')}}if(remaining>0)hp-=remaining}
@@ -262,13 +301,13 @@ function draw(){
  chests.forEach(ch=>{const [sx,sy]=worldToScreen(ch.x,ch.y);ctx.fillStyle='#9a6027';ctx.fillRect(sx-13,sy-10,26,20);ctx.fillStyle='#ffd166';ctx.fillRect(sx-2,sy-10,4,20)});
  bullets.forEach(b=>{const [sx,sy]=worldToScreen(b.x,b.y);ctx.fillStyle=b.rocket?'#fb923c':'#f8fafc';ctx.beginPath();ctx.arc(sx,sy,b.rocket?6:3.5,0,Math.PI*2);ctx.fill()});
  enemyBullets.forEach(b=>{const [sx,sy]=worldToScreen(b.x,b.y);ctx.fillStyle='#fb7185';ctx.beginPath();ctx.arc(sx,sy,5,0,Math.PI*2);ctx.fill()});
- enemies.forEach(e=>{const [sx,sy]=worldToScreen(e.x,e.y),col={red:'#ef4444',yellow:'#facc15',blue:'#3b82f6',pistol:'#a855f7',melee:'#92400e',redBoss:'#ef4444',yellowBoss:'#facc15',blueBoss:'#3b82f6',purpleBoss:'#a855f7',brownBoss:'#92400e'}[e.type]||'#ef4444';
+ enemies.forEach(e=>{const [sx,sy]=worldToScreen(e.x,e.y),col=e.isBoss?'#f8fafc':(enemyDefs[e.baseType||e.type]?.color||'#ef4444');
  // Draw the weapon first so it visibly rotates around the enemy.
  ctx.save();ctx.translate(sx,sy);
  if(e.weapon==='melee'){ctx.rotate(e.bladeAngle||0);ctx.fillStyle='#854d0e';ctx.fillRect(e.r-1,-4,34,8);ctx.fillStyle='#c08457';ctx.fillRect(e.r+25,-7,13,14);ctx.fillStyle='#e7c99a';ctx.fillRect(e.r+32,-5,4,10)}
  else if(e.weapon==='pistol'){ctx.rotate(Math.atan2(py-e.y,px-e.x));ctx.fillStyle='#cbd5e1';ctx.fillRect(e.r-1,-4,15,8);ctx.fillStyle='#64748b';ctx.fillRect(e.r+8,-3,8,6)}ctx.restore();
- ctx.fillStyle=col;ctx.beginPath();ctx.arc(sx,sy,e.r,0,Math.PI*2);ctx.fill();
- if(e.isBoss){ctx.fillStyle='#f8fafc';ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText(e.type.replace('Boss','').toUpperCase()+' BOSS',sx,sy-e.r-19);ctx.textAlign='left'}
+ ctx.fillStyle=col;ctx.beginPath();if(e.behavior==='shield'){for(let k=0;k<6;k++){const aa=k*Math.PI/3;const xx=sx+Math.cos(aa)*e.r,yy=sy+Math.sin(aa)*e.r;k===0?ctx.moveTo(xx,yy):ctx.lineTo(xx,yy)}ctx.closePath()}else if(e.behavior==='sniper'){ctx.moveTo(sx,sy-e.r);ctx.lineTo(sx+e.r,sy+e.r);ctx.lineTo(sx-e.r,sy+e.r);ctx.closePath()}else if(e.behavior==='bomber'){ctx.rect(sx-e.r,sy-e.r,e.r*2,e.r*2)}else if(e.behavior==='summon'){ctx.moveTo(sx,sy-e.r);ctx.lineTo(sx+e.r,sy);ctx.lineTo(sx,sy+e.r);ctx.lineTo(sx-e.r,sy);ctx.closePath()}else ctx.arc(sx,sy,e.r,0,Math.PI*2);ctx.fill();
+ if(e.isBoss){ctx.fillStyle='#f8fafc';ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText((enemyDefs[e.baseType]?.label||e.baseType).toUpperCase()+' BOSS',sx,sy-e.r-19);ctx.textAlign='left';ctx.strokeStyle='#f8fafc';ctx.lineWidth=2;ctx.beginPath();ctx.arc(sx,sy,e.r+5,0,Math.PI*2);ctx.stroke()}else if(e.behavior==='shield'){ctx.strokeStyle='#bfdbfe';ctx.lineWidth=4;ctx.beginPath();ctx.arc(sx,sy,e.r+4,-.8,.8);ctx.stroke()}else if(e.behavior==='regen'){ctx.strokeStyle='#86efac';ctx.lineWidth=2;ctx.beginPath();ctx.arc(sx,sy,e.r+3,0,Math.PI*2);ctx.stroke()}else if(e.behavior==='sniper'){ctx.strokeStyle='#f9a8d4';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx-5,sy);ctx.lineTo(sx+5,sy);ctx.moveTo(sx,sy-5);ctx.lineTo(sx,sy+5);ctx.stroke()}
  if(e.max>100){ctx.fillStyle='#000';ctx.fillRect(sx-35,sy-e.r-12,70,6);ctx.fillStyle='#22c55e';ctx.fillRect(sx-35,sy-e.r-12,70*Math.max(0,e.hp/e.max),6)}});
  const skin=skins[equipped.skins],ang=Math.atan2(mouse.y-H/2,mouse.x-W/2);ctx.save();ctx.translate(W/2,H/2);
  // Shield is a clear, detailed ring with small segmented seams and a recharge glint.
@@ -286,41 +325,39 @@ function draw(){
  // The held gun has a unique body/barrel color and silhouette.
  ctx.save();ctx.rotate(ang);const gn=guns[equipped.guns],gnm=gn.name.toLowerCase();let gunColor='#cbd5e1',barrel='#64748b';if(gnm.includes('laser')||gnm.includes('beam')||gnm.includes('prism')||gnm.includes('plasma')){gunColor='#22d3ee';barrel='#a5f3fc'}else if(gnm.includes('rocket')||gnm.includes('mortar')||gnm.includes('grenade')||gnm.includes('cannon')){gunColor='#fb923c';barrel='#7c2d12'}else if(gnm.includes('rail')||gnm.includes('lance')){gunColor='#a78bfa';barrel='#e9d5ff'}else if(gnm.includes('shotgun')||gnm.includes('flak')||gnm.includes('scatter')){gunColor='#d6b78b';barrel='#854d0e'}else if(gnm.includes('void')||gnm.includes('black hole')||gnm.includes('eclipse')){gunColor='#7c3aed';barrel='#ddd6fe'}
  ctx.fillStyle='#334155';ctx.fillRect(8,-5,28,10);ctx.fillStyle=gunColor;ctx.fillRect(12,-6,23,12);ctx.fillStyle=barrel;ctx.fillRect(30,-4,14,8);ctx.fillStyle=accent;ctx.fillRect(16,-3,Math.max(3,Math.min(13,gn.dmg/40)),2);if(gnm.includes('dual')||gnm.includes('double')||gnm.includes('tri')){ctx.fillStyle=gunColor;ctx.fillRect(28,2,16,5)}if(gnm.includes('minigun')||gnm.includes('drum')){ctx.fillStyle='#94a3b8';ctx.beginPath();ctx.arc(21,0,7,0,Math.PI*2);ctx.fill();ctx.fillStyle=barrel;ctx.fillRect(25,-8,18,4);ctx.fillRect(25,4,18,4)}ctx.restore();ctx.restore();
- ctx.fillStyle='#0009';ctx.fillRect(12,12,300,76);ctx.fillStyle='#fff';ctx.font='bold 15px system-ui';ctx.fillText('HP',22,34);ctx.fillStyle='#ef4444';ctx.fillRect(58,23,200,13);ctx.fillStyle='#22c55e';ctx.fillRect(58,23,200*Math.max(0,hp/maxHp),13);ctx.fillStyle='#dbeafe';ctx.font='13px system-ui';ctx.fillText('Gun: '+guns[equipped.guns].name,22,56);ctx.fillText('Melee: '+melee[equipped.melee].name,22,76);ctx.fillText('Shield: '+shields[equipped.shields].name+' '+Math.ceil(shieldHp)+'/'+shieldMax()+(shieldCooldown>0?' · '+shieldCooldown.toFixed(1)+'s':'')+' · XP '+Math.floor(xp),22,101);
- ctx.fillStyle='#dbeafe';ctx.font='bold 13px system-ui';ctx.fillText('Bosses: Red · Yellow · Blue · Purple · Brown',W-360,24);ctx.fillStyle='#22c55e';ctx.fillText('Green + = healing · Gold = coins',W-300,44);
+ ctx.fillStyle='#0009';ctx.fillRect(12,12,300,76);ctx.fillStyle='#fff';ctx.font='bold 15px system-ui';ctx.fillText('HP',22,34);ctx.fillStyle='#ef4444';ctx.fillRect(58,23,200,13);ctx.fillStyle='#22c55e';ctx.fillRect(58,23,200*Math.max(0,hp/maxHp),13);ctx.fillStyle='#dbeafe';ctx.font='13px system-ui';ctx.fillText('Gun: '+guns[equipped.guns].name,22,56);ctx.fillText('Melee: '+melee[equipped.melee].name,22,76);ctx.fillText('Shield: '+shields[equipped.shields].name+' '+Math.ceil(shieldHp)+'/'+shieldMax()+(shieldCooldown>0?' · '+shieldCooldown.toFixed(1)+'s':''),22,101);ctx.fillStyle='#ffd166';ctx.fillText('Gold: '+Math.floor(gold),22,122);
+ ctx.fillStyle='#dbeafe';ctx.font='bold 13px system-ui';ctx.fillText('Bosses: '+bossesDefeated+' defeated',W-230,24);ctx.fillStyle='#22c55e';ctx.fillText('Green + = healing · Gold = coins',W-300,44);
 }
 function update(dt){
  if(gameOver||paused)return;
  const skin=skins[equipped.skins];gameTime+=dt;if(shieldCooldown>0){shieldCooldown=Math.max(0,shieldCooldown-dt);if(shieldCooldown===0){shieldHp=shieldMax();say('Shield recharged to full!')}}playerBladeAngle=(gameTime*Math.PI*2)%(Math.PI*2);let dx=0,dy=0;
  if(keys.has('w')||keys.has('arrowup'))dy--;if(keys.has('s')||keys.has('arrowdown'))dy++;if(keys.has('a')||keys.has('arrowleft'))dx--;if(keys.has('d')||keys.has('arrowright'))dx++;
- playerMoving=!!(dx||dy);if(playerMoving){const n=Math.hypot(dx,dy);px+=dx/n*220*skin.speed*itemLevelBoost('skins')*dt;py+=dy/n*220*skin.speed*itemLevelBoost('skins')*dt}
+ playerMoving=!!(dx||dy);if(playerMoving){const n=Math.hypot(dx,dy);px+=dx/n*220*skin.speed*itemLevelBoost('skins')*(gameTime<playerDisruptUntil?.62:1)*dt;py+=dy/n*220*skin.speed*itemLevelBoost('skins')*(gameTime<playerDisruptUntil?.62:1)*dt}
  swingAnim=Math.max(0,swingAnim-dt);
  if(mouse.down||keys.has(' '))fire();
  // The equipped melee weapon automatically circles the player once per second.
  const pm=melee[equipped.melee],bladeReach=pm.range*itemLevelBoost('melee');
- enemies.forEach(e=>{const d=Math.hypot(e.x-px,e.y-py);if(d<=bladeReach+e.r&&gameTime-e.lastPlayerBladeHit>=0.82){e.hp-=pm.dmg*skin.dmg*itemLevelBoost('melee')*itemLevelBoost('skins');e.lastPlayerBladeHit=gameTime;swingAnim=.18;}});
+ enemies.forEach(e=>{const d=Math.hypot(e.x-px,e.y-py);if(d<=bladeReach+e.r&&gameTime-e.lastPlayerBladeHit>=0.82){e.hp-=pm.dmg*skin.dmg*itemLevelBoost('melee')*itemLevelBoost('skins')*(e.supported?.72:1);e.lastPlayerBladeHit=gameTime;swingAnim=.18;}});
  spawnT-=dt;chestT-=dt;bossT-=dt;
- if(spawnT<=0){spawnT=Math.max(.24,1-score/30000);const r=Math.random();spawnEnemy(r<.42?'red':r<.58?'yellow':r<.70?'blue':r<.85?'pistol':'melee')}
+ if(spawnT<=0){spawnT=Math.max(.20,1.05-score/28000);const pool=enemyTypes.filter(t=>gameTime>25||!['sniper','mortar','shieldbearer','regenerator','bulwark','disruptor','summoner'].includes(t));spawnEnemy(pool[Math.floor(Math.random()*pool.length)])}
  if(chestT<=0){chestT=7;const a=Math.random()*Math.PI*2,r=420+Math.random()*300;chests.push({x:px+Math.cos(a)*r,y:py+Math.sin(a)*r,open:false})}
- if(bossT<=0){bossT=45;const bossTypes=['redBoss','yellowBoss','blueBoss','purpleBoss','brownBoss'];spawnEnemy(bossTypes[Math.floor(Math.random()*bossTypes.length)])}
- bullets.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;for(const e of enemies){if(b.life>0&&Math.hypot(b.x-e.x,b.y-e.y)<e.r+(b.rocket?9:4)){e.hp-=b.dmg;b.life=0;if(b.rocket){enemies.forEach(other=>{if(Math.hypot(other.x-b.x,other.y-b.y)<90)other.hp-=b.dmg*.45})}}}});
+ if(bossT<=0){bossT=Math.max(30,48-gameTime/240);const bossType=enemyTypes[Math.floor(Math.random()*enemyTypes.length)]+'Boss';spawnEnemy(bossType)}
+ bullets.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;for(const e of enemies){if(b.life>0&&Math.hypot(b.x-e.x,b.y-e.y)<e.r+(b.rocket?9:4)){e.hp-=b.dmg*(e.supported?.72:1);b.life=0;if(b.rocket){enemies.forEach(other=>{if(Math.hypot(other.x-b.x,other.y-b.y)<90)other.hp-=b.dmg*.45})}}}});
  bullets=bullets.filter(b=>b.life>0);
- enemies.forEach(e=>{const dx=px-e.x,dy=py-e.y,d=Math.hypot(dx,dy),a=Math.atan2(dy,dx);
- if(e.weapon==='pistol'){
-   // Pistol enemies fire exactly once per second, but only while visible on the canvas.
-   e.shotT-=dt;
-   const sx=W/2+e.x-px,sy=H/2+e.y-py,onScreen=sx>=0&&sx<=W&&sy>=0&&sy<=H;
-   if(e.shotT<=0&&onScreen){e.shotT=1;const aim=Math.atan2(dy,dx)+(Math.random()-.5)*e.aimJitter;const speed=420;enemyBullets.push({x:e.x+Math.cos(aim)*(e.r+5),y:e.y+Math.sin(aim)*(e.r+5),vx:Math.cos(aim)*speed,vy:Math.sin(aim)*speed,life:2.1,dmg:e.dmg*.75})}
-   if(d>210){e.x+=Math.cos(a)*e.speed*.65*dt;e.y+=Math.sin(a)*e.speed*.65*dt}
- } else if(e.weapon==='melee') {
-   if(d>e.r+24){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}
-   e.bladeAngle=(e.bladeAngle+Math.PI*2*dt)%(Math.PI*2);
-   // Their rotating wooden sword hurts if you stay within its reach as it sweeps past.
-   if(d<43&&gameTime-e.lastBladeHit>=.82){takeDamage(e.dmg*.7);e.lastBladeHit=gameTime}
- } else {
-   if(d>e.r+20){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}
-   if(d<e.r+18)takeDamage(e.dmg*.25*dt);
- }
+ enemies.forEach(e=>{e.supported=false});enemies.forEach(supporter=>{if(supporter.behavior==='support')enemies.forEach(other=>{if(other!==supporter&&Math.hypot(other.x-supporter.x,other.y-supporter.y)<105)other.supported=true})});enemies.forEach(e=>{const dx=px-e.x,dy=py-e.y,d=Math.hypot(dx,dy),a=Math.atan2(dy,dx),b=e.behavior||'chase';
+   if(b==='shoot'||b==='burst'||b==='sniper'||b==='mortar'){
+     e.shotT-=dt;const sx=W/2+e.x-px,sy=H/2+e.y-py,onScreen=sx>=0&&sx<=W&&sy>=0&&sy<=H;
+     const preferred=b==='sniper'?390:b==='mortar'?310:220;if(d<preferred-45){e.x-=Math.cos(a)*e.speed*.75*dt;e.y-=Math.sin(a)*e.speed*.75*dt}else if(d>preferred+70){e.x+=Math.cos(a)*e.speed*.55*dt;e.y+=Math.sin(a)*e.speed*.55*dt}
+     if(e.shotT<=0&&onScreen){e.shotT=b==='burst'?1.65:b==='sniper'?2.1:b==='mortar'?2.5:1.15;const shots=b==='burst'?3:1;for(let j=0;j<shots;j++){const aim=a+(Math.random()-.5)*(b==='sniper'?.035:.22)+(j-(shots-1)/2)*.12,speed=b==='mortar'?260:b==='sniper'?650:420;enemyBullets.push({x:e.x+Math.cos(aim)*(e.r+5),y:e.y+Math.sin(aim)*(e.r+5),vx:Math.cos(aim)*speed,vy:Math.sin(aim)*speed,life:b==='mortar'?3:2.1,dmg:e.dmg*(b==='sniper'?1.5:b==='mortar'?1.2:.65),rocket:b==='mortar'})}}
+   } else if(b==='shield') {if(d>e.r+28){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}e.guardAngle=a;}
+   else if(b==='regen'){e.regenT-=dt;if(e.regenT<=0){e.hp=Math.min(e.max,e.hp+e.max*.045);e.regenT=1.2}if(d>e.r+20){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}}
+   else if(b==='support'){if(d>150){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}}
+   else if(b==='disrupt'){if(d>e.r+22){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}if(d<155&&gameTime>=playerDisruptUntil){playerDisruptUntil=gameTime+1.35;say('DISRUPTED! Weapon systems jammed briefly.')}}
+   else if(b==='dash'||b==='bomber'){e.dashT-=dt;const burstSpeed=b==='bomber'?e.speed*1.4:e.speed*2.15;if(e.dashT<=0){e.dashT=b==='bomber'?1.2:1.8;e.dashing=.22}if(e.dashing>0){e.x+=Math.cos(a)*burstSpeed*dt;e.y+=Math.sin(a)*burstSpeed*dt;e.dashing-=dt}else if(d>e.r+18){e.x+=Math.cos(a)*e.speed*.45*dt;e.y+=Math.sin(a)*e.speed*.45*dt}if(b==='bomber'&&d<e.r+25){takeDamage(e.dmg);e.hp=0}}
+   else if(b==='summon'){e.summonT-=dt;if(e.summonT<=0&&enemies.length<100){e.summonT=5.5;for(let j=0;j<2;j++){const aa=Math.random()*Math.PI*2;enemies.push({x:e.x+Math.cos(aa)*35,y:e.y+Math.sin(aa)*35,type:'swarmling',baseType:'swarmling',hp:enemyDefs.swarmling.hp,max:enemyDefs.swarmling.hp,speed:enemyDefs.swarmling.speed,dmg:enemyDefs.swarmling.dmg,r:enemyDefs.swarmling.r,value:enemyDefs.swarmling.value,weapon:'none',behavior:'chase',shotT:1,lastBladeHit:-10,lastPlayerBladeHit:-10,isBoss:false,regenT:1,summonT:5,dashT:1,splitDone:true})}}if(d>e.r+30){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}}
+   else if(b==='leech'){if(d>e.r+18){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}else if(gameTime-(e.lastBladeHit||0)>.9){takeDamage(e.dmg);e.hp=Math.min(e.max,e.hp+e.dmg*.5);e.lastBladeHit=gameTime}}
+   else {if(d>e.r+20){e.x+=Math.cos(a)*e.speed*dt;e.y+=Math.sin(a)*e.speed*dt}if(b==='blade'){e.bladeAngle=(e.bladeAngle+Math.PI*2*dt)%(Math.PI*2);if(d<43&&gameTime-e.lastBladeHit>=.82){takeDamage(e.dmg*.7);e.lastBladeHit=gameTime}}else if(d<e.r+18)takeDamage(e.dmg*.25*dt)}
+   if(e.isBoss&&e.hp<e.max*.5)e.speed=Math.max(e.speed,enemyDefs[e.baseType]?.speed*1.18||e.speed)
  });
  enemyBullets.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;if(b.life>0&&Math.hypot(b.x-px,b.y-py)<19){takeDamage(b.dmg);b.life=0}});enemyBullets=enemyBullets.filter(b=>b.life>0);
  enemies.filter(e=>e.hp<=0).forEach(drop);enemies=enemies.filter(e=>e.hp>0);
@@ -334,25 +371,25 @@ function update(dt){
 }
 function loop(t){const dt=Math.min(.033,(t-last)/1000);last=t;update(dt);draw();if(paused){ctx.fillStyle='#020617b8';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font='bold 52px system-ui';ctx.fillText('PAUSED',W/2,H/2);ctx.font='18px system-ui';ctx.fillText('Save your run or press Resume to continue',W/2,H/2+38);ctx.textAlign='left'}requestAnimationFrame(loop)}
 function saveProgress(){
- const data={gold,score,xp,levels,shieldHp,shieldCooldown,hp,maxHp,px,py,bullets,enemyBullets,enemies,loot,healLoot,chests,spawnT,chestT,bossT,gameTime,bossesDefeated,unlocked:{guns:[...unlocked.guns],melee:[...unlocked.melee],skins:[...unlocked.skins],shields:[...unlocked.shields],secret:[...unlocked.secret]},equipped,weaponMode};
- try{localStorage.setItem('monsterMayhemSaveV2',JSON.stringify(data));say('Progress saved in this browser!');return true}catch(err){say('Could not save progress in this browser.');return false}
+ const data={gold,score,levels,shieldHp,shieldCooldown,hp,maxHp,px,py,bullets,enemyBullets,enemies,loot,healLoot,chests,spawnT,chestT,bossT,gameTime,bossesDefeated,unlocked:{guns:[...unlocked.guns],melee:[...unlocked.melee],skins:[...unlocked.skins],shields:[...unlocked.shields],secret:[...unlocked.secret]},equipped,weaponMode};
+ try{localStorage.setItem('monsterMayhemGoldEditionSaveV1',JSON.stringify(data));say('Progress saved in this browser!');return true}catch(err){say('Could not save progress in this browser.');return false}
 }
 function loadProgress(){
- try{const raw=localStorage.getItem('monsterMayhemSaveV2');if(!raw){say('No saved run found yet.');return false}const d=JSON.parse(raw);
+ try{const raw=localStorage.getItem('monsterMayhemGoldEditionSaveV1');if(!raw){say('No saved run found yet.');return false}const d=JSON.parse(raw);
  for(const k of ['gold','score','hp','maxHp','px','py','bullets','enemyBullets','enemies','loot','healLoot','chests','spawnT','chestT','bossT','gameTime','weaponMode','bossesDefeated'])if(d[k]!==undefined)({gold,score,hp,maxHp,px,py,bullets,enemyBullets,enemies,loot,chests,spawnT,chestT,bossT,gameTime,weaponMode}[k]=d[k]);
  // Explicit assignments keep restored values connected to the live game state.
- gold=d.gold;score=d.score;xp=d.xp||0;levels=d.levels||{guns:{},melee:{},skins:{},shields:{}};shieldHp=d.shieldHp??(shields[0].hp);shieldCooldown=d.shieldCooldown||0;hp=d.hp;maxHp=d.maxHp;px=d.px;py=d.py;bullets=d.bullets||[];enemyBullets=d.enemyBullets||[];enemies=d.enemies||[];loot=d.loot||[];healLoot=d.healLoot||[];chests=d.chests||[];spawnT=d.spawnT||0;chestT=d.chestT||0;bossT=d.bossT||0;gameTime=d.gameTime||0;weaponMode=d.weaponMode||'gun';bossesDefeated=d.bossesDefeated||0;
+ gold=d.gold;score=d.score;levels=d.levels||{guns:{},melee:{},skins:{},shields:{}};shieldHp=d.shieldHp??(shields[0].hp);shieldCooldown=d.shieldCooldown||0;hp=d.hp;maxHp=d.maxHp;px=d.px;py=d.py;bullets=d.bullets||[];enemyBullets=d.enemyBullets||[];enemies=d.enemies||[];loot=d.loot||[];healLoot=d.healLoot||[];chests=d.chests||[];spawnT=d.spawnT||0;chestT=d.chestT||0;bossT=d.bossT||0;gameTime=d.gameTime||0;weaponMode=d.weaponMode||'gun';bossesDefeated=d.bossesDefeated||0;
  if(d.unlocked){unlocked={guns:new Set(d.unlocked.guns||[0]),melee:new Set(d.unlocked.melee||[0]),skins:new Set(d.unlocked.skins||[0]),shields:new Set(d.unlocked.shields||[0]),secret:new Set(d.unlocked.secret||[])};for(const i of unlocked.secret){const w=secretWeapons[i];if(!w)continue;if(w.kind==='gun'&&!guns.some(g=>g.name===w.name))guns.push({...w,secret:true});if(w.kind==='melee'&&!melee.some(m=>m.name===w.name))melee.push({...w,secret:true});}}if(d.equipped)equipped={guns:0,melee:0,skins:0,shields:0,...d.equipped};if(!unlocked.shields.has(equipped.shields||0))unlocked.shields.add(equipped.shields||0);shieldHp=Math.min(shieldHp,shieldMax());
  gameOver=false;paused=false;$('overlay').style.display='none';$('pauseBtn').textContent='⏸ Pause';updateHUD();renderShop();say('Saved run loaded!');return true
  }catch(err){say('Save file could not be loaded.');return false}
 }
 function pauseGame(){if(gameOver)return;paused=!paused;$('pauseBtn').textContent=paused?'▶ Resume':'⏸ Pause';if(paused){$('modalTitle').textContent='PAUSED';$('finalscore').textContent='Score: '+Math.floor(score)+' · Gold: '+Math.floor(gold);$('modalHint').textContent='Save your progress to continue this run later.';$('restart').style.display='none';$('resumeBtn').style.display='inline-block';$('saveModalBtn').style.display='inline-block';$('overlay').style.display='flex'}else{$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';$('saveModalBtn').style.display='none'}last=performance.now()}
-$('pauseBtn').addEventListener('click',pauseGame);$('saveBtn').addEventListener('click',saveProgress);$('loadBtn').addEventListener('click',loadProgress);$('newBtn').addEventListener('click',()=>{if(confirm('Start a new run? Save the current run first if you want to keep it.')){reset();say('New run started.')}});$('resumeBtn').addEventListener('click',pauseGame);$('saveModalBtn').addEventListener('click',saveProgress);
-window.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(k==='escape'){pauseGame();return}if(paused)return;keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k==='r'&&gameOver)reset();if(k==='q'){weaponMode=weaponMode==='gun'?'melee':'gun';say('Switched to '+weaponMode.toUpperCase()+' mode.');}});
+$('rulesBtn').addEventListener('click',()=>{$('rulesOverlay').style.display='flex';paused=true;last=performance.now()});$('closeRulesBtn').addEventListener('click',()=>{$('rulesOverlay').style.display='none';paused=false;$('pauseBtn').textContent='⏸ Pause';last=performance.now()});$('pauseBtn').addEventListener('click',pauseGame);$('saveBtn').addEventListener('click',saveProgress);$('loadBtn').addEventListener('click',loadProgress);$('newBtn').addEventListener('click',()=>{if(confirm('Start a new run? Save the current run first if you want to keep it.')){reset();say('New run started.')}});$('resumeBtn').addEventListener('click',pauseGame);$('saveModalBtn').addEventListener('click',saveProgress);
+window.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(k==='escape'){if($('rulesOverlay').style.display==='flex'){$('rulesOverlay').style.display='none';paused=false;last=performance.now();return}pauseGame();return}if(paused)return;keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k==='r'&&gameOver)reset();if(k==='q'){weaponMode=weaponMode==='gun'?'melee':'gun';say('Switched to '+weaponMode.toUpperCase()+' mode.');}});
 window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=(e.clientX-r.left)*W/r.width;mouse.y=(e.clientY-r.top)*H/r.height});
 canvas.addEventListener('mousedown',e=>{if(e.button===0)mouse.down=true;if(e.button===2)swing()});window.addEventListener('mouseup',()=>mouse.down=false);canvas.addEventListener('contextmenu',e=>e.preventDefault());
-function reset(){gold=0;score=0;hp=maxHp=100;shieldHp=shieldMax();shieldCooldown=0;px=py=0;bullets=[];enemyBullets=[];enemies=[];loot=[];healLoot=[];chests=[];gameOver=false;paused=false;gameTime=0;playerBladeAngle=0;bossesDefeated=0;spawnT=.5;chestT=4;bossT=25;weaponMode='gun';swingAnim=0;$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';$('saveModalBtn').style.display='none';$('pauseBtn').textContent='⏸ Pause';last=performance.now();updateHUD()}
+function reset(){gold=0;score=0;playerDisruptUntil=0;hp=maxHp=100;shieldHp=shieldMax();shieldCooldown=0;px=py=0;bullets=[];enemyBullets=[];enemies=[];loot=[];healLoot=[];chests=[];gameOver=false;paused=false;gameTime=0;playerBladeAngle=0;bossesDefeated=0;spawnT=.5;chestT=4;bossT=25;weaponMode='gun';swingAnim=0;$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';$('saveModalBtn').style.display='none';$('pauseBtn').textContent='⏸ Pause';last=performance.now();updateHUD()}
 $('restart').addEventListener('click',reset);
 renderShop();reset();requestAnimationFrame(loop);
 })();
