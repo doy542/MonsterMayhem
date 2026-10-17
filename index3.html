@@ -398,7 +398,17 @@ window.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(k==='escape
 window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=(e.clientX-r.left)*W/r.width;mouse.y=(e.clientY-r.top)*H/r.height});
 canvas.addEventListener('mousedown',e=>{if(e.button===0)mouse.down=true;if(e.button===2)swing()});window.addEventListener('mouseup',()=>mouse.down=false);canvas.addEventListener('contextmenu',e=>e.preventDefault());
-function reset(){gold=0;score=0;playerDisruptUntil=0;hp=maxHp=100;shieldHp=shieldMax();shieldCooldown=0;px=py=0;bullets=[];enemyBullets=[];enemies=[];loot=[];healLoot=[];chests=[];gameOver=false;paused=false;gameTime=0;playerBladeAngle=0;bossesDefeated=0;spawnT=.5;chestT=4;bossT=25;worldBossT=55+Math.random()*35;eventT=75+Math.random()*35;autoSaveT=3;invulnUntil=0;evolutionTier=0;weaponMode='gun';swingAnim=0;$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';$('pauseBtn').textContent='⏸ Pause';last=performance.now();updateHUD()}
+function reset(){
+ // Fusion weapons are run-only: remove them on every new run, while keeping permanent purchases and recipe unlocks.
+ const fusedNames=new Set(fusionRecipes.map(r=>r.name));
+ const previousGuns=guns.map((gun,index)=>({gun,index}));
+ const previousEquippedGun=equipped.guns;
+ const keptGuns=previousGuns.filter(entry=>!fusedNames.has(entry.gun.name));
+ const remap=new Map();keptGuns.forEach((entry,newIndex)=>remap.set(entry.index,newIndex));
+ guns.splice(0,guns.length,...keptGuns.map(entry=>entry.gun));
+ unlocked.guns=new Set([...unlocked.guns].filter(index=>remap.has(index)).map(index=>remap.get(index)));
+ equipped.guns=remap.has(previousEquippedGun)?remap.get(previousEquippedGun):0;
+ gold=0;score=0;playerDisruptUntil=0;hp=maxHp=100;shieldHp=shieldMax();shieldCooldown=0;px=py=0;bullets=[];enemyBullets=[];enemies=[];loot=[];healLoot=[];chests=[];gameOver=false;paused=false;gameTime=0;playerBladeAngle=0;bossesDefeated=0;spawnT=.5;chestT=4;bossT=25;worldBossT=55+Math.random()*35;eventT=75+Math.random()*35;autoSaveT=3;invulnUntil=0;evolutionTier=0;weaponMode='gun';swingAnim=0;$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';$('pauseBtn').textContent='⏸ Pause';last=performance.now();updateHUD()}
 $('restart').addEventListener('click',reset);
 renderShop();reset();if(localStorage.getItem('monsterMayhemGoldEditionSaveV1'))loadProgress();window.addEventListener('pagehide',()=>saveProgress(true));document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgress(true)});requestAnimationFrame(loop);
 })();
