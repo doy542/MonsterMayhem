@@ -27,7 +27,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 </head>
 <body>
 <header>
-<div><h1>⚔️ MONSTER MAYHEM</h1><p>Evolve, fuse weapons, survive world events</p></div>
+<div><h1>⚔️ MONSTERMAYHEM3</h1><p>Evolve, fuse weapons, survive world events</p></div>
 <div class="stats"><span class="pill">🪙 Gold: <b id="gold">0</b></span><span class="pill">🏆 Score: <b id="score">0</b></span><span class="pill">👑 Best: <b id="best">0</b></span><span class="pill">❤️ HP: <b id="hp">100</b></span><span class="pill">🛡️ Shield: <b id="shieldHud">0/0</b></span></div>
 </header>
 <main>
@@ -42,7 +42,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 <div class="items" id="items"></div><div class="notice" id="notice" role="status">Welcome! Pistol and Normal skin are unlocked.</div>
 </aside>
 </main>
-<div class="overlay" id="rulesOverlay" style="z-index:8"><div class="modal" style="max-width:680px;text-align:left;max-height:85vh;overflow:auto"><h2 style="font-size:28px">📖 HOW TO PLAY</h2><p><b>Movement:</b> WASD or arrow keys. <b>Aim:</b> Mouse. <b>Shoot:</b> Left-click or Space. <b>Focused melee swing:</b> Right-click. <b>Switch focus:</b> Q.</p><p><b>Loadout:</b> You always have one gun and one melee weapon equipped. Melee also spins around you automatically, and right-click performs a focused swing.</p><p><b>Shields:</b> A shield absorbs damage before your health. If one hit breaks it, any excess damage carries over to your health. A depleted shield fully recharges after 10 seconds.</p><p><b>Enemies:</b> Different enemy types have different behavior. Enemies become tougher as the run progresses and as your equipped gear gets stronger. Every 2.5 seconds, enemies evolve and their threat-rated gold rewards rise.</p><p><b>Bosses:</b> Each regular enemy type has a matching boss variant. World bosses arrive at random intervals and pay more gold. Defeat four bosses or reach 10,000 score to unlock the Secret Shop.</p><p><b>Survive:</b> Collect green healing drops, shoot gold chests to open them, your progress autosaves in this browser; try to beat your high score.</p><div style="text-align:right"><button class="action" id="closeRulesBtn">Got it!</button></div></div></div>
+<div class="overlay" id="rulesOverlay" style="z-index:8"><div class="modal" style="max-width:680px;text-align:left;max-height:85vh;overflow:auto"><h2 style="font-size:28px">📖 HOW TO PLAY</h2><p><b>Movement:</b> WASD or arrow keys. <b>Aim:</b> Mouse. <b>Shoot:</b> Left-click or Space. <b>Focused melee swing:</b> Right-click. <b>Switch focus:</b> Q.</p><p><b>One currency: GOLD.</b> Defeat enemies and collect gold drops. Spend gold to buy guns, melee weapons, skins, shields, upgrades, and weapon-fusion recipes. There is no XP.</p><p><b>Loadout:</b> You always have one gun and one melee weapon equipped. Melee also spins around you automatically, and right-click performs a focused swing.</p><p><b>Shields:</b> A shield absorbs damage before your health. If one hit breaks it, any excess damage carries over to your health. A depleted shield fully recharges after 10 seconds.</p><p><b>Enemies:</b> Different enemy types have different behavior. Enemies become tougher as the run progresses and as your equipped gear gets stronger. Every 2.5 minutes, enemies evolve and their threat-rated gold rewards rise.</p><p><b>Bosses:</b> Each regular enemy type has a matching boss variant. World bosses arrive at random intervals and pay more gold. Defeat four bosses or reach 10,000 score to unlock the Secret Shop.</p><p><b>Survive:</b> Collect green healing drops, shoot gold chests to open them, your progress autosaves in this browser; try to beat your high score.</p><div style="text-align:right"><button class="action" id="closeRulesBtn">Got it!</button></div></div></div>
 <div class="overlay" id="overlay"><div class="modal"><h2 id="modalTitle">GAME OVER</h2><p id="finalscore"></p><p id="modalHint">Ready to try for a new record?</p><button class="action" id="restart">Play Again</button><button class="action" id="resumeBtn" style="display:none;background:#267b5a">Resume</button></div></div>
 <script>
 (()=> {
@@ -384,6 +384,8 @@ function saveProgress(silent=false){
 }
 function loadProgress(){
  try{const raw=localStorage.getItem('monsterMayhemGoldEditionSaveV1');if(!raw){say('No saved run found yet.');return false}const d=JSON.parse(raw);
+ // A run saved during page exit may already be over. Do not revive a zero-HP run.
+ if(!Number.isFinite(Number(d.hp))||Number(d.hp)<=0){reset();say('Your previous run had ended. A fresh run is ready!');return false}
  // Restore the full arsenal too, including fusion weapons crafted during this run.
  if(Array.isArray(d.guns))guns.splice(0,guns.length,...d.guns);
  if(Array.isArray(d.melee))melee.splice(0,melee.length,...d.melee);
