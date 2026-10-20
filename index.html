@@ -203,7 +203,7 @@ function itemLevelBoost(kind,index=equipped[kind]){return 1+levelOf(kind,index)*
 function shieldMax(){return Math.round((shields[equipped.shields]?.hp||70)*itemLevelBoost('shields'))}
 function upgradeEquipped(kind){const index=equipped[kind],cost=levelCost(kind,index);if(gold<cost){say('Need '+(cost-gold)+' more gold to upgrade your '+kind.slice(0,-1)+'.');return}gold-=cost;levels[kind][index]=levelOf(kind,index)+1;if(kind==='shields'){shieldHp=shieldMax();shieldCooldown=0}say('Upgraded '+(kind==='guns'?guns[index].name:kind==='melee'?melee[index].name:kind==='shields'?shields[index].name:skins[index].name)+' to level '+levels[kind][index]+' for '+cost+' gold!');updateHUD();renderShop()}
 function renderUpgrades(root){
- const intro=document.createElement('div');intro.className='notice';intro.textContent='🪙 Gold is the only currency. Spend it to upgrade your equipped gun, melee weapon, skin, or shield. Every upgrade improves the selected item.';root.append(intro);
+ const intro=document.createElement('div');intro.className='notice';intro.textContent='🪙Spend gold to upgrade your equipped gun, melee weapon, skin, or shield. Every upgrade improves the selected item.';root.append(intro);
  for(const kind of ['guns','melee','skins','shields']){const index=equipped[kind],item=kind==='guns'?guns[index]:kind==='melee'?melee[index]:kind==='skins'?skins[index]:shields[index],lvl=levelOf(kind,index),cost=levelCost(kind,index);const card=document.createElement('div');card.className='item';const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent=({guns:'🔫 Equipped Gun',melee:'⚔️ Equipped Melee',skins:'✨ Equipped Skin',shields:'🛡️ Equipped Shield'})[kind]+' · '+item.name;desc.className='desc';desc.textContent='Level '+lvl+' · '+({guns:'+7.5% damage per level',melee:'+7.5% damage and reach per level',skins:'+7.5% combat bonus per level',shields:'+7.5% shield capacity per level'})[kind];price.className='price';price.textContent='Upgrade cost: '+cost+' gold · You have '+Math.floor(gold)+' gold';info.append(name,desc,price);const btn=document.createElement('button');btn.className='action';btn.textContent='UPGRADE';btn.disabled=gold<cost;btn.addEventListener('click',()=>upgradeEquipped(kind));card.append(info,btn);root.append(card)}
 }
 function buyOrEquip(tab,i){
@@ -277,6 +277,18 @@ function spawnEnemy(type){
  let weapon=['shoot','burst','sniper','mortar'].includes(def.behavior)?'pistol':def.behavior==='blade'?'melee':'none';
  enemies.push({x:px+Math.cos(a)*r,y:py+Math.sin(a)*r,type,baseType,hp:def.hp*hpScale,max:def.hp*hpScale,speed:def.speed*speedScale*(isBoss?1.12:1),dmg:def.dmg*dmgScale*(isBoss?1.5:1),r:def.r*(isBoss?1.65:1),value:Math.round(def.value*(isBoss?22:1)*Math.pow(1.5,evolutionTier)),evolutionTier,weapon,behavior:def.behavior,shotT:1,aimJitter:.10+Math.random()*.2,swingT:1,bladeAngle:Math.random()*Math.PI*2,lastBladeHit:-10,lastPlayerBladeHit:-10,isBoss,regenT:1,summonT:5,dashT:1,splitDone:false,disruptT:0});
 }
+function spawnWorldBoss(){
+  const type=enemyTypes[Math.floor(Math.random()*enemyTypes.length)]+'Boss';
+  spawnEnemy(type);
+  const boss=enemies[enemies.length-1];
+  boss.isWorldBoss=true;
+  boss.hp*=8;
+  boss.max*=8;
+  boss.r*=2.5;
+  boss.dmg*=2.5;
+  boss.speed*=1.2;
+  boss.value*=10;
+}
 function drop(e){
  score+=Math.max(1,Math.round(e.value/(e.isBoss?1.5:1)));
  const threatReward=Math.max(5,Math.round(e.value*(1+evolutionTier*.18)));
@@ -308,13 +320,15 @@ function draw(){
  chests.forEach(ch=>{const [sx,sy]=worldToScreen(ch.x,ch.y);ctx.fillStyle='#9a6027';ctx.fillRect(sx-13,sy-10,26,20);ctx.fillStyle='#ffd166';ctx.fillRect(sx-2,sy-10,4,20)});
  bullets.forEach(b=>{const [sx,sy]=worldToScreen(b.x,b.y);ctx.fillStyle=b.rocket?'#fb923c':'#f8fafc';ctx.beginPath();ctx.arc(sx,sy,b.rocket?6:3.5,0,Math.PI*2);ctx.fill()});
  enemyBullets.forEach(b=>{const [sx,sy]=worldToScreen(b.x,b.y);ctx.fillStyle='#fb7185';ctx.beginPath();ctx.arc(sx,sy,5,0,Math.PI*2);ctx.fill()});
- enemies.forEach(e=>{const [sx,sy]=worldToScreen(e.x,e.y),col=e.isBoss?'#f8fafc':(enemyDefs[e.baseType||e.type]?.color||'#ef4444');
+ enemies.forEach(e=>{const [sx,sy]=worldToScreen(e.x,e.y),col=e.isWorldBoss?'#f43f5e':e.isBoss?'#f8fafc':(enemyDefs[e.baseType||e.type]?.color||'#ef4444');
  // Draw the weapon first so it visibly rotates around the enemy.
  ctx.save();ctx.translate(sx,sy);
  if(e.weapon==='melee'){ctx.rotate(e.bladeAngle||0);ctx.fillStyle='#854d0e';ctx.fillRect(e.r-1,-4,34,8);ctx.fillStyle='#c08457';ctx.fillRect(e.r+25,-7,13,14);ctx.fillStyle='#e7c99a';ctx.fillRect(e.r+32,-5,4,10)}
  else if(e.weapon==='pistol'){ctx.rotate(Math.atan2(py-e.y,px-e.x));ctx.fillStyle='#cbd5e1';ctx.fillRect(e.r-1,-4,15,8);ctx.fillStyle='#64748b';ctx.fillRect(e.r+8,-3,8,6)}ctx.restore();
  ctx.fillStyle=col;ctx.beginPath();if(e.behavior==='shield'){for(let k=0;k<6;k++){const aa=k*Math.PI/3;const xx=sx+Math.cos(aa)*e.r,yy=sy+Math.sin(aa)*e.r;k===0?ctx.moveTo(xx,yy):ctx.lineTo(xx,yy)}ctx.closePath()}else if(e.behavior==='sniper'){ctx.moveTo(sx,sy-e.r);ctx.lineTo(sx+e.r,sy+e.r);ctx.lineTo(sx-e.r,sy+e.r);ctx.closePath()}else if(e.behavior==='bomber'){ctx.rect(sx-e.r,sy-e.r,e.r*2,e.r*2)}else if(e.behavior==='summon'){ctx.moveTo(sx,sy-e.r);ctx.lineTo(sx+e.r,sy);ctx.lineTo(sx,sy+e.r);ctx.lineTo(sx-e.r,sy);ctx.closePath()}else ctx.arc(sx,sy,e.r,0,Math.PI*2);ctx.fill();
- if(e.isBoss){ctx.fillStyle='#f8fafc';ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText((enemyDefs[e.baseType]?.label||e.baseType).toUpperCase()+' BOSS',sx,sy-e.r-19);ctx.textAlign='left';ctx.strokeStyle='#f8fafc';ctx.lineWidth=2;ctx.beginPath();ctx.arc(sx,sy,e.r+5,0,Math.PI*2);ctx.stroke()}else if(e.behavior==='shield'){ctx.strokeStyle='#bfdbfe';ctx.lineWidth=4;ctx.beginPath();ctx.arc(sx,sy,e.r+4,-.8,.8);ctx.stroke()}else if(e.behavior==='regen'){ctx.strokeStyle='#86efac';ctx.lineWidth=2;ctx.beginPath();ctx.arc(sx,sy,e.r+3,0,Math.PI*2);ctx.stroke()}else if(e.behavior==='sniper'){ctx.strokeStyle='#f9a8d4';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx-5,sy);ctx.lineTo(sx+5,sy);ctx.moveTo(sx,sy-5);ctx.lineTo(sx,sy+5);ctx.stroke()}
+if(e.isWorldBoss){ctx.fillStyle='#fbbf24';ctx.font='bold 16px system-ui';ctx.textAlign='center';ctx.fillText('⚠ WORLD BOSS ⚠',sx,sy-e.r-22);ctx.textAlign='left';ctx.strokeStyle='#f43f5e';ctx.lineWidth=5;ctx.beginPath();ctx.arc(sx,sy,e.r+7,0,Math.PI*2);ctx.stroke();}
+else if(e.isBoss){ctx.fillStyle='#f8fafc';ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText((enemyDefs[e.baseType]?.label||e.baseType).toUpperCase()+' BOSS',sx,sy-e.r-19);ctx.textAlign='left';ctx.strokeStyle='#f8fafc';ctx.lineWidth=2;ctx.beginPath();ctx.arc(sx,sy,e.r+5,0,Math.PI*2);ctx.stroke();}
+else if(e.behavior==='shield'){ctx.strokeStyle='#bfdbfe';ctx.lineWidth=4;ctx.beginPath();ctx.arc(sx,sy,e.r+4,-.8,.8);ctx.stroke()}else if(e.behavior==='regen'){ctx.strokeStyle='#86efac';ctx.lineWidth=2;ctx.beginPath();ctx.arc(sx,sy,e.r+3,0,Math.PI*2);ctx.stroke()}else if(e.behavior==='sniper'){ctx.strokeStyle='#f9a8d4';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx-5,sy);ctx.lineTo(sx+5,sy);ctx.moveTo(sx,sy-5);ctx.lineTo(sx,sy+5);ctx.stroke()}
  if(e.max>100){ctx.fillStyle='#000';ctx.fillRect(sx-35,sy-e.r-12,70,6);ctx.fillStyle='#22c55e';ctx.fillRect(sx-35,sy-e.r-12,70*Math.max(0,e.hp/e.max),6)}});
  const skin=skins[equipped.skins],ang=Math.atan2(mouse.y-H/2,mouse.x-W/2);ctx.save();ctx.translate(W/2,H/2);
  // Shield is a clear, detailed ring with small segmented seams and a recharge glint.
@@ -337,7 +351,7 @@ function draw(){
 }
 function update(dt){
  if(gameOver||paused)return;
- const skin=skins[equipped.skins];gameTime+=dt;autoSaveT-=dt;eventT-=dt;worldBossT-=dt;if(autoSaveT<=0){autoSaveT=3;saveProgress(true)}if(gameTime>=((evolutionTier+1)*150)){evolutionTier++;enemies.forEach(e=>{e.hp*=1.34;e.max*=1.34;e.dmg*=1.12;e.speed*=1.07;e.value=Math.round(e.value*1.5);e.evolutionTier=evolutionTier});say('🧬 ENEMY EVOLUTION '+evolutionTier+'! Enemies grew stronger and now drop more gold.')}if(eventT<=0){eventT=75+Math.random()*55;const event=Math.floor(Math.random()*4);if(event===0){const bonus=350+Math.floor(Math.random()*900)+evolutionTier*250;gold+=bonus;say('🎲 GOLD RUSH! Bonus '+bonus+' gold!')}else if(event===1){invulnUntil=gameTime+10;say('✨ RUN EVENT: 10 seconds of INVINCIBILITY!')}else if(event===2){for(let i=0;i<5;i++)loot.push({x:px+(Math.random()-.5)*300,y:py+(Math.random()-.5)*300,v:100+evolutionTier*40,r:8,type:'gold'});say('🪙 TREASURE STORM! Gold drops appeared nearby!')}else{hp=Math.min(maxHp,hp+35);say('💚 FIELD MEDIC! Restored up to 35 HP!')}}if(shieldCooldown>0){shieldCooldown=Math.max(0,shieldCooldown-dt);if(shieldCooldown===0){shieldHp=shieldMax();say('Shield recharged to full!')}}playerBladeAngle=(gameTime*Math.PI*2)%(Math.PI*2);let dx=0,dy=0;
+ const skin=skins[equipped.skins];gameTime+=dt;autoSaveT-=dt;eventT-=dt;bossT-=dt;worldBossT-=dt;if(autoSaveT<=0){autoSaveT=3;saveProgress(true)}if(gameTime>=((evolutionTier+1)*150)){evolutionTier++;enemies.forEach(e=>{e.hp*=1.34;e.max*=1.34;e.dmg*=1.12;e.speed*=1.07;e.value=Math.round(e.value*1.5);e.evolutionTier=evolutionTier});say('🧬 ENEMY EVOLUTION '+evolutionTier+'! Enemies grew stronger and now drop more gold.')}if(eventT<=0){eventT=75+Math.random()*55;const event=Math.floor(Math.random()*4);if(event===0){const bonus=350+Math.floor(Math.random()*900)+evolutionTier*250;gold+=bonus;say('🎲 GOLD RUSH! Bonus '+bonus+' gold!')}else if(event===1){invulnUntil=gameTime+10;say('✨ RUN EVENT: 10 seconds of INVINCIBILITY!')}else if(event===2){for(let i=0;i<5;i++)loot.push({x:px+(Math.random()-.5)*300,y:py+(Math.random()-.5)*300,v:100+evolutionTier*40,r:8,type:'gold'});say('🪙 TREASURE STORM! Gold drops appeared nearby!')}else{hp=Math.min(maxHp,hp+35);say('💚 FIELD MEDIC! Restored up to 35 HP!')}}if(shieldCooldown>0){shieldCooldown=Math.max(0,shieldCooldown-dt);if(shieldCooldown===0){shieldHp=shieldMax();say('Shield recharged to full!')}}playerBladeAngle=(gameTime*Math.PI*2)%(Math.PI*2);let dx=0,dy=0;
  if(keys.has('w')||keys.has('arrowup'))dy--;if(keys.has('s')||keys.has('arrowdown'))dy++;if(keys.has('a')||keys.has('arrowleft'))dx--;if(keys.has('d')||keys.has('arrowright'))dx++;
  playerMoving=!!(dx||dy);if(playerMoving){const n=Math.hypot(dx,dy);px+=dx/n*220*skin.speed*itemLevelBoost('skins')*(gameTime<playerDisruptUntil?.62:1)*dt;py+=dy/n*220*skin.speed*itemLevelBoost('skins')*(gameTime<playerDisruptUntil?.62:1)*dt}
  swingAnim=Math.max(0,swingAnim-dt);
@@ -348,7 +362,10 @@ function update(dt){
  spawnT-=dt;chestT-=dt;
  if(spawnT<=0){spawnT=Math.max(.20,1.05-score/28000);const pool=enemyTypes.filter(t=>gameTime>25||!['sniper','mortar','shieldbearer','regenerator','bulwark','disruptor','summoner'].includes(t));spawnEnemy(pool[Math.floor(Math.random()*pool.length)])}
  if(chestT<=0){chestT=7;const a=Math.random()*Math.PI*2,r=420+Math.random()*300;chests.push({x:px+Math.cos(a)*r,y:py+Math.sin(a)*r,open:false})}
- if(worldBossT<=0){worldBossT=70+Math.random()*65;const bossType=enemyTypes[Math.floor(Math.random()*enemyTypes.length)]+'Boss';spawnEnemy(bossType);say('👑 WORLD BOSS EVENT! '+(enemyDefs[bossType.slice(0,-4)]?.label||'A terrifying enemy')+' BOSS has arrived!')}
+ if(bossT<=0){bossT=Math.max(30,48-gameTime/240);const bossType=enemyTypes[Math.floor(Math.random()*enemyTypes.length)]+'Boss';spawnEnemy(bossType);say('👑 BOSS! '+(enemyDefs[bossType.slice(0,-4)]?.label||'Enemy')+' Boss has spawned!');
+}
+if(worldBossT<=0){worldBossT=70+Math.random()*65;spawnWorldBoss();say('🌋 WORLD BOSS EVENT! AN EXTREMELY POWERFUL WORLD BOSS HAS ARRIVED!');
+}
  if(invulnUntil>gameTime&&Math.floor(gameTime*5)%2===0){ctx.save();ctx.strokeStyle='#67e8f9';ctx.lineWidth=4;ctx.beginPath();ctx.arc(W/2,H/2,32,0,Math.PI*2);ctx.stroke();ctx.restore()}
  bullets.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;for(const e of enemies){if(b.life>0&&Math.hypot(b.x-e.x,b.y-e.y)<e.r+(b.rocket?9:4)){e.hp-=b.dmg*(e.supported?.72:1);b.life=0;if(b.rocket){enemies.forEach(other=>{if(Math.hypot(other.x-b.x,other.y-b.y)<90)other.hp-=b.dmg*.45})}}}});
  bullets=bullets.filter(b=>b.life>0);
