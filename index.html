@@ -19,7 +19,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 .items{overflow:auto;padding:8px;display:grid;gap:7px;align-content:start}
 .item{border:1px solid var(--line);background:linear-gradient(120deg,#141e33,#101728);border-radius:10px;padding:9px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
 .item.selected{border-color:#6da8ff;box-shadow:inset 0 0 0 1px #6da8ff55}.itemname{font-weight:800}.desc{font-size:11px;color:var(--muted);margin-top:2px}.price{font-size:11px;color:var(--gold);font-weight:800;margin-top:4px}
-.action{min-width:82px;border:0;border-radius:8px;padding:8px 9px;background:#2f6ed1;color:white;font-weight:800;cursor:pointer}.action:hover{filter:brightness(1.15)}.action:disabled{cursor:default;background:#25324a;color:#8da1c3}.action.equip{background:#267b5a}.action.equipped{background:#24543f;color:#9ff3c5}
+.action{min-width:82px;border:0;border-radius:8px;padding:8px 9px;background:#2f6ed1;color:white;font-weight:800;cursor:pointer}.action:hover{filter:brightness(1.15)}.action:disabled{cursor:default;background:#25324a;color:#8da1c3}.action.equip{background:#267b5a}.action.equipped{background:#24543f;color:#9ff3c5}.action.sell{background:#a33d4c}.action.fuse{background:#7c3aed}.fusion-select{width:100%;margin-top:7px;padding:9px;border:1px solid var(--line);border-radius:8px;background:#0a1120;color:var(--text)}.actiongroup{display:flex;flex-direction:column;gap:5px;min-width:82px}
 .notice{padding:8px 12px;background:#0e1627;border-top:1px solid var(--line);color:#c6d5f0;min-height:34px;font-size:12px}
 .overlay{position:fixed;inset:0;background:#030611c9;display:none;align-items:center;justify-content:center;padding:20px;z-index:5}.modal{background:#121a2d;border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center;max-width:420px;width:100%;box-shadow:0 20px 60px #0008}.modal h2{font-size:32px;margin:0 0 8px}.modal button{margin-top:12px}
 @media(max-width:900px){main{grid-template-columns:1fr}.shop{max-height:500px}.stats{width:100%}header{align-items:flex-start}}
@@ -33,7 +33,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 <main>
 <section class="gamewrap">
 <canvas id="game" width="1100" height="700"></canvas>
-<div class="gamecontrols"><button id="pauseBtn">⏸ Pause</button><button id="newBtn">↻ New Run</button><button id="rulesBtn">📖 Rules</button></div><div class="help">Move: <b>WASD / Arrow keys</b> · Aim: <b>Mouse</b> · Fire: <b>Left click / Space</b> · Switch gun/melee: <b>Q</b> · Secret Shop: <b>10,000 score OR 4 bosses</b><br>Your melee weapon circles you automatically; right-click for a focused swing. Use Fusion to unlock permanent recipes and craft powerful weapons. Enemies evolve every 2.5 minutes; world bosses and helpful run events appear randomly. Your run autosaves.</div>
+<div class="gamecontrols"><button id="pauseBtn">⏸ Pause</button><button id="newBtn">↻ New Run</button><button id="rulesBtn">📖 Rules</button></div><div class="help">Move: <b>WASD / Arrow keys</b> · Aim: <b>Mouse</b> · Fire: <b>Left click / Space</b> · Switch gun/melee: <b>Q</b> · Secret Shop: <b>pay 100,000 gold to unlock</b><br>Your melee weapon circles you automatically; right-click for a focused swing. Fuse any two owned basic weapons of the same type for 1,000 gold. Enemies evolve every 2.5 minutes; world bosses and helpful run events appear randomly. Your run autosaves.</div>
 </section>
 <aside class="shop">
 <div class="shophead"><h2>🛒 Arsenal & Skins</h2><p>Purchase once, then equip whenever you want. Your gold is only charged on a successful purchase.</p>
@@ -42,7 +42,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 <div class="items" id="items"></div><div class="notice" id="notice" role="status">Welcome! Pistol and Normal skin are unlocked.</div>
 </aside>
 </main>
-<div class="overlay" id="rulesOverlay" style="z-index:8"><div class="modal" style="max-width:680px;text-align:left;max-height:85vh;overflow:auto"><h2 style="font-size:28px">📖 HOW TO PLAY</h2><p><b>Movement:</b> WASD or arrow keys. <b>Aim:</b> Mouse. <b>Shoot:</b> Left-click or Space. <b>Focused melee swing:</b> Right-click. <b>Switch focus:</b> Q.</p><p><b>One currency: GOLD.</b> Defeat enemies and collect gold drops. Spend gold to buy guns, melee weapons, skins, shields, upgrades, and weapon-fusion recipes. There is no XP.</p><p><b>Loadout:</b> You always have one gun and one melee weapon equipped. Melee also spins around you automatically, and right-click performs a focused swing.</p><p><b>Shields:</b> A shield absorbs damage before your health. If one hit breaks it, any excess damage carries over to your health. A depleted shield fully recharges after 10 seconds.</p><p><b>Enemies:</b> Different enemy types have different behavior. Enemies become tougher as the run progresses and as your equipped gear gets stronger. Every 2.5 minutes, enemies evolve and their threat-rated gold rewards rise.</p><p><b>Bosses:</b> Each regular enemy type has a matching boss variant. World bosses arrive at random intervals and pay more gold. Defeat four bosses or reach 10,000 score to unlock the Secret Shop.</p><p><b>Survive:</b> Collect green healing drops, shoot gold chests to open them, your progress autosaves in this browser; try to beat your high score.</p><div style="text-align:right"><button class="action" id="closeRulesBtn">Got it!</button></div></div></div>
+<div class="overlay" id="rulesOverlay" style="z-index:8"><div class="modal" style="max-width:680px;text-align:left;max-height:85vh;overflow:auto"><h2 style="font-size:28px">📖 HOW TO PLAY</h2><p><b>Movement:</b> WASD or arrow keys. <b>Aim:</b> Mouse. <b>Shoot:</b> Left-click or Space. <b>Focused melee swing:</b> Right-click. <b>Switch focus:</b> Q.</p><p><b>One currency: GOLD.</b> Defeat enemies and collect gold drops. Spend gold to buy guns, melee weapons, skins, shields, and upgrades. Fuse any two owned basic guns together or any two owned basic melee weapons together for 1,000 gold. There is no XP.</p><p><b>Loadout:</b> You always have one gun and one melee weapon equipped. Melee also spins around you automatically, and right-click performs a focused swing.</p><p><b>Shields:</b> A shield absorbs damage before your health. If one hit breaks it, any excess damage carries over to your health. A depleted shield fully recharges after 10 seconds.</p><p><b>Enemies:</b> Different enemy types have different behavior. Enemies become tougher as the run progresses and as your equipped gear gets stronger. Every 2.5 minutes, enemies evolve and their threat-rated gold rewards rise.</p><p><b>Bosses:</b> Each regular enemy type has a matching boss variant. World bosses arrive at random intervals and pay more gold. Pay 100,000 gold once to permanently unlock the Secret Shop.</p><p><b>Survive:</b> Collect green healing drops, shoot gold chests to open them, your progress autosaves in this browser; try to beat your high score.</p><div style="text-align:right"><button class="action" id="closeRulesBtn">Got it!</button></div></div></div>
 <div class="overlay" id="overlay"><div class="modal"><h2 id="modalTitle">GAME OVER</h2><p id="finalscore"></p><p id="modalHint">Ready to try for a new record?</p><button class="action" id="restart">Play Again</button><button class="action" id="resumeBtn" style="display:none;background:#267b5a">Resume</button></div></div>
 <script>
 (()=> {
@@ -188,6 +188,7 @@ let levels={guns:{},melee:{},skins:{},shields:{}},shieldHp=70,shieldCooldown=0;
 let bestScore=Number(localStorage.getItem('monsterMayhemBest')||0),highScores=[];try{highScores=JSON.parse(localStorage.getItem('monsterMayhemHighScores')||'[]')}catch(e){highScores=[]}let bossesDefeated=0,healLoot=[],evolutionTier=0,eventT=75+Math.random()*35,autoSaveT=3,invulnUntil=0,worldBossT=55+Math.random()*35;
 const fusionRecipes=[{id:'storm',name:'Storm SMG',a:'SMG',b:'Dual Pistols',unlockCost:1800,craftCost:1200,weapon:{name:'Storm SMG',dmg:15,rate:62,speed:900,count:2,spread:.09,cost:0,desc:'Fused rapid-fire twin-bolt weapon.'}},{id:'void',name:'Void Cannon',a:'Revolver',b:'Shotgun',unlockCost:6500,craftCost:4200,weapon:{name:'Void Cannon',dmg:95,rate:390,speed:850,count:5,spread:.22,cost:0,desc:'Fused heavy spread cannon.'}},{id:'titan',name:'Titan MK',a:'Minigun',b:'Laser Gun',unlockCost:24000,craftCost:16000,weapon:{name:'Titan MK',dmg:43,rate:48,speed:1050,count:2,spread:.035,cost:0,desc:'Ultimate fused rotary energy weapon.'}}];
 let unlockedRecipes=new Set();try{unlockedRecipes=new Set(JSON.parse(localStorage.getItem('monsterMayhemFusionRecipes')||'[]'))}catch(e){unlockedRecipes=new Set()}
+let secretShopUnlocked=localStorage.getItem('monsterMayhemSecretShopUnlocked')==='true';
 let activeTab='guns',gold=0,score=0,hp=100,maxHp=100,px=0,py=0,bullets=[],enemyBullets=[],enemies=[],loot=[],chests=[],keys=new Set(),mouse={x:W/2,y:H/2,down:false},gameOver=false,paused=false,last=performance.now(),spawnT=0,chestT=0,bossT=0,shootT=0,meleeT=0,swingAnim=0,weaponMode='gun',playerMoving=false,gameTime=0,playerBladeAngle=0,playerDisruptUntil=0;
 function say(s){$('notice').textContent=s}
 function currentList(tab){if(tab==='guns')return guns.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret);if(tab==='melee')return melee.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret);if(tab==='secret')return secretWeapons;if(tab==='shields')return shields;return skins}
@@ -208,36 +209,225 @@ function renderUpgrades(root){
 }
 function buyOrEquip(tab,i){
  const list=currentList(tab),item=list[i],actual=item._index??i;
- if(tab==='secret'&&score<10000&&bossesDefeated<4){say('Secret Shop locked! Reach 10,000 score OR defeat 4 bosses.');return}
+ if(tab==='secret'&&!secretShopUnlocked){say('Secret Shop locked! Pay 100,000 gold to unlock it.');return}
+ if(item.fused&&!isUnlocked(tab,actual)){say('Fused weapons can only be crafted at the Fusion station.');return}
  if(isUnlocked(tab,tab==='guns'||tab==='melee'?actual:i)){select(tab,i);return}
  if(gold<item.cost){say('Not enough gold for '+item.name+'. Need '+(item.cost-gold)+' more gold.');return}
  gold-=item.cost;unlocked[tab].add(tab==='guns'||tab==='melee'?actual:i);
- if(tab==='secret'){if(item.kind==='gun'){item.secret=true;guns.push({...item,secret:true});equipped.guns=guns.length-1;}else{item.secret=true;melee.push({...item,secret:true});equipped.melee=melee.length-1;}}else if(tab==='guns'||tab==='melee'){const actual=list[i]._index??i;unlocked[tab].add(actual);equipped[tab]=actual;}else if(tab==='shields'){equipped.shields=i;shieldHp=shieldMax();shieldCooldown=0;}else equipped.skins=i;
+ if(tab==='secret'){if(item.kind==='gun'){item.secret=true;const existing=guns.findIndex(g=>g.name===item.name);if(existing<0)guns.push({...item,secret:true});equipped.guns=existing>=0?existing:guns.length-1;}else{item.secret=true;const existing=melee.findIndex(m=>m.name===item.name);if(existing<0)melee.push({...item,secret:true});equipped.melee=existing>=0?existing:melee.length-1;}}else if(tab==='guns'||tab==='melee'){equipped[tab]=actual;}else if(tab==='shields'){equipped.shields=i;shieldHp=shieldMax();shieldCooldown=0;}else equipped.skins=i;
  say('Purchased '+item.name+' for '+item.cost+' gold!');updateHUD();renderShop();
 }
+function sellWeapon(tab,i){
+ const list=currentList(tab),item=list[i],actual=item?._index??i;
+ if(!item||!['guns','melee','secret'].includes(tab))return;
+ if(item.cost<=0){say('Your free starter weapon stays in your loadout.');return}
+ if(gold<0)return;
+ const salePrice=Number(item.cost)||0;
+ if(tab==='secret'){
+   if(item.kind==='gun'){
+     const idx=guns.findIndex(g=>g.name===item.name&&g.secret);
+     if(idx>=0&&equipped.guns===idx)equipped.guns=0;
+   }else{
+     const idx=melee.findIndex(m=>m.name===item.name&&m.secret);
+     if(idx>=0&&equipped.melee===idx)equipped.melee=0;
+   }
+   unlocked.secret.delete(i);
+ }else if(tab==='guns'){
+   if(equipped.guns===actual)equipped.guns=0;
+   unlocked.guns.delete(actual);
+ }else{
+   if(equipped.melee===actual)equipped.melee=0;
+   unlocked.melee.delete(actual);
+ }
+ gold+=salePrice;say('Sold '+item.name+' for its original purchase price: '+salePrice+' gold.');updateHUD();renderShop();
+}
+function ownedBasicWeapons(kind){
+ const arr=kind==='guns'?guns:melee,owned=kind==='guns'?unlocked.guns:unlocked.melee,secretKind=kind==='guns'?'gun':'melee',out=[];
+ arr.forEach((item,index)=>{
+   if(item.fused||item.secret)return;
+   if(owned.has(index))out.push({item,index,secretIndex:-1,label:item.name+' · '+item.dmg+' dmg'});
+ });
+ arr.forEach((item,index)=>{
+   if(!item.secret||item.fused)return;
+   const secretIndex=secretWeapons.findIndex(w=>w.kind===secretKind&&w.name===item.name);
+   if(secretIndex>=0&&unlocked.secret.has(secretIndex))out.push({item,index,secretIndex,label:'🌌 '+item.name+' · '+item.dmg+' dmg'});
+ });
+ return out;
+}
+let fusionA = null;
+let fusionB = null;
+
 function renderFusion(root){
- const intro=document.createElement('div');intro.className='notice';intro.textContent='⚗️ Unlock a recipe permanently, then pay its crafting cost each run. Crafted weapons are added to your arsenal for this run.';root.append(intro);
- fusionRecipes.forEach(r=>{const card=document.createElement('div');card.className='item';const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent='⚗️ '+r.name;desc.className='desc';desc.textContent=r.a+' + '+r.b+' → '+r.name+' · '+r.weapon.desc;price.className='price';price.textContent=unlockedRecipes.has(r.id)?'Recipe permanently unlocked · Craft: '+r.craftCost+' gold':'Unlock recipe: '+r.unlockCost+' gold';info.append(name,desc,price);const btn=document.createElement('button');btn.className='action';btn.textContent=unlockedRecipes.has(r.id)?'CRAFT':'UNLOCK RECIPE';btn.disabled=gold<(unlockedRecipes.has(r.id)?r.craftCost:r.unlockCost);btn.addEventListener('click',()=>{if(!unlockedRecipes.has(r.id)){if(gold<r.unlockCost)return;gold-=r.unlockCost;unlockedRecipes.add(r.id);localStorage.setItem('monsterMayhemFusionRecipes',JSON.stringify([...unlockedRecipes]));say('Recipe unlocked permanently: '+r.name+'!');}else{if(gold<r.craftCost)return;gold-=r.craftCost;let idx=guns.findIndex(g=>g.name===r.name);if(idx<0){guns.push({...r.weapon});idx=guns.length-1;}unlocked.guns.add(idx);equipped.guns=idx;say('CRAFTED '+r.name+'! Weapon equipped.');}updateHUD();renderShop()});card.append(info,btn);root.append(card)});
+  const intro = document.createElement('div');
+  intro.className = 'notice';
+  intro.textContent ='⚗️ Choose two owned guns or two owned melee weapons. Fusion costs 1,000 gold.';root.append(intro);
+  const ownedGuns = [...unlocked.guns].filter(i => guns[i]).map(i => ({ kind: 'guns', index: i, item: guns[i] })).filter(x => x.item);
+  const ownedMelee = [...unlocked.melee].map(i => ({ kind: 'melee', index: i, item: melee[i] })).filter(x => x.item);
+  const owned = [...ownedGuns, ...ownedMelee];
+  function makeSelector(label, value, onChange){
+  const wrap = document.createElement('div');
+  wrap.className = 'item';
+  const info = document.createElement('div');
+  const name = document.createElement('div');
+  name.className = 'itemname';
+  name.textContent = label;
+  const select = document.createElement('select');
+  select.style.cssText =
+  'width:100%;margin-top:8px;padding:8px;background:#0a1120;color:white;border:1px solid #2b3b5e;border-radius:8px';
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = 'Choose a weapon...';
+  select.append(placeholder);
+  owned.forEach(w => {
+  const option = document.createElement('option');
+  option.value = w.kind + ':' + w.index;
+  option.textContent=(w.kind === 'guns' ? '🔫 ' : '🗡️ ') + w.item.name;
+  select.append(option);});
+  select.value = value || '';
+  select.addEventListener('change', () => onChange(select.value));
+  info.append(name, select);
+  wrap.append(info);
+  return wrap;
+    }
+    const first=makeSelector('Weapon A', fusionA, value => {
+        fusionA = value || null;
+        renderShop();
+    });
+    const second=makeSelector('Weapon B', fusionB, value => {
+        fusionB = value || null;
+        renderShop();
+    });
+    root.append(first, second);
+    const btn = document.createElement('button');
+    btn.className = 'action';
+    btn.textContent = '⚗️ FUSE — 1,000 GOLD';
+    const valid = (() => {
+        if (!fusionA || !fusionB || fusionA === fusionB) return false;
+        const [kindA] = fusionA.split(':');
+        const [kindB] = fusionB.split(':');
+        return kindA === kindB && gold >= 1000;
+    })();
+    btn.disabled = !valid;
+    btn.addEventListener('click', () => {
+        if(!valid)return;
+        const [kindA, indexA] = fusionA.split(':');
+        const [kindB, indexB] = fusionB.split(':');
+        if(kindA !== kindB || fusionA === fusionB || gold < 1000){
+          say('Choose two different weapons of the same category!');
+          return;
+        }
+        const list = kindA === 'guns' ? guns : melee;
+        const a = list[Number(indexA)];
+        const b = list[Number(indexB)];
+        if(!a || !b || a === b){
+            say('Invalid weapon combination!');
+            return;
+        }
+        gold -= 1000;
+        const fusedName = a.name + ' + ' + b.name + ' Fusion';
+        if(kindA === 'guns'){
+            const newWeapon={
+                name: fusedName,
+                dmg: Math.round((a.dmg + b.dmg) * 0.8),
+                rate: Math.round((a.rate + b.rate) / 2),
+                speed: Math.round(((a.speed || 800) + (b.speed || 800)) / 2),
+                count: Math.max(1, Math.round(((a.count || 1) + (b.count || 1)) / 2)),
+                spread: ((a.spread || 0) + (b.spread || 0)) / 2,
+                cost: 1000,
+                desc: 'Fused from ' + a.name + ' and ' + b.name + '.'
+            };
+            guns.push(newWeapon);
+            const index = guns.length - 1;
+            unlocked.guns.add(index);
+            equipped.guns = index;
+        }
+        else{
+            const newWeapon={
+                name: fusedName,
+                dmg: Math.round((a.dmg + b.dmg) * 0.8),
+                rate: Math.round((a.rate + b.rate) / 2),
+                range: Math.round((a.range + b.range) / 2),
+                cost: 1000,
+                desc: 'Fused from ' + a.name + ' and ' + b.name + '.'
+            };
+            melee.push(newWeapon);
+            const index = melee.length - 1;
+            unlocked.melee.add(index);
+            equipped.melee = index;
+        }
+        fusionA = null;
+        fusionB = null;
+        say('⚗️ FUSION COMPLETE! Created ' + fusedName + '!');
+        updateHUD();
+        renderShop();
+        saveProgress(true);
+    });
+
+    root.append(btn);
+    const fusedOwned = [];
+    guns.forEach((item, index) => {if(item.fused && unlocked.guns.has(index)){fusedOwned.push({ kind: 'guns', item, index });}});
+    melee.forEach((item, index) => {if(item.fused && unlocked.melee.has(index)){fusedOwned.push({ kind: 'melee', item, index });}});
+    if(fusedOwned.length){
+        const heading = document.createElement('div');
+        heading.className='notice';
+        heading.textContent='🪙 Your fused weapons · sell for their original 1,000-gold fusion cost';
+        root.append(heading);
+        fusedOwned.forEach(entry => {
+            const card = document.createElement('div');
+            card.className = 'item';
+            const info = document.createElement('div');
+            const name = document.createElement('div');
+            const desc = document.createElement('div');
+            const price = document.createElement('div');
+            name.className = 'itemname';
+            name.textContent=(entry.kind === 'guns' ? '🔫 ' : '🗡️ ') + entry.item.name;
+            desc.className = 'desc';
+            desc.textContent = entry.item.desc;
+            price.className = 'price';
+            price.textContent = 'Sell price: ' + entry.item.cost + ' gold';
+            info.append(name, desc, price);
+            const btn = document.createElement('button');
+            btn.className = 'action sell';
+            btn.textContent = 'SELL · ' + entry.item.cost;
+            btn.addEventListener('click', () => {
+                const owned = entry.kind === 'guns' ? unlocked.guns : unlocked.melee;
+                if(!owned.has(entry.index)){return;}
+                owned.delete(entry.index);
+                if(entry.kind === 'guns' && equipped.guns === entry.index) {equipped.guns = 0;}
+                if(entry.kind === 'melee' && equipped.melee === entry.index) {equipped.melee = 0;}
+                gold += entry.item.cost;
+                say('Sold ' + entry.item.name + ' for its original fusion cost: ' + entry.item.cost + ' gold.');
+                updateHUD();
+                renderShop();
+                saveProgress(true);
+            });
+            card.append(info, btn);
+            root.append(card);
+        });
+    }
 }
 function renderShop(){
  const list=currentList(activeTab),root=$('items');root.innerHTML='';if(activeTab==='upgrades'){renderUpgrades(root);return}if(activeTab==='fusion'){renderFusion(root);return}
- if(activeTab==='secret'&&score<10000&&bossesDefeated<4){const locked=document.createElement('div');locked.className='notice';locked.textContent='🔒 SECRET SHOP LOCKED — reach 10,000 score OR defeat 4 bosses.';root.append(locked);}
+ if(activeTab==='secret'&&!secretShopUnlocked){
+   const locked=document.createElement('div');locked.className='item';locked.style.gridTemplateColumns='minmax(0,1fr)';
+   const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent='🔒 Secret Shop Locked';desc.className='desc';desc.textContent='Pay once to permanently unlock the Secret Shop and access its cosmic arsenal.';price.className='price';price.textContent='Unlock fee: 100,000 gold · Your gold: '+Math.floor(gold);info.append(name,desc,price);
+   const btn=document.createElement('button');btn.className='action';btn.textContent='PAY 100,000 GOLD';btn.disabled=gold<100000;btn.addEventListener('click',()=>{if(secretShopUnlocked)return;if(gold<100000){say('You need '+(100000-gold)+' more gold to unlock the Secret Shop.');return}gold-=100000;secretShopUnlocked=true;localStorage.setItem('monsterMayhemSecretShopUnlocked','true');say('🔓 SECRET SHOP PERMANENTLY UNLOCKED!');updateHUD();renderShop()});locked.append(info,btn);root.append(locked);return;
+ }
  list.forEach((it,i)=>{
-  const actual=it._index??i;const unlockedNow=isUnlocked(activeTab,i)||(activeTab==='guns'||activeTab==='melee')&&isUnlocked(activeTab,actual),equippedNow=unlockedNow&&(activeTab==='guns'?equipped.guns===actual:activeTab==='melee'?equipped.melee===actual:activeTab==='skins'?equipped.skins===i:activeTab==='shields'?equipped.shields===i:false);
-  if(activeTab==='secret'&&score<10000&&bossesDefeated<4)return;
+  const actual=it._index??i;const unlockedNow=isUnlocked(activeTab,activeTab==='guns'||activeTab==='melee'?actual:i),equippedNow=unlockedNow&&(activeTab==='guns'?equipped.guns===actual:activeTab==='melee'?equipped.melee===actual:activeTab==='skins'?equipped.skins===i:activeTab==='shields'?equipped.shields===i:activeTab==='secret'?(it.kind==='gun'?equipped.guns===guns.findIndex(g=>g.name===it.name&&g.secret):equipped.melee===melee.findIndex(m=>m.name===it.name&&m.secret)):false);
   const card=document.createElement('div');card.className='item'+(equippedNow?' selected':'');
   const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');
   name.className='itemname';name.textContent=(activeTab==='guns'?'🔫 ':activeTab==='melee'?'🗡️ ':activeTab==='shields'?'🛡️ ':activeTab==='secret'?(it.kind==='gun'?'🌌 ':'☄️ '):'✨ ')+it.name;
   desc.className='desc';desc.textContent=it.desc;
-  price.className='price';price.textContent=it.cost===0?'FREE':(unlockedNow?'UNLOCKED':'🪙 '+it.cost+' gold');
+  price.className='price';price.textContent=it.cost===0?'FREE':(unlockedNow?(['guns','melee','secret'].includes(activeTab)?'OWNED · Sell for '+it.cost+' gold':'UNLOCKED'):'🪙 '+it.cost+' gold');
   info.append(name,desc,price);
-  const btn=document.createElement('button');btn.className='action';
+  const actions=document.createElement('div');actions.className='actiongroup';const btn=document.createElement('button');btn.className='action';
   if(equippedNow){btn.textContent='EQUIPPED';btn.classList.add('equipped');btn.disabled=true}
   else if(unlockedNow){btn.textContent='EQUIP';btn.classList.add('equip')}
   else btn.textContent='BUY';
-  // Use a direct click handler on each newly-rendered button.
-  btn.addEventListener('click',()=>buyOrEquip(activeTab,i));
-  card.append(info,btn);root.append(card);
+  btn.addEventListener('click',()=>buyOrEquip(activeTab,i));actions.append(btn);
+  if(unlockedNow&&['guns','melee','secret'].includes(activeTab)&&it.cost>0){const sell=document.createElement('button');sell.className='action sell';sell.textContent='SELL · '+it.cost;sell.title='Sell for exactly the original purchase price';sell.addEventListener('click',()=>sellWeapon(activeTab,i));actions.append(sell)}
+  card.append(info,actions);root.append(card);
  });
 }
 document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
@@ -293,7 +483,7 @@ function drop(e){
  score+=Math.max(1,Math.round(e.value/(e.isBoss?1.5:1)));
  const threatReward=Math.max(5,Math.round(e.value*(1+evolutionTier*.18)));
  if(e.behavior==='split'&&!e.splitDone){for(let i=0;i<2;i++)enemies.push({x:e.x+(Math.random()-.5)*30,y:e.y+(Math.random()-.5)*30,type:'swarmling',baseType:'swarmling',hp:enemyDefs.swarmling.hp,max:enemyDefs.swarmling.hp,speed:enemyDefs.swarmling.speed,dmg:enemyDefs.swarmling.dmg,r:enemyDefs.swarmling.r,value:enemyDefs.swarmling.value,weapon:'none',behavior:'chase',shotT:1,lastBladeHit:-10,lastPlayerBladeHit:-10,isBoss:false,regenT:1,summonT:5,dashT:1,splitDone:true})}
- if(e.isBoss){bossesDefeated++;say('Boss defeated! '+bossesDefeated+'/4 bosses toward the Secret Shop.');if(score>=10000||bossesDefeated>=4){activeTab='secret';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab==='secret'));say('SECRET SHOP UNLOCKED!');}renderShop()}
+ if(e.isBoss){bossesDefeated++;say('Boss defeated! '+bossesDefeated+' defeated so far.');renderShop()}
  if(equipped.skins===11)hp=Math.min(maxHp,hp+2);loot.push({x:e.x,y:e.y,v:threatReward,r:8,type:'gold'});if(Math.random()<.22)healLoot.push({x:e.x+12,y:e.y-8,v:18+Math.floor(Math.random()*18),r:9});
 }
 function fire(){
@@ -392,11 +582,11 @@ if(worldBossT<=0){worldBossT=70+Math.random()*65;spawnWorldBoss();say('🌋 WORL
  loot=loot.filter(l=>{if(Math.hypot(px-l.x,py-l.y)<pickup){gold+=l.v;return false}return true});
  healLoot=healLoot.filter(l=>{if(Math.hypot(px-l.x,py-l.y)<30){hp=Math.min(maxHp,hp+l.v);say('Picked up a green heal: +'+l.v+' HP!');return false}return true});
  if(hp<=0){hp=0;gameOver=true;highScores.push({score:Math.floor(score),gold:Math.floor(gold),date:new Date().toLocaleDateString()});highScores.sort((a,b)=>b.score-a.score);highScores=highScores.slice(0,10);localStorage.setItem('monsterMayhemHighScores',JSON.stringify(highScores));$('finalscore').textContent='Final score: '+Math.floor(score)+' · Gold collected: '+Math.floor(gold)+'\n\n🏆 LOCAL TOP SCORES\n'+highScores.slice(0,5).map((r,i)=>(i+1)+'. '+r.score+' points · '+r.date).join('\n');$('overlay').style.display='flex'}
- if(score>=10000||bossesDefeated>=4){if(activeTab==='secret')renderShop()}updateHUD();
+ if(activeTab==='secret')renderShop();updateHUD();
 }
 function loop(t){const dt=Math.min(.033,(t-last)/1000);last=t;update(dt);draw();if(paused){ctx.fillStyle='#020617b8';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font='bold 52px system-ui';ctx.fillText('PAUSED',W/2,H/2);ctx.font='18px system-ui';ctx.fillText('Your run saves automatically · press Resume to continue',W/2,H/2+38);ctx.textAlign='left'}requestAnimationFrame(loop)}
 function saveProgress(silent=false){
- const data={gold,score,levels,shieldHp,shieldCooldown,hp,maxHp,px,py,bullets,enemyBullets,enemies,loot,healLoot,chests,spawnT,chestT,bossT,gameTime,bossesDefeated,evolutionTier,eventT,worldBossT,invulnUntil,guns,melee,unlockedRecipes:[...unlockedRecipes],unlocked:{guns:[...unlocked.guns],melee:[...unlocked.melee],skins:[...unlocked.skins],shields:[...unlocked.shields],secret:[...unlocked.secret]},equipped,weaponMode};
+ const data={gold,score,levels,shieldHp,shieldCooldown,hp,maxHp,px,py,bullets,enemyBullets,enemies,loot,healLoot,chests,spawnT,chestT,bossT,gameTime,bossesDefeated,evolutionTier,eventT,worldBossT,invulnUntil,guns,melee,unlockedRecipes:[...unlockedRecipes],unlocked:{guns:[...unlocked.guns],melee:[...unlocked.melee],skins:[...unlocked.skins],shields:[...unlocked.shields],secret:[...unlocked.secret]},equipped,weaponMode,secretShopUnlocked};
  try{localStorage.setItem('monsterMayhemGoldEditionSaveV1',JSON.stringify(data));if(!silent)say('Progress saved automatically in this browser!');return true}catch(err){if(!silent)say('Could not save progress in this browser.');return false}
 }
 function loadProgress(){
@@ -406,7 +596,7 @@ function loadProgress(){
  // Restore the full arsenal too, including fusion weapons crafted during this run.
  if(Array.isArray(d.guns))guns.splice(0,guns.length,...d.guns);
  if(Array.isArray(d.melee))melee.splice(0,melee.length,...d.melee);
- gold=d.gold;score=d.score;evolutionTier=d.evolutionTier||0;eventT=d.eventT??75;worldBossT=d.worldBossT??70;invulnUntil=d.invulnUntil||0;if(d.unlockedRecipes){unlockedRecipes=new Set(d.unlockedRecipes);localStorage.setItem('monsterMayhemFusionRecipes',JSON.stringify([...unlockedRecipes]))}levels=d.levels||{guns:{},melee:{},skins:{},shields:{}};shieldHp=d.shieldHp??(shields[0].hp);shieldCooldown=d.shieldCooldown||0;hp=d.hp;maxHp=d.maxHp;px=d.px;py=d.py;bullets=d.bullets||[];enemyBullets=d.enemyBullets||[];enemies=d.enemies||[];loot=d.loot||[];healLoot=d.healLoot||[];chests=d.chests||[];spawnT=d.spawnT||0;chestT=d.chestT||0;bossT=d.bossT||0;gameTime=d.gameTime||0;weaponMode=d.weaponMode||'gun';bossesDefeated=d.bossesDefeated||0;
+ gold=d.gold;score=d.score;if(d.secretShopUnlocked===true){secretShopUnlocked=true;localStorage.setItem('monsterMayhemSecretShopUnlocked','true')}evolutionTier=d.evolutionTier||0;eventT=d.eventT??75;worldBossT=d.worldBossT??70;invulnUntil=d.invulnUntil||0;if(d.unlockedRecipes){unlockedRecipes=new Set(d.unlockedRecipes);localStorage.setItem('monsterMayhemFusionRecipes',JSON.stringify([...unlockedRecipes]))}levels=d.levels||{guns:{},melee:{},skins:{},shields:{}};shieldHp=d.shieldHp??(shields[0].hp);shieldCooldown=d.shieldCooldown||0;hp=d.hp;maxHp=d.maxHp;px=d.px;py=d.py;bullets=d.bullets||[];enemyBullets=d.enemyBullets||[];enemies=d.enemies||[];loot=d.loot||[];healLoot=d.healLoot||[];chests=d.chests||[];spawnT=d.spawnT||0;chestT=d.chestT||0;bossT=d.bossT||0;gameTime=d.gameTime||0;weaponMode=d.weaponMode||'gun';bossesDefeated=d.bossesDefeated||0;
  if(d.unlocked){unlocked={guns:new Set(d.unlocked.guns||[0]),melee:new Set(d.unlocked.melee||[0]),skins:new Set(d.unlocked.skins||[0]),shields:new Set(d.unlocked.shields||[0]),secret:new Set(d.unlocked.secret||[])};for(const i of unlocked.secret){const w=secretWeapons[i];if(!w)continue;if(w.kind==='gun'&&!guns.some(g=>g.name===w.name))guns.push({...w,secret:true});if(w.kind==='melee'&&!melee.some(m=>m.name===w.name))melee.push({...w,secret:true});}}if(d.equipped)equipped={guns:0,melee:0,skins:0,shields:0,...d.equipped};if(!unlocked.shields.has(equipped.shields||0))unlocked.shields.add(equipped.shields||0);shieldHp=Math.min(shieldHp,shieldMax());
  gameOver=false;paused=false;$('overlay').style.display='none';$('pauseBtn').textContent='⏸ Pause';updateHUD();renderShop();say('Saved run loaded!');return true
  }catch(err){say('Save file could not be loaded.');return false}
@@ -422,9 +612,10 @@ function reset(){
  const fusedNames=new Set(fusionRecipes.map(r=>r.name));
  const previousGuns=guns.map((gun,index)=>({gun,index}));
  const previousEquippedGun=equipped.guns;
- const keptGuns=previousGuns.filter(entry=>!fusedNames.has(entry.gun.name));
+ const keptGuns=previousGuns.filter(entry=>!entry.gun.fused&&!fusedNames.has(entry.gun.name));
  const remap=new Map();keptGuns.forEach((entry,newIndex)=>remap.set(entry.index,newIndex));
  guns.splice(0,guns.length,...keptGuns.map(entry=>entry.gun));
+ const previousMelee=melee.map((weapon,index)=>({weapon,index}));const previousEquippedMelee=equipped.melee;const keptMelee=previousMelee.filter(entry=>!entry.weapon.fused);const meleeRemap=new Map();keptMelee.forEach((entry,newIndex)=>meleeRemap.set(entry.index,newIndex));melee.splice(0,melee.length,...keptMelee.map(entry=>entry.weapon));unlocked.melee=new Set([...unlocked.melee].filter(index=>meleeRemap.has(index)).map(index=>meleeRemap.get(index)));equipped.melee=meleeRemap.has(previousEquippedMelee)?meleeRemap.get(previousEquippedMelee):0;
  unlocked.guns=new Set([...unlocked.guns].filter(index=>remap.has(index)).map(index=>remap.get(index)));
  equipped.guns=remap.has(previousEquippedGun)?remap.get(previousEquippedGun):0;
  gold=0;score=0;playerDisruptUntil=0;hp=maxHp=100;shieldHp=shieldMax();shieldCooldown=0;px=py=0;bullets=[];enemyBullets=[];enemies=[];loot=[];healLoot=[];chests=[];gameOver=false;paused=false;gameTime=0;playerBladeAngle=0;bossesDefeated=0;spawnT=.5;chestT=4;bossT=25;worldBossT=55+Math.random()*35;eventT=75+Math.random()*35;autoSaveT=3;invulnUntil=0;evolutionTier=0;weaponMode='gun';swingAnim=0;$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';$('pauseBtn').textContent='⏸ Pause';last=performance.now();updateHUD()}
