@@ -202,7 +202,7 @@ let bestScore=Number(safeStorage.getItem('monsterMayhemBest')||0),highScores=[];
 let secretShopUnlocked=safeStorage.getItem('monsterMayhemSecretShopUnlocked')==='true';
 let activeTab='guns',gold=0,score=0,hp=100,maxHp=100,px=0,py=0,bullets=[],enemyBullets=[],enemies=[],loot=[],chests=[],keys=new Set(),mouse={x:W/2,y:H/2,down:false},gameOver=false,paused=false,last=performance.now(),spawnT=0,chestT=0,bossT=0,shootT=0,meleeT=0,swingAnim=0,weaponMode='gun',playerMoving=false,gameTime=0,playerBladeAngle=0,playerDisruptUntil=0,fusionSerial=1,fusionCategory='guns';
 function say(s){$('notice').textContent=s}
-function currentList(tab){if(tab==='guns')return guns.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused);if(tab==='melee')return melee.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused);if(tab==='secret')return secretWeapons;if(tab==='shields')return shields.map((x,i)=>({...x,_index:i})).filter(x=>!x.fused);if(tab==='skins')return skins.map((x,i)=>({...x,_index:i})).filter(x=>!x.fused);return skins}
+function currentList(tab){const byPrice=(a,b)=>a.cost-b.cost;if(tab==='guns')return guns.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused).sort(byPrice);if(tab==='melee')return melee.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused).sort(byPrice);if(tab==='secret')return secretWeapons;if(tab==='shields')return shields.map((x,i)=>({...x,_index:i})).filter(x=>!x.fused).sort(byPrice);if(tab==='skins')return skins.map((x,i)=>({...x,_index:i})).filter(x=>!x.fused).sort(byPrice);return skins}
 function itemLabel(tab,i){return currentList(tab)[i].name}
 function isUnlocked(tab,i){return (unlocked[tab]||new Set()).has(i)}
 function select(tab,i){
