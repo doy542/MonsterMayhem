@@ -33,19 +33,20 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 <main>
 <section class="gamewrap">
 <canvas id="game" width="1100" height="700"></canvas>
-<div class="gamecontrols"><button id="pauseBtn">⏸ Pause</button><button id="newBtn">↻ New Run</button><button id="rulesBtn">📖 Rules</button></div><div class="help">Move: <b>WASD / Arrow keys</b> · Aim: <b>Mouse</b> · Fire: <b>Left click / Space</b> · Switch gun/melee: <b>Q</b> · Secret Shop: <b>pay 100,000 gold to unlock</b><br>Your melee weapon circles you automatically; right-click for a focused swing. Fuse any two owned basic weapons of the same type for 1,000 gold. Enemies evolve every 2.5 minutes; world bosses and helpful run events appear randomly. Your run autosaves.</div>
+<div class="gamecontrols"><button id="pauseBtn">⏸ Pause</button><button id="newBtn">↻ New Run</button><button id="rulesBtn">📖 Rules</button></div><div class="help">Move: <b>WASD / Arrow keys</b> · Aim: <b>Mouse</b> · Fire: <b>Left click / Space</b> · Switch gun/melee: <b>Q</b> · Secret Shop: <b>pay 100,000 gold to unlock</b><br>Your melee weapon circles you automatically; right-click for a focused swing. Fuse two different owned basic guns or two different owned basic melee weapons for 1,000 gold; both originals are consumed. Enemies evolve every 2.5 minutes; world bosses and helpful run events appear randomly. Your gold, arsenal, merged weapons, and upgrades autosave, including after death.</div>
 </section>
 <aside class="shop">
 <div class="shophead"><h2>🛒 Arsenal & Skins</h2><p>Purchase once, then equip whenever you want. Your gold is only charged on a successful purchase.</p>
-<div class="tabs"><button class="tab active" data-tab="guns">🔫 Guns</button><button class="tab" data-tab="melee">🗡️ Melee</button><button class="tab" data-tab="skins">✨ Skins</button><button class="tab" data-tab="shields">🛡️ Shields</button><button class="tab" data-tab="upgrades">⬆️ Upgrades</button><button class="tab" data-tab="fusion">⚗️ Fusion</button><button class="tab" data-tab="secret">🔒 Secret Shop</button></div>
+<div class="tabs"><button class="tab active" data-tab="guns">🔫 Guns</button><button class="tab" data-tab="melee">🗡️ Melee</button><button class="tab" data-tab="skins">✨ Skins</button><button class="tab" data-tab="shields">🛡️ Shields</button><button class="tab" data-tab="upgrades">⬆️ Upgrades</button><button class="tab" data-tab="fusion">⚗️ Fusion Station</button><button class="tab" data-tab="merged">🧬 Merged</button><button class="tab" data-tab="secret">🔒 Secret Shop</button></div>
 </div>
 <div class="items" id="items"></div><div class="notice" id="notice" role="status">Welcome! Pistol and Normal skin are unlocked.</div>
 </aside>
 </main>
-<div class="overlay" id="rulesOverlay" style="z-index:8"><div class="modal" style="max-width:680px;text-align:left;max-height:85vh;overflow:auto"><h2 style="font-size:28px">📖 HOW TO PLAY</h2><p><b>Movement:</b> WASD or arrow keys. <b>Aim:</b> Mouse. <b>Shoot:</b> Left-click or Space. <b>Focused melee swing:</b> Right-click. <b>Switch focus:</b> Q.</p><p><b>One currency: GOLD.</b> Defeat enemies and collect gold drops. Spend gold to buy guns, melee weapons, skins, shields, and upgrades. Fuse any two owned basic guns together or any two owned basic melee weapons together for 1,000 gold. There is no XP.</p><p><b>Loadout:</b> You always have one gun and one melee weapon equipped. Melee also spins around you automatically, and right-click performs a focused swing.</p><p><b>Shields:</b> A shield absorbs damage before your health. If one hit breaks it, any excess damage carries over to your health. A depleted shield fully recharges after 10 seconds.</p><p><b>Enemies:</b> Different enemy types have different behavior. Enemies become tougher as the run progresses and as your equipped gear gets stronger. Every 2.5 minutes, enemies evolve and their threat-rated gold rewards rise.</p><p><b>Bosses:</b> Each regular enemy type has a matching boss variant. World bosses arrive at random intervals and pay more gold. Pay 100,000 gold once to permanently unlock the Secret Shop.</p><p><b>Survive:</b> Collect green healing drops, shoot gold chests to open them, your progress autosaves in this browser; try to beat your high score.</p><div style="text-align:right"><button class="action" id="closeRulesBtn">Got it!</button></div></div></div>
+<div class="overlay" id="rulesOverlay" style="z-index:8"><div class="modal" style="max-width:680px;text-align:left;max-height:85vh;overflow:auto"><h2 style="font-size:28px">📖 HOW TO PLAY</h2><p><b>Movement:</b> WASD or arrow keys. <b>Aim:</b> Mouse. <b>Shoot:</b> Left-click or Space. <b>Focused melee swing:</b> Right-click. <b>Switch focus:</b> Q.</p><p><b>One currency: GOLD.</b> Defeat enemies and collect gold drops. Spend gold to buy guns, melee weapons, skins, shields, and upgrades. Fuse any two different owned basic guns or any two different owned basic melee weapons together for 1,000 gold. Fused weapons have fixed recipes and merged attack patterns based on their weapon stats, are saved, and can be sold for 1,000 gold plus both original weapon prices. There is no XP.</p><p><b>Loadout:</b> You always have one gun and one melee weapon equipped. Melee also spins around you automatically, and right-click performs a focused swing.</p><p><b>Shields:</b> A shield absorbs damage before your health. If one hit breaks it, any excess damage carries over to your health. A depleted shield fully recharges after 10 seconds.</p><p><b>Enemies:</b> Different enemy types have different behavior. Enemies become tougher as the run progresses and as your equipped gear gets stronger. Every 2.5 minutes, enemies evolve and their threat-rated gold rewards rise.</p><p><b>Bosses:</b> Each regular enemy type has a matching boss variant. World bosses arrive at random intervals and pay more gold. Pay 100,000 gold once to permanently unlock the Secret Shop.</p><p><b>Survive:</b> Collect green healing drops, shoot gold chests to open them, your progress autosaves in this browser, and your gold, arsenal, merged weapons, and upgrades are kept after death; try to beat your high score.</p><div style="text-align:right"><button class="action" id="closeRulesBtn">Got it!</button></div></div></div>
 <div class="overlay" id="overlay"><div class="modal"><h2 id="modalTitle">GAME OVER</h2><p id="finalscore"></p><p id="modalHint">Ready to try for a new record?</p><button class="action" id="restart">Play Again</button><button class="action" id="resumeBtn" style="display:none;background:#267b5a">Resume</button></div></div>
 <script>
 (()=> {
+const safeStorage=(()=>{let fallback={};return {getItem(key){try{return window.localStorage.getItem(key)}catch(e){return Object.prototype.hasOwnProperty.call(fallback,key)?fallback[key]:null}},setItem(key,value){try{window.localStorage.setItem(key,String(value))}catch(e){fallback[key]=String(value)}},removeItem(key){try{window.localStorage.removeItem(key)}catch(e){delete fallback[key]}}}})();
 const canvas=document.getElementById('game'),ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
 const $=id=>document.getElementById(id);
 const guns=[
@@ -185,13 +186,11 @@ const shields=[
 const colors=['#e5e7eb','#38bdf8','#facc15','#a78bfa','#22d3ee','#fb7185','#f97316','#94a3b8','#f472b6','#34d399','#c084fc','#fb923c'];
 let unlocked={guns:new Set([0]),melee:new Set([0]),skins:new Set([0]),shields:new Set([0]),secret:new Set()},equipped={guns:0,melee:0,skins:0,shields:0};
 let levels={guns:{},melee:{},skins:{},shields:{}},shieldHp=70,shieldCooldown=0;
-let bestScore=Number(localStorage.getItem('monsterMayhemBest')||0),highScores=[];try{highScores=JSON.parse(localStorage.getItem('monsterMayhemHighScores')||'[]')}catch(e){highScores=[]}let bossesDefeated=0,healLoot=[],evolutionTier=0,eventT=75+Math.random()*35,autoSaveT=3,invulnUntil=0,worldBossT=55+Math.random()*35;
-const fusionRecipes=[{id:'storm',name:'Storm SMG',a:'SMG',b:'Dual Pistols',unlockCost:1800,craftCost:1200,weapon:{name:'Storm SMG',dmg:15,rate:62,speed:900,count:2,spread:.09,cost:0,desc:'Fused rapid-fire twin-bolt weapon.'}},{id:'void',name:'Void Cannon',a:'Revolver',b:'Shotgun',unlockCost:6500,craftCost:4200,weapon:{name:'Void Cannon',dmg:95,rate:390,speed:850,count:5,spread:.22,cost:0,desc:'Fused heavy spread cannon.'}},{id:'titan',name:'Titan MK',a:'Minigun',b:'Laser Gun',unlockCost:24000,craftCost:16000,weapon:{name:'Titan MK',dmg:43,rate:48,speed:1050,count:2,spread:.035,cost:0,desc:'Ultimate fused rotary energy weapon.'}}];
-let unlockedRecipes=new Set();try{unlockedRecipes=new Set(JSON.parse(localStorage.getItem('monsterMayhemFusionRecipes')||'[]'))}catch(e){unlockedRecipes=new Set()}
-let secretShopUnlocked=localStorage.getItem('monsterMayhemSecretShopUnlocked')==='true';
-let activeTab='guns',gold=0,score=0,hp=100,maxHp=100,px=0,py=0,bullets=[],enemyBullets=[],enemies=[],loot=[],chests=[],keys=new Set(),mouse={x:W/2,y:H/2,down:false},gameOver=false,paused=false,last=performance.now(),spawnT=0,chestT=0,bossT=0,shootT=0,meleeT=0,swingAnim=0,weaponMode='gun',playerMoving=false,gameTime=0,playerBladeAngle=0,playerDisruptUntil=0;
+let bestScore=Number(safeStorage.getItem('monsterMayhemBest')||0),highScores=[];try{highScores=JSON.parse(safeStorage.getItem('monsterMayhemHighScores')||'[]')}catch(e){highScores=[]}let bossesDefeated=0,healLoot=[],evolutionTier=0,eventT=75+Math.random()*35,autoSaveT=3,invulnUntil=0,worldBossT=55+Math.random()*35;
+let secretShopUnlocked=safeStorage.getItem('monsterMayhemSecretShopUnlocked')==='true';
+let activeTab='guns',gold=0,score=0,hp=100,maxHp=100,px=0,py=0,bullets=[],enemyBullets=[],enemies=[],loot=[],chests=[],keys=new Set(),mouse={x:W/2,y:H/2,down:false},gameOver=false,paused=false,last=performance.now(),spawnT=0,chestT=0,bossT=0,shootT=0,meleeT=0,swingAnim=0,weaponMode='gun',playerMoving=false,gameTime=0,playerBladeAngle=0,playerDisruptUntil=0,fusionSerial=1,fusionCategory='guns';
 function say(s){$('notice').textContent=s}
-function currentList(tab){if(tab==='guns')return guns.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret);if(tab==='melee')return melee.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret);if(tab==='secret')return secretWeapons;if(tab==='shields')return shields;return skins}
+function currentList(tab){if(tab==='guns')return guns.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused);if(tab==='melee')return melee.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused);if(tab==='secret')return secretWeapons;if(tab==='shields')return shields;return skins}
 function itemLabel(tab,i){return currentList(tab)[i].name}
 function isUnlocked(tab,i){return (unlocked[tab]||new Set()).has(i)}
 function select(tab,i){
@@ -219,199 +218,122 @@ function buyOrEquip(tab,i){
 }
 function sellWeapon(tab,i){
  const list=currentList(tab),item=list[i],actual=item?._index??i;
- if(!item||!['guns','melee','secret'].includes(tab))return;
- if(item.cost<=0){say('Your free starter weapon stays in your loadout.');return}
- if(gold<0)return;
+ if(!item||!['guns','melee','secret','skins','shields'].includes(tab))return;
+ if(item.cost<=0){say('Your free starter item stays in your loadout.');return}
  const salePrice=Number(item.cost)||0;
  if(tab==='secret'){
-   if(item.kind==='gun'){
-     const idx=guns.findIndex(g=>g.name===item.name&&g.secret);
-     if(idx>=0&&equipped.guns===idx)equipped.guns=0;
-   }else{
-     const idx=melee.findIndex(m=>m.name===item.name&&m.secret);
-     if(idx>=0&&equipped.melee===idx)equipped.melee=0;
-   }
+   if(item.kind==='gun'){const idx=guns.findIndex(g=>g.name===item.name&&g.secret);if(idx>=0){if(equipped.guns===idx)equipped.guns=0;unlocked.guns.delete(idx)}}
+   else{const idx=melee.findIndex(m=>m.name===item.name&&m.secret);if(idx>=0){if(equipped.melee===idx)equipped.melee=0;unlocked.melee.delete(idx)}}
    unlocked.secret.delete(i);
- }else if(tab==='guns'){
-   if(equipped.guns===actual)equipped.guns=0;
-   unlocked.guns.delete(actual);
- }else{
-   if(equipped.melee===actual)equipped.melee=0;
-   unlocked.melee.delete(actual);
- }
- gold+=salePrice;say('Sold '+item.name+' for its original purchase price: '+salePrice+' gold.');updateHUD();renderShop();
+ }else if(tab==='guns'){if(equipped.guns===actual)equipped.guns=0;unlocked.guns.delete(actual);delete levels.guns[actual];}
+ else if(tab==='melee'){if(equipped.melee===actual)equipped.melee=0;unlocked.melee.delete(actual);delete levels.melee[actual];}
+ else if(tab==='skins'){if(equipped.skins===i)equipped.skins=0;unlocked.skins.delete(i);delete levels.skins[i];}
+ else if(tab==='shields'){if(equipped.shields===i){equipped.shields=0;shieldHp=shieldMax();shieldCooldown=0;}unlocked.shields.delete(i);delete levels.shields[i];}
+ gold+=salePrice;say('Sold '+item.name+' for '+salePrice+' gold.');updateHUD();renderShop();saveProgress(true);
 }
 function ownedBasicWeapons(kind){
- const arr=kind==='guns'?guns:melee,owned=kind==='guns'?unlocked.guns:unlocked.melee,secretKind=kind==='guns'?'gun':'melee',out=[];
- arr.forEach((item,index)=>{
-   if(item.fused||item.secret)return;
-   if(owned.has(index))out.push({item,index,secretIndex:-1,label:item.name+' · '+item.dmg+' dmg'});
- });
- arr.forEach((item,index)=>{
-   if(!item.secret||item.fused)return;
-   const secretIndex=secretWeapons.findIndex(w=>w.kind===secretKind&&w.name===item.name);
-   if(secretIndex>=0&&unlocked.secret.has(secretIndex))out.push({item,index,secretIndex,label:'🌌 '+item.name+' · '+item.dmg+' dmg'});
- });
- return out;
+  const arr=kind==='guns'?guns:melee,owned=kind==='guns'?unlocked.guns:unlocked.melee;
+  return arr.map((item,index)=>({item,index,label:item.name+' · '+item.dmg+' dmg'}))
+   .filter(x=>owned.has(x.index)&&!x.item.fused&&!x.item.secret);
 }
-let fusionA = null;
-let fusionB = null;
-
+let fusionA=null,fusionB=null;
+function fusionPair(a,b){
+  return [a,b].sort((x,y)=>x.name.localeCompare(y.name));
+}
+function fusionSignature(kind,a,b){
+  const key=kind+'|'+a.name+'|'+b.name;let h=2166136261;
+  for(let i=0;i<key.length;i++){h^=key.charCodeAt(i);h=Math.imul(h,16777619)}
+  return h>>>0;
+}
+const fusionNameA=['Aether','Nova','Tempest','Obsidian','Prism','Rift','Solar','Phantom','Thunder','Vortex','Starfall','Iron'];
+const fusionNameB=['weave','breaker','lance','fang','engine','reaver','burst','wraith','coil','crown','shard','storm'];
+function createFusedWeapon(kind,wa,wb){
+  const [a,b]=fusionPair(wa,wb),seed=fusionSignature(kind,a,b),originalA=Number(a.originalPrice??a.cost)||0,originalB=Number(b.originalPrice??b.cost)||0;
+  const hue1=seed%360,hue2=(hue1+95+(seed%71))%360;
+  const palette=`hsl(${hue1} 88% 62%)`,accentColor=`hsl(${hue2} 95% 78%)`;
+  const properName=fusionNameA[(seed>>>4)%fusionNameA.length]+' '+fusionNameB[(seed>>>12)%fusionNameB.length]+' ('+a.name+' + '+b.name+')';
+  const saleValue=1000+originalA+originalB;
+  if(kind==='guns'){
+    const count=Math.min(16,Math.max(1,(a.count||1)+(b.count||1)));
+    const spread=Math.min(1.15,(((a.spread||0)+(b.spread||0))/2)+Math.abs((a.spread||0)-(b.spread||0))*.12);
+    return {name:properName,dmg:Math.max(1,Math.round((a.dmg+b.dmg)*.58)),rate:Math.max(25,Math.round(Math.sqrt(a.rate*b.rate)*.88)),speed:Math.round(((a.speed||800)+(b.speed||800))/2),count,spread,cost:saleValue,originalPrice:saleValue,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,fusionColor:palette,fusionAccent:accentColor,desc:'Unique fusion design forged from '+a.name+' and '+b.name+'. Signature: '+properName+'.'};
+  }
+  return {name:properName,dmg:Math.max(1,Math.round((a.dmg+b.dmg)*.68)),rate:Math.max(100,Math.round(Math.sqrt(a.rate*b.rate)*.88)),range:Math.round(((a.range||60)+(b.range||60))/2*1.12),cost:saleValue,originalPrice:saleValue,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,fusionColor:palette,fusionAccent:accentColor,desc:'Unique melee design forged from '+a.name+' and '+b.name+'. Signature: '+properName+'.'};
+}
+function ownedFusionItems(kind){
+ const arr=kind==='guns'?guns:kind==='melee'?melee:kind==='skins'?skins:shields;
+ const owned=unlocked[kind];
+ return arr.map((item,index)=>({item,index,label:item.name})).filter(x=>owned.has(x.index)&&!x.item.fused&&!x.item.secret);
+}
+function createFusedCosmetic(kind,wa,wb){
+ const [a,b]=fusionPair(wa,wb),seed=fusionSignature(kind,a,b),h1=seed%360,h2=(h1+105+(seed%67))%360;
+ const color=`hsl(${h1} 82% 58%)`,accent=`hsl(${h2} 95% 78%)`;
+ const first=fusionNameA[(seed>>>4)%fusionNameA.length],second=fusionNameB[(seed>>>12)%fusionNameB.length];
+ const name=first+' '+(kind==='skins'?'Synthesis Suit':'Aegis')+' '+second+' ('+a.name+' + '+b.name+')';
+ const cost=1000+(Number(a.originalPrice??a.cost)||0)+(Number(b.originalPrice??b.cost)||0);
+ if(kind==='skins')return {name,speed:Math.min(1.8,Math.sqrt((a.speed||1)*(b.speed||1))*1.06),rate:Math.max(.45,Math.sqrt((a.rate||1)*(b.rate||1))*.94),dmg:Math.min(2.5,Math.sqrt((a.dmg||1)*(b.dmg||1))*1.08),cost,originalPrice:cost,color,accent,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,desc:'Unique fused suit combining '+a.name+' and '+b.name+'.'};
+ return {name,hp:Math.round((a.hp+b.hp)*.68),cost,originalPrice:cost,color,accent,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,shieldStyle:seed%4,desc:'Unique fused shield combining '+a.name+' and '+b.name+'.'};
+}
 function renderFusion(root){
-  const intro = document.createElement('div');
-  intro.className = 'notice';
-  intro.textContent ='⚗️ Choose two owned guns or two owned melee weapons. Fusion costs 1,000 gold.';root.append(intro);
-  const ownedGuns = [...unlocked.guns].filter(i => guns[i]).map(i => ({ kind: 'guns', index: i, item: guns[i] })).filter(x => x.item);
-  const ownedMelee = [...unlocked.melee].map(i => ({ kind: 'melee', index: i, item: melee[i] })).filter(x => x.item);
-  const owned = [...ownedGuns, ...ownedMelee];
-  function makeSelector(label, value, onChange){
-  const wrap = document.createElement('div');
-  wrap.className = 'item';
-  const info = document.createElement('div');
-  const name = document.createElement('div');
-  name.className = 'itemname';
-  name.textContent = label;
-  const select = document.createElement('select');
-  select.style.cssText =
-  'width:100%;margin-top:8px;padding:8px;background:#0a1120;color:white;border:1px solid #2b3b5e;border-radius:8px';
-  const placeholder = document.createElement('option');
-  placeholder.value = '';
-  placeholder.textContent = 'Choose a weapon...';
-  select.append(placeholder);
-  owned.forEach(w => {
-  const option = document.createElement('option');
-  option.value = w.kind + ':' + w.index;
-  option.textContent=(w.kind === 'guns' ? '🔫 ' : '🗡️ ') + w.item.name;
-  select.append(option);});
-  select.value = value || '';
-  select.addEventListener('change', () => onChange(select.value));
-  info.append(name, select);
-  wrap.append(info);
-  return wrap;
-    }
-    const first=makeSelector('Weapon A', fusionA, value => {
-        fusionA = value || null;
-        renderShop();
-    });
-    const second=makeSelector('Weapon B', fusionB, value => {
-        fusionB = value || null;
-        renderShop();
-    });
-    root.append(first, second);
-    const btn = document.createElement('button');
-    btn.className = 'action';
-    btn.textContent = '⚗️ FUSE — 1,000 GOLD';
-    const valid = (() => {
-        if (!fusionA || !fusionB || fusionA === fusionB) return false;
-        const [kindA] = fusionA.split(':');
-        const [kindB] = fusionB.split(':');
-        return kindA === kindB && gold >= 1000;
-    })();
-    btn.disabled = !valid;
-    btn.addEventListener('click', () => {
-        if(!valid)return;
-        const [kindA, indexA] = fusionA.split(':');
-        const [kindB, indexB] = fusionB.split(':');
-        if(kindA !== kindB || fusionA === fusionB || gold < 1000){
-          say('Choose two different weapons of the same category!');
-          return;
-        }
-        const list = kindA === 'guns' ? guns : melee;
-        const a = list[Number(indexA)];
-        const b = list[Number(indexB)];
-        if(!a || !b || a === b){
-            say('Invalid weapon combination!');
-            return;
-        }
-        gold -= 1000;
-        const fusedName = a.name + ' + ' + b.name + ' Fusion';
-        if(kindA === 'guns'){
-            const newWeapon={
-                name: fusedName,
-                dmg: Math.round((a.dmg + b.dmg) * 0.8),
-                rate: Math.round((a.rate + b.rate) / 2),
-                speed: Math.round(((a.speed || 800) + (b.speed || 800)) / 2),
-                count: Math.max(1, Math.round(((a.count || 1) + (b.count || 1)) / 2)),
-                spread: ((a.spread || 0) + (b.spread || 0)) / 2,
-                cost: 1000,
-                desc: 'Fused from ' + a.name + ' and ' + b.name + '.'
-            };
-            guns.push(newWeapon);
-            const index = guns.length - 1;
-            unlocked.guns.add(index);
-            equipped.guns = index;
-        }
-        else{
-            const newWeapon={
-                name: fusedName,
-                dmg: Math.round((a.dmg + b.dmg) * 0.8),
-                rate: Math.round((a.rate + b.rate) / 2),
-                range: Math.round((a.range + b.range) / 2),
-                cost: 1000,
-                desc: 'Fused from ' + a.name + ' and ' + b.name + '.'
-            };
-            melee.push(newWeapon);
-            const index = melee.length - 1;
-            unlocked.melee.add(index);
-            equipped.melee = index;
-        }
-        fusionA = null;
-        fusionB = null;
-        say('⚗️ FUSION COMPLETE! Created ' + fusedName + '!');
-        updateHUD();
-        renderShop();
-        saveProgress(true);
-    });
-
-    root.append(btn);
-    const fusedOwned = [];
-    guns.forEach((item, index) => {if(item.fused && unlocked.guns.has(index)){fusedOwned.push({ kind: 'guns', item, index });}});
-    melee.forEach((item, index) => {if(item.fused && unlocked.melee.has(index)){fusedOwned.push({ kind: 'melee', item, index });}});
-    if(fusedOwned.length){
-        const heading = document.createElement('div');
-        heading.className='notice';
-        heading.textContent='🪙 Your fused weapons · sell for their original 1,000-gold fusion cost';
-        root.append(heading);
-        fusedOwned.forEach(entry => {
-            const card = document.createElement('div');
-            card.className = 'item';
-            const info = document.createElement('div');
-            const name = document.createElement('div');
-            const desc = document.createElement('div');
-            const price = document.createElement('div');
-            name.className = 'itemname';
-            name.textContent=(entry.kind === 'guns' ? '🔫 ' : '🗡️ ') + entry.item.name;
-            desc.className = 'desc';
-            desc.textContent = entry.item.desc;
-            price.className = 'price';
-            price.textContent = 'Sell price: ' + entry.item.cost + ' gold';
-            info.append(name, desc, price);
-            const btn = document.createElement('button');
-            btn.className = 'action sell';
-            btn.textContent = 'SELL · ' + entry.item.cost;
-            btn.addEventListener('click', () => {
-                const owned = entry.kind === 'guns' ? unlocked.guns : unlocked.melee;
-                if(!owned.has(entry.index)){return;}
-                owned.delete(entry.index);
-                if(entry.kind === 'guns' && equipped.guns === entry.index) {equipped.guns = 0;}
-                if(entry.kind === 'melee' && equipped.melee === entry.index) {equipped.melee = 0;}
-                gold += entry.item.cost;
-                say('Sold ' + entry.item.name + ' for its original fusion cost: ' + entry.item.cost + ' gold.');
-                updateHUD();
-                renderShop();
-                saveProgress(true);
-            });
-            card.append(info, btn);
-            root.append(card);
-        });
-    }
+  const intro=document.createElement('div');intro.className='notice';intro.textContent='⚗️ Fuse two different owned basic items of the same category for 1,000 gold. Guns, melee weapons, skins, and shields each have fixed pairings; both ingredients are consumed.';root.append(intro);
+  const modes=document.createElement('div');modes.style.cssText='display:flex;gap:8px;padding:4px;flex-wrap:wrap';
+  [['guns','🔫 GUNS'],['melee','🗡️ MELEE'],['skins','✨ SKINS'],['shields','🛡️ SHIELDS']].forEach(([kind,label])=>{const b=document.createElement('button');b.className='action'+(fusionCategory===kind?' fuse':'');b.textContent=label;b.style.flex='1';b.addEventListener('click',()=>{fusionCategory=kind;fusionA=fusionB=null;renderShop()});modes.append(b)});root.append(modes);
+  const owned=['guns','melee'].includes(fusionCategory)?ownedBasicWeapons(fusionCategory):ownedFusionItems(fusionCategory);
+  const validIndexes=new Set(owned.map(w=>w.index));
+  if(!validIndexes.has(fusionA))fusionA=null;
+  if(!validIndexes.has(fusionB))fusionB=null;
+  function selector(label,value,onChange,excludeIndex=null){
+   const wrap=document.createElement('div');wrap.className='item';const info=document.createElement('div');info.style.width='100%';
+   const title=document.createElement('div');title.className='itemname';title.textContent=label;
+   const sel=document.createElement('select');sel.className='fusion-select';const empty=document.createElement('option');empty.value='';empty.textContent='Choose '+({guns:'a gun',melee:'a melee weapon',skins:'a skin',shields:'a shield'}[fusionCategory])+'...';sel.append(empty);
+   owned.forEach(w=>{const o=document.createElement('option');o.value=String(w.index);o.textContent=w.item.name+(['guns','melee'].includes(fusionCategory)?' · '+w.item.dmg+' damage':fusionCategory==='skins'?' · '+Math.round((w.item.dmg||1)*100)+'% power':' · '+w.item.hp+' shield HP');o.disabled=w.index===excludeIndex;sel.append(o)});
+   sel.value=value??'';sel.addEventListener('change',()=>onChange(sel.value===''?null:Number(sel.value)));info.append(title,sel);wrap.append(info);return wrap;
+  }
+  root.append(selector('Weapon A',fusionA,v=>{fusionA=v;if(fusionB===v)fusionB=null;renderShop()}),selector('Weapon B',fusionB,v=>{fusionB=v;if(fusionA===v)fusionA=null;renderShop()},fusionA));
+  const fusionArray=fusionCategory==='guns'?guns:fusionCategory==='melee'?melee:fusionCategory==='skins'?skins:shields;const a=fusionA===null?null:fusionArray[fusionA],b=fusionB===null?null:fusionArray[fusionB];
+  const btn=document.createElement('button');btn.className='action fuse';btn.style.width='100%';btn.textContent='⚗️ FUSE — 1,000 GOLD';btn.disabled=!a||!b||fusionA===fusionB||gold<1000||!owned.some(x=>x.index===fusionA)||!owned.some(x=>x.index===fusionB);
+  btn.addEventListener('click',()=>{
+   const arr=fusionCategory==='guns'?guns:fusionCategory==='melee'?melee:fusionCategory==='skins'?skins:shields,ownedSet=unlocked[fusionCategory];
+   const wa=arr[fusionA],wb=arr[fusionB];
+   if(!wa||!wb||fusionA===fusionB||wa.secret||wb.secret||wa.fused||wb.fused||!ownedSet.has(fusionA)||!ownedSet.has(fusionB)||gold<1000){say('Choose two different owned basic '+({guns:'guns',melee:'melee weapons',skins:'skins',shields:'shields'}[fusionCategory])+'.');return}
+   const weapon=['guns','melee'].includes(fusionCategory)?createFusedWeapon(fusionCategory,wa,wb):createFusedCosmetic(fusionCategory,wa,wb);
+   gold-=1000;ownedSet.delete(fusionA);ownedSet.delete(fusionB);
+   delete levels[fusionCategory][fusionA];delete levels[fusionCategory][fusionB];
+   if(fusionCategory==='guns'){if(equipped.guns===fusionA||equipped.guns===fusionB)equipped.guns=0;guns.push(weapon);const idx=guns.length-1;unlocked.guns.add(idx);equipped.guns=idx;}
+   else if(fusionCategory==='melee'){if(equipped.melee===fusionA||equipped.melee===fusionB)equipped.melee=0;melee.push(weapon);const idx=melee.length-1;unlocked.melee.add(idx);equipped.melee=idx;}
+   else if(fusionCategory==='skins'){if(equipped.skins===fusionA||equipped.skins===fusionB)equipped.skins=0;skins.push(weapon);const idx=skins.length-1;unlocked.skins.add(idx);equipped.skins=idx;}
+   else {if(equipped.shields===fusionA||equipped.shields===fusionB)equipped.shields=0;shields.push(weapon);const idx=shields.length-1;unlocked.shields.add(idx);equipped.shields=idx;shieldHp=shieldMax();shieldCooldown=0;}
+   fusionA=fusionB=null;say('🧬 Fusion complete! '+weapon.name+' created. Sell value: '+weapon.cost+' gold.');updateHUD();renderShop();saveProgress(true);
+  });root.append(btn);
+}
+function renderMerged(root){
+ const intro=document.createElement('div');intro.className='notice';intro.textContent='🧬 Every fused weapon you own is listed here. Fused weapons are saved and persist between runs.';root.append(intro);
+ let count=0;
+ for(const [kind,arr,owned] of [['guns',guns,unlocked.guns],['melee',melee,unlocked.melee]]){
+  arr.forEach((item,index)=>{if(!item.fused||!owned.has(index))return;count++;
+   const card=document.createElement('div');card.className='item';const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');
+   name.className='itemname';name.textContent=(kind==='guns'?'🔫 ':'🗡️ ')+item.name;desc.className='desc';desc.textContent=item.desc;price.className='price';price.textContent='Sell value: '+item.cost+' gold';info.append(name,desc,price);
+   const actions=document.createElement('div');actions.className='actiongroup';const equip=document.createElement('button');equip.className='action equip';equip.textContent=(equipped[kind]===index?'EQUIPPED':'EQUIP');equip.disabled=equipped[kind]===index;equip.addEventListener('click',()=>{equipped[kind]=index;say('Equipped '+item.name+'.');renderShop();saveProgress(true)});
+   const sell=document.createElement('button');sell.className='action sell';sell.textContent='SELL · '+item.cost;sell.addEventListener('click',()=>{owned.delete(index);if(equipped[kind]===index)equipped[kind]=0;fusionA=null;fusionB=null;gold+=item.cost;say('Sold '+item.name+' for '+item.cost+' gold.');updateHUD();renderShop();saveProgress(true)});
+   actions.append(equip,sell);card.append(info,actions);root.append(card);
+  });
+ }
+ for(const [kind,arr,owned] of [['skins',skins,unlocked.skins],['shields',shields,unlocked.shields]]){
+  arr.forEach((item,index)=>{if(!item.fused||!owned.has(index))return;count++;
+   const card=document.createElement('div');card.className='item';const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');
+   name.className='itemname';name.textContent=(kind==='skins'?'✨ ':'🛡️ ')+item.name;desc.className='desc';desc.textContent=item.desc+(kind==='shields'?' Shield capacity: '+item.hp+' HP.':' Speed ×'+item.speed.toFixed(2)+', fire rate ×'+item.rate.toFixed(2)+', damage ×'+item.dmg.toFixed(2)+'.');price.className='price';price.textContent='Sell value: '+item.cost+' gold';info.append(name,desc,price);
+   const actions=document.createElement('div');actions.className='actiongroup';const equip=document.createElement('button');equip.className='action equip';equip.textContent=(equipped[kind]===index?'EQUIPPED':'EQUIP');equip.disabled=equipped[kind]===index;equip.addEventListener('click',()=>{equipped[kind]=index;if(kind==='shields'){shieldHp=shieldMax();shieldCooldown=0}say('Equipped '+item.name+'.');updateHUD();renderShop();saveProgress(true)});
+   const sell=document.createElement('button');sell.className='action sell';sell.textContent='SELL · '+item.cost;sell.addEventListener('click',()=>sellWeapon(kind,index));actions.append(equip,sell);card.append(info,actions);root.append(card);
+  });
+ }
+ if(!count){const empty=document.createElement('div');empty.className='item';empty.textContent='No fused items yet. Visit the Fusion Station to combine weapons, skins, or shields!';root.append(empty)}
 }
 function renderShop(){
- const list=currentList(activeTab),root=$('items');root.innerHTML='';if(activeTab==='upgrades'){renderUpgrades(root);return}if(activeTab==='fusion'){renderFusion(root);return}
+ const list=currentList(activeTab),root=$('items');root.innerHTML='';if(activeTab==='upgrades'){renderUpgrades(root);return}if(activeTab==='fusion'){renderFusion(root);return}if(activeTab==='merged'){renderMerged(root);return}
  if(activeTab==='secret'&&!secretShopUnlocked){
    const locked=document.createElement('div');locked.className='item';locked.style.gridTemplateColumns='minmax(0,1fr)';
    const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent='🔒 Secret Shop Locked';desc.className='desc';desc.textContent='Pay once to permanently unlock the Secret Shop and access its cosmic arsenal.';price.className='price';price.textContent='Unlock fee: 100,000 gold · Your gold: '+Math.floor(gold);info.append(name,desc,price);
-   const btn=document.createElement('button');btn.className='action';btn.textContent='PAY 100,000 GOLD';btn.disabled=gold<100000;btn.addEventListener('click',()=>{if(secretShopUnlocked)return;if(gold<100000){say('You need '+(100000-gold)+' more gold to unlock the Secret Shop.');return}gold-=100000;secretShopUnlocked=true;localStorage.setItem('monsterMayhemSecretShopUnlocked','true');say('🔓 SECRET SHOP PERMANENTLY UNLOCKED!');updateHUD();renderShop()});locked.append(info,btn);root.append(locked);return;
+   const btn=document.createElement('button');btn.className='action';btn.textContent='PAY 100,000 GOLD';btn.disabled=gold<100000;btn.addEventListener('click',()=>{if(secretShopUnlocked)return;if(gold<100000){say('You need '+(100000-gold)+' more gold to unlock the Secret Shop.');return}gold-=100000;secretShopUnlocked=true;safeStorage.setItem('monsterMayhemSecretShopUnlocked','true');say('🔓 SECRET SHOP PERMANENTLY UNLOCKED!');updateHUD();renderShop()});locked.append(info,btn);root.append(locked);return;
  }
  list.forEach((it,i)=>{
   const actual=it._index??i;const unlockedNow=isUnlocked(activeTab,activeTab==='guns'||activeTab==='melee'?actual:i),equippedNow=unlockedNow&&(activeTab==='guns'?equipped.guns===actual:activeTab==='melee'?equipped.melee===actual:activeTab==='skins'?equipped.skins===i:activeTab==='shields'?equipped.shields===i:activeTab==='secret'?(it.kind==='gun'?equipped.guns===guns.findIndex(g=>g.name===it.name&&g.secret):equipped.melee===melee.findIndex(m=>m.name===it.name&&m.secret)):false);
@@ -419,21 +341,21 @@ function renderShop(){
   const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');
   name.className='itemname';name.textContent=(activeTab==='guns'?'🔫 ':activeTab==='melee'?'🗡️ ':activeTab==='shields'?'🛡️ ':activeTab==='secret'?(it.kind==='gun'?'🌌 ':'☄️ '):'✨ ')+it.name;
   desc.className='desc';desc.textContent=it.desc;
-  price.className='price';price.textContent=it.cost===0?'FREE':(unlockedNow?(['guns','melee','secret'].includes(activeTab)?'OWNED · Sell for '+it.cost+' gold':'UNLOCKED'):'🪙 '+it.cost+' gold');
+  price.className='price';price.textContent=it.cost===0?'FREE':(unlockedNow?(['guns','melee','secret','skins','shields'].includes(activeTab)?'OWNED · Sell for '+it.cost+' gold':'UNLOCKED'):'🪙 '+it.cost+' gold');
   info.append(name,desc,price);
   const actions=document.createElement('div');actions.className='actiongroup';const btn=document.createElement('button');btn.className='action';
   if(equippedNow){btn.textContent='EQUIPPED';btn.classList.add('equipped');btn.disabled=true}
   else if(unlockedNow){btn.textContent='EQUIP';btn.classList.add('equip')}
   else btn.textContent='BUY';
   btn.addEventListener('click',()=>buyOrEquip(activeTab,i));actions.append(btn);
-  if(unlockedNow&&['guns','melee','secret'].includes(activeTab)&&it.cost>0){const sell=document.createElement('button');sell.className='action sell';sell.textContent='SELL · '+it.cost;sell.title='Sell for exactly the original purchase price';sell.addEventListener('click',()=>sellWeapon(activeTab,i));actions.append(sell)}
+  if(unlockedNow&&['guns','melee','secret','skins','shields'].includes(activeTab)&&it.cost>0){const sell=document.createElement('button');sell.className='action sell';sell.textContent='SELL · '+it.cost;sell.title='Sell for the item purchase value';sell.addEventListener('click',()=>sellWeapon(activeTab,i));actions.append(sell)}
   card.append(info,actions);root.append(card);
  });
 }
 document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
  activeTab=btn.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));renderShop();
 }));
-function updateHUD(){$('gold').textContent=Math.floor(gold);$('score').textContent=Math.floor(score);$('hp').textContent=Math.ceil(hp)+'/'+maxHp;$('shieldHud').textContent=Math.ceil(shieldHp)+'/'+shieldMax()+(shieldCooldown>0?' ⏳'+shieldCooldown.toFixed(1)+'s':'');bestScore=Math.max(bestScore,Math.floor(score));$('best').textContent=bestScore;localStorage.setItem('monsterMayhemBest',String(bestScore))}
+function updateHUD(){$('gold').textContent=Math.floor(gold);$('score').textContent=Math.floor(score);$('hp').textContent=Math.ceil(hp)+'/'+maxHp;$('shieldHud').textContent=Math.ceil(shieldHp)+'/'+shieldMax()+(shieldCooldown>0?' ⏳'+shieldCooldown.toFixed(1)+'s':'');bestScore=Math.max(bestScore,Math.floor(score));$('best').textContent=bestScore;safeStorage.setItem('monsterMayhemBest',String(bestScore))}
 const enemyDefs={
  red:{label:'Runner',color:'#ef4444',hp:40,speed:86,dmg:10,r:13,value:20,behavior:'chase'},
  yellow:{label:'Brute',color:'#facc15',hp:125,speed:31,dmg:18,r:19,value:35,behavior:'chase'},
@@ -496,7 +418,7 @@ function fire(){
 function swing(){
  const m=melee[equipped.melee],skin=skins[equipped.skins],now=performance.now();if(now-meleeT<m.rate/Math.pow(itemLevelBoost('melee'),.35))return;meleeT=now;
  const ang=Math.atan2(mouse.y-H/2,mouse.x-W/2);
- enemies.forEach(e=>{const dx=e.x-px,dy=e.y-py,d=Math.hypot(dx,dy),a=Math.atan2(dy,dx),diff=Math.atan2(Math.sin(a-ang),Math.cos(a-ang));if(d<m.range*itemLevelBoost('melee')+e.r&&Math.abs(diff)<1.05)e.hp-=m.dmg*skin.dmg*itemLevelBoost('melee')*itemLevelBoost('skins')*(e.supported?.72:1)});
+ enemies.forEach(e=>{const dx=e.x-px,dy=e.y-py,d=Math.hypot(dx,dy),a=Math.atan2(dy,dx),diff=Math.atan2(Math.sin(a-ang),Math.cos(a-ang));if(d<m.range*itemLevelBoost('melee')+e.r&&Math.abs(diff)<1.05){const hit=m.dmg*skin.dmg*itemLevelBoost('melee')*itemLevelBoost('skins')*(e.supported?.72:1);e.hp-=hit;}});
  swingAnim=.24;
 }
 function takeDamage(amount){if(gameTime<invulnUntil){return}let remaining=amount;if(shieldHp>0){const absorbed=Math.min(shieldHp,remaining);shieldHp-=absorbed;remaining-=absorbed;if(shieldHp<=0){shieldHp=0;shieldCooldown=10;say('Shield broken! Recharging for 10 seconds.')}}if(remaining>0)hp-=remaining}
@@ -522,20 +444,21 @@ else if(e.behavior==='shield'){ctx.strokeStyle='#bfdbfe';ctx.lineWidth=4;ctx.beg
  if(e.max>100){ctx.fillStyle='#000';ctx.fillRect(sx-35,sy-e.r-12,70,6);ctx.fillStyle='#22c55e';ctx.fillRect(sx-35,sy-e.r-12,70*Math.max(0,e.hp/e.max),6)}});
  const skin=skins[equipped.skins],ang=Math.atan2(mouse.y-H/2,mouse.x-W/2);ctx.save();ctx.translate(W/2,H/2);
  // Shield is a clear, detailed ring with small segmented seams and a recharge glint.
- if(shieldHp>0){const sh=shields[equipped.shields];ctx.strokeStyle=sh.color;ctx.lineWidth=4;ctx.globalAlpha=.38+.18*Math.sin(gameTime*5);ctx.beginPath();ctx.arc(0,0,29,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;ctx.strokeStyle=sh.accent;ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,32,-Math.PI/2,-Math.PI/2+Math.PI*2*(shieldHp/shieldMax()));ctx.stroke();for(let k=0;k<8;k++){const a=k*Math.PI/4;ctx.fillStyle=sh.accent;ctx.beginPath();ctx.arc(Math.cos(a)*29,Math.sin(a)*29,2.2,0,Math.PI*2);ctx.fill()}}
+ if(shieldHp>0){const sh=shields[equipped.shields],segments=sh.fused?10+(sh.shieldStyle||0)*2:8;ctx.strokeStyle=sh.color;ctx.lineWidth=sh.fused?5:4;ctx.globalAlpha=.38+.18*Math.sin(gameTime*5);ctx.beginPath();ctx.arc(0,0,29,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;ctx.strokeStyle=sh.accent;ctx.lineWidth=sh.fused?3:2;ctx.setLineDash(sh.fused?[4,2]:[]);ctx.beginPath();ctx.arc(0,0,32,-Math.PI/2,-Math.PI/2+Math.PI*2*(shieldHp/shieldMax()));ctx.stroke();ctx.setLineDash([]);for(let k=0;k<segments;k++){const a=k*Math.PI*2/segments;ctx.fillStyle=sh.accent;ctx.beginPath();if(sh.fused&&sh.shieldStyle%2){ctx.moveTo(Math.cos(a)*25,Math.sin(a)*25);ctx.lineTo(Math.cos(a-.09)*33,Math.sin(a-.09)*33);ctx.lineTo(Math.cos(a+.09)*33,Math.sin(a+.09)*33);ctx.closePath()}else ctx.arc(Math.cos(a)*29,Math.sin(a)*29,sh.fused?3:2.2,0,Math.PI*2);ctx.fill()}}
  const body=skin.color||colors[equipped.skins%colors.length],accent=skin.accent||'#f8fafc';
  ctx.fillStyle=body;ctx.beginPath();ctx.arc(0,0,18,0,Math.PI*2);ctx.fill();ctx.strokeStyle=accent;ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,12,0,Math.PI*2);ctx.stroke();ctx.fillStyle=accent;ctx.beginPath();ctx.arc(-5,-5,3,0,Math.PI*2);ctx.fill();ctx.fillRect(2,4,9,3);
  // Distinct melee silhouettes based on weapon identity.
- ctx.save();ctx.rotate(playerBladeAngle);const m=melee[equipped.melee],mn=m.name.toLowerCase();let blade=m.range*.72;ctx.lineCap='round';
- if(mn.includes('spear')||mn.includes('glaive')||mn.includes('staff')||mn.includes('lance')){ctx.strokeStyle='#b6c6d8';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(12,0);ctx.lineTo(blade+20,0);ctx.stroke();ctx.fillStyle=mn.includes('thunder')?'#67e8f9':'#cbd5e1';ctx.beginPath();ctx.moveTo(blade+27,0);ctx.lineTo(blade+11,-9);ctx.lineTo(blade+11,9);ctx.closePath();ctx.fill()}
- else if(mn.includes('axe')||mn.includes('cleaver')||mn.includes('pick')){ctx.fillStyle='#9a6a42';ctx.fillRect(12,-4,blade,8);ctx.fillStyle=accent;ctx.beginPath();ctx.moveTo(blade+10,-17);ctx.lineTo(blade+28,-10);ctx.lineTo(blade+24,8);ctx.lineTo(blade+7,13);ctx.closePath();ctx.fill();ctx.strokeStyle=body;ctx.lineWidth=2;ctx.stroke()}
- else if(mn.includes('hammer')||mn.includes('maul')||mn.includes('mace')||mn.includes('anchor')){ctx.fillStyle='#9a6a42';ctx.fillRect(12,-3,blade,6);ctx.fillStyle=accent;ctx.fillRect(blade+4,-12,19,24);ctx.fillStyle=body;ctx.fillRect(blade+7,-8,13,16)}
- else if(mn.includes('scythe')||mn.includes('crescent')||mn.includes('whip')||mn.includes('chain')){ctx.strokeStyle=body;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(12,0);ctx.lineTo(blade+15,0);ctx.stroke();ctx.strokeStyle=accent;ctx.lineWidth=6;ctx.beginPath();ctx.arc(blade+15,-8,16,.15,Math.PI*1.3);ctx.stroke()}
- else if(mn.includes('dagger')||mn.includes('tonfa')||mn.includes('knuckle')){ctx.fillStyle=body;ctx.fillRect(12,-8,blade*.55,5);ctx.fillRect(12,4,blade*.55,5);ctx.fillStyle=accent;ctx.fillRect(blade*.55+12,-10,9,8);ctx.fillRect(blade*.55+12,2,9,8)}
- else {ctx.fillStyle=body;ctx.fillRect(12,-5,blade,10);ctx.fillStyle=accent;ctx.beginPath();ctx.moveTo(blade+12,-9);ctx.lineTo(blade+28,0);ctx.lineTo(blade+12,9);ctx.closePath();ctx.fill();ctx.fillStyle='#d6b78b';ctx.fillRect(12,-7,Math.max(10,blade*.18),14)}ctx.restore();
+ ctx.save();ctx.rotate(playerBladeAngle);const m=melee[equipped.melee],mn=m.name.toLowerCase();let blade=m.range*.72;ctx.lineCap='round';const mBody=m.fused?(m.fusionColor||'#a78bfa'):body,mAccent=m.fused?(m.fusionAccent||'#f0abfc'):accent;
+ if(mn.includes('spear')||mn.includes('glaive')||mn.includes('staff')||mn.includes('lance')){ctx.strokeStyle=m.fused?mAccent:'#b6c6d8';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(12,0);ctx.lineTo(blade+20,0);ctx.stroke();ctx.fillStyle=m.fused?mAccent:(mn.includes('thunder')?'#67e8f9':'#cbd5e1');ctx.beginPath();ctx.moveTo(blade+27,0);ctx.lineTo(blade+11,-9);ctx.lineTo(blade+11,9);ctx.closePath();ctx.fill()}
+ else if(mn.includes('axe')||mn.includes('cleaver')||mn.includes('pick')){ctx.fillStyle='#9a6a42';ctx.fillRect(12,-4,blade,8);ctx.fillStyle=mAccent;ctx.beginPath();ctx.moveTo(blade+10,-17);ctx.lineTo(blade+28,-10);ctx.lineTo(blade+24,8);ctx.lineTo(blade+7,13);ctx.closePath();ctx.fill();ctx.strokeStyle=mBody;ctx.lineWidth=2;ctx.stroke()}
+ else if(mn.includes('hammer')||mn.includes('maul')||mn.includes('mace')||mn.includes('anchor')){ctx.fillStyle='#9a6a42';ctx.fillRect(12,-3,blade,6);ctx.fillStyle=mAccent;ctx.fillRect(blade+4,-12,19,24);ctx.fillStyle=mBody;ctx.fillRect(blade+7,-8,13,16)}
+ else if(mn.includes('scythe')||mn.includes('crescent')||mn.includes('whip')||mn.includes('chain')){ctx.strokeStyle=mBody;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(12,0);ctx.lineTo(blade+15,0);ctx.stroke();ctx.strokeStyle=accent;ctx.lineWidth=6;ctx.beginPath();ctx.arc(blade+15,-8,16,.15,Math.PI*1.3);ctx.stroke()}
+ else if(mn.includes('dagger')||mn.includes('tonfa')||mn.includes('knuckle')){ctx.fillStyle=mBody;ctx.fillRect(12,-8,blade*.55,5);ctx.fillRect(12,4,blade*.55,5);ctx.fillStyle=mAccent;ctx.fillRect(blade*.55+12,-10,9,8);ctx.fillRect(blade*.55+12,2,9,8)}
+ else {ctx.fillStyle=mBody;ctx.fillRect(12,-5,blade,10);ctx.fillStyle=mAccent;ctx.beginPath();ctx.moveTo(blade+12,-9);ctx.lineTo(blade+28,0);ctx.lineTo(blade+12,9);ctx.closePath();ctx.fill();ctx.fillStyle='#d6b78b';ctx.fillRect(12,-7,Math.max(10,blade*.18),14)}ctx.restore();
+ if(m.fused){ctx.save();ctx.rotate((m.fusionSeed%628)/100);ctx.strokeStyle=mAccent;ctx.lineWidth=3;ctx.beginPath();ctx.arc(blade*.52,0,7+(m.fusionSeed%6),-.9,1.9);ctx.stroke();ctx.fillStyle=mBody;ctx.beginPath();ctx.moveTo(blade*.42,-9);ctx.lineTo(blade*.52,-16);ctx.lineTo(blade*.62,-9);ctx.lineTo(blade*.52,-2);ctx.closePath();ctx.fill();ctx.restore()}
  // The held gun has a unique body/barrel color and silhouette.
- ctx.save();ctx.rotate(ang);const gn=guns[equipped.guns],gnm=gn.name.toLowerCase();let gunColor='#cbd5e1',barrel='#64748b';if(gnm.includes('laser')||gnm.includes('beam')||gnm.includes('prism')||gnm.includes('plasma')){gunColor='#22d3ee';barrel='#a5f3fc'}else if(gnm.includes('rocket')||gnm.includes('mortar')||gnm.includes('grenade')||gnm.includes('cannon')){gunColor='#fb923c';barrel='#7c2d12'}else if(gnm.includes('rail')||gnm.includes('lance')){gunColor='#a78bfa';barrel='#e9d5ff'}else if(gnm.includes('shotgun')||gnm.includes('flak')||gnm.includes('scatter')){gunColor='#d6b78b';barrel='#854d0e'}else if(gnm.includes('void')||gnm.includes('black hole')||gnm.includes('eclipse')){gunColor='#7c3aed';barrel='#ddd6fe'}
- ctx.fillStyle='#334155';ctx.fillRect(8,-5,28,10);ctx.fillStyle=gunColor;ctx.fillRect(12,-6,23,12);ctx.fillStyle=barrel;ctx.fillRect(30,-4,14,8);ctx.fillStyle=accent;ctx.fillRect(16,-3,Math.max(3,Math.min(13,gn.dmg/40)),2);if(gnm.includes('dual')||gnm.includes('double')||gnm.includes('tri')){ctx.fillStyle=gunColor;ctx.fillRect(28,2,16,5)}if(gnm.includes('minigun')||gnm.includes('drum')){ctx.fillStyle='#94a3b8';ctx.beginPath();ctx.arc(21,0,7,0,Math.PI*2);ctx.fill();ctx.fillStyle=barrel;ctx.fillRect(25,-8,18,4);ctx.fillRect(25,4,18,4)}ctx.restore();ctx.restore();
+ ctx.save();ctx.rotate(ang);const gn=guns[equipped.guns],gnm=gn.name.toLowerCase();let gunColor=gn.fused?(gn.fusionColor||'#a78bfa'):'#cbd5e1',barrel=gn.fused?(gn.fusionAccent||'#f0abfc'):'#64748b';if(gnm.includes('laser')||gnm.includes('beam')||gnm.includes('prism')||gnm.includes('plasma')){gunColor='#22d3ee';barrel='#a5f3fc'}else if(gnm.includes('rocket')||gnm.includes('mortar')||gnm.includes('grenade')||gnm.includes('cannon')){gunColor='#fb923c';barrel='#7c2d12'}else if(gnm.includes('rail')||gnm.includes('lance')){gunColor='#a78bfa';barrel='#e9d5ff'}else if(gnm.includes('shotgun')||gnm.includes('flak')||gnm.includes('scatter')){gunColor='#d6b78b';barrel='#854d0e'}else if(gnm.includes('void')||gnm.includes('black hole')||gnm.includes('eclipse')){gunColor='#7c3aed';barrel='#ddd6fe'}
+ ctx.fillStyle=gn.fused?barrel:'#334155';ctx.fillRect(8,-5,28,10);ctx.fillStyle=gunColor;ctx.fillRect(12,-6,23,12);ctx.fillStyle=barrel;ctx.fillRect(30,-4,14,8);ctx.fillStyle=gn.fused?accent:accent;ctx.fillRect(16,-3,Math.max(3,Math.min(13,gn.dmg/40)),2);if(gn.fused){const fs=gn.fusionSeed||0;ctx.fillStyle=barrel;ctx.beginPath();ctx.moveTo(15,-7);ctx.lineTo(21,-13-(fs%5));ctx.lineTo(27,-7);ctx.closePath();ctx.fill();ctx.fillRect(18,7,5,4);ctx.fillStyle=gunColor;ctx.beginPath();ctx.arc(25,0,3+(fs%4),0,Math.PI*2);ctx.fill();if(fs%2){ctx.fillStyle=barrel;ctx.fillRect(33,-9,4,4);ctx.fillRect(33,5,4,4)}else{ctx.strokeStyle=barrel;ctx.lineWidth=2;ctx.beginPath();ctx.arc(22,0,10,0,Math.PI*2);ctx.stroke()}}if(gnm.includes('dual')||gnm.includes('double')||gnm.includes('tri')){ctx.fillStyle=gunColor;ctx.fillRect(28,2,16,5)}if(gnm.includes('minigun')||gnm.includes('drum')){ctx.fillStyle='#94a3b8';ctx.beginPath();ctx.arc(21,0,7,0,Math.PI*2);ctx.fill();ctx.fillStyle=barrel;ctx.fillRect(25,-8,18,4);ctx.fillRect(25,4,18,4)}ctx.restore();ctx.restore();
  ctx.fillStyle='#0009';ctx.fillRect(12,12,300,76);ctx.fillStyle='#fff';ctx.font='bold 15px system-ui';ctx.fillText('HP',22,34);ctx.fillStyle='#ef4444';ctx.fillRect(58,23,200,13);ctx.fillStyle='#22c55e';ctx.fillRect(58,23,200*Math.max(0,hp/maxHp),13);ctx.fillStyle='#dbeafe';ctx.font='13px system-ui';ctx.fillText('Gun: '+guns[equipped.guns].name,22,56);ctx.fillText('Melee: '+melee[equipped.melee].name,22,76);ctx.fillText('Shield: '+shields[equipped.shields].name+' '+Math.ceil(shieldHp)+'/'+shieldMax()+(shieldCooldown>0?' · '+shieldCooldown.toFixed(1)+'s':''),22,101);ctx.fillStyle='#ffd166';ctx.fillText('Gold: '+Math.floor(gold),22,122);
  ctx.fillStyle='#dbeafe';ctx.font='bold 13px system-ui';ctx.fillText('Bosses: '+bossesDefeated+' defeated',W-230,24);ctx.fillStyle='#22c55e';ctx.fillText('Green + = healing · Gold = coins',W-300,44);
 }
@@ -557,9 +480,10 @@ function update(dt){
 if(worldBossT<=0){worldBossT=70+Math.random()*65;spawnWorldBoss();say('🌋 WORLD BOSS EVENT! AN EXTREMELY POWERFUL WORLD BOSS HAS ARRIVED!');
 }
  if(invulnUntil>gameTime&&Math.floor(gameTime*5)%2===0){ctx.save();ctx.strokeStyle='#67e8f9';ctx.lineWidth=4;ctx.beginPath();ctx.arc(W/2,H/2,32,0,Math.PI*2);ctx.stroke();ctx.restore()}
- bullets.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;for(const e of enemies){if(b.life>0&&Math.hypot(b.x-e.x,b.y-e.y)<e.r+(b.rocket?9:4)){e.hp-=b.dmg*(e.supported?.72:1);b.life=0;if(b.rocket){enemies.forEach(other=>{if(Math.hypot(other.x-b.x,other.y-b.y)<90)other.hp-=b.dmg*.45})}}}});
+ bullets.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;for(const e of enemies){if(b.life>0&&Math.hypot(b.x-e.x,b.y-e.y)<e.r+(b.rocket?9:4)){e.hp-=b.dmg*(e.supported?.72:1);b.life=0;
+ if(b.rocket){enemies.forEach(other=>{if(Math.hypot(other.x-b.x,other.y-b.y)<90)other.hp-=b.dmg*.45})}}}});
  bullets=bullets.filter(b=>b.life>0);
- enemies.forEach(e=>{e.supported=false});enemies.forEach(supporter=>{if(supporter.behavior==='support')enemies.forEach(other=>{if(other!==supporter&&Math.hypot(other.x-supporter.x,other.y-supporter.y)<105)other.supported=true})});enemies.forEach(e=>{const dx=px-e.x,dy=py-e.y,d=Math.hypot(dx,dy),a=Math.atan2(dy,dx),b=e.behavior||'chase';
+ enemies.forEach(e=>{if(e.burnUntil>gameTime)e.hp-=(e.burnDmg||0)*dt; e.supported=false});enemies.forEach(supporter=>{if(supporter.behavior==='support')enemies.forEach(other=>{if(other!==supporter&&Math.hypot(other.x-supporter.x,other.y-supporter.y)<105)other.supported=true})});enemies.forEach(e=>{const dx=px-e.x,dy=py-e.y,d=Math.hypot(dx,dy),a=Math.atan2(dy,dx),b=e.behavior||'chase';
    if(b==='shoot'||b==='burst'||b==='sniper'||b==='mortar'){
      e.shotT-=dt;const sx=W/2+e.x-px,sy=H/2+e.y-py,onScreen=sx>=0&&sx<=W&&sy>=0&&sy<=H;
      const preferred=b==='sniper'?390:b==='mortar'?310:220;if(d<preferred-45){e.x-=Math.cos(a)*e.speed*.75*dt;e.y-=Math.sin(a)*e.speed*.75*dt}else if(d>preferred+70){e.x+=Math.cos(a)*e.speed*.55*dt;e.y+=Math.sin(a)*e.speed*.55*dt}
@@ -581,46 +505,41 @@ if(worldBossT<=0){worldBossT=70+Math.random()*65;spawnWorldBoss();say('🌋 WORL
  const pickup=skins[equipped.skins].name==='Magnet'?85:26;
  loot=loot.filter(l=>{if(Math.hypot(px-l.x,py-l.y)<pickup){gold+=l.v;return false}return true});
  healLoot=healLoot.filter(l=>{if(Math.hypot(px-l.x,py-l.y)<30){hp=Math.min(maxHp,hp+l.v);say('Picked up a green heal: +'+l.v+' HP!');return false}return true});
- if(hp<=0){hp=0;gameOver=true;highScores.push({score:Math.floor(score),gold:Math.floor(gold),date:new Date().toLocaleDateString()});highScores.sort((a,b)=>b.score-a.score);highScores=highScores.slice(0,10);localStorage.setItem('monsterMayhemHighScores',JSON.stringify(highScores));$('finalscore').textContent='Final score: '+Math.floor(score)+' · Gold collected: '+Math.floor(gold)+'\n\n🏆 LOCAL TOP SCORES\n'+highScores.slice(0,5).map((r,i)=>(i+1)+'. '+r.score+' points · '+r.date).join('\n');$('overlay').style.display='flex'}
+ if(hp<=0){hp=0;gameOver=true;highScores.push({score:Math.floor(score),gold:Math.floor(gold),date:new Date().toLocaleDateString()});highScores.sort((a,b)=>b.score-a.score);highScores=highScores.slice(0,10);safeStorage.setItem('monsterMayhemHighScores',JSON.stringify(highScores));saveProgress(true);$('finalscore').textContent='Final score: '+Math.floor(score)+' · Gold collected: '+Math.floor(gold)+'\n\n🏆 LOCAL TOP SCORES\n'+highScores.slice(0,5).map((r,i)=>(i+1)+'. '+r.score+' points · '+r.date).join('\n');$('overlay').style.display='flex'}
  if(activeTab==='secret')renderShop();updateHUD();
 }
 function loop(t){const dt=Math.min(.033,(t-last)/1000);last=t;update(dt);draw();if(paused){ctx.fillStyle='#020617b8';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font='bold 52px system-ui';ctx.fillText('PAUSED',W/2,H/2);ctx.font='18px system-ui';ctx.fillText('Your run saves automatically · press Resume to continue',W/2,H/2+38);ctx.textAlign='left'}requestAnimationFrame(loop)}
 function saveProgress(silent=false){
- const data={gold,score,levels,shieldHp,shieldCooldown,hp,maxHp,px,py,bullets,enemyBullets,enemies,loot,healLoot,chests,spawnT,chestT,bossT,gameTime,bossesDefeated,evolutionTier,eventT,worldBossT,invulnUntil,guns,melee,unlockedRecipes:[...unlockedRecipes],unlocked:{guns:[...unlocked.guns],melee:[...unlocked.melee],skins:[...unlocked.skins],shields:[...unlocked.shields],secret:[...unlocked.secret]},equipped,weaponMode,secretShopUnlocked};
- try{localStorage.setItem('monsterMayhemGoldEditionSaveV1',JSON.stringify(data));if(!silent)say('Progress saved automatically in this browser!');return true}catch(err){if(!silent)say('Could not save progress in this browser.');return false}
+ const data={gold,score,levels,shieldHp,shieldCooldown,hp,maxHp,px,py,bullets,enemyBullets,enemies,loot,healLoot,chests,spawnT,chestT,bossT,gameTime,bossesDefeated,evolutionTier,eventT,worldBossT,invulnUntil,guns,melee,skins,shields,fusionSerial,fusionCategory,unlocked:{guns:[...unlocked.guns],melee:[...unlocked.melee],skins:[...unlocked.skins],shields:[...unlocked.shields],secret:[...unlocked.secret]},equipped,weaponMode,secretShopUnlocked};
+ try{safeStorage.setItem('monsterMayhemGoldEditionSaveV1',JSON.stringify(data));if(!silent)say('Progress saved automatically in this browser!');return true}catch(err){if(!silent)say('Could not save progress in this browser.');return false}
 }
 function loadProgress(){
- try{const raw=localStorage.getItem('monsterMayhemGoldEditionSaveV1');if(!raw){say('No saved run found yet.');return false}const d=JSON.parse(raw);
- // A run saved during page exit may already be over. Do not revive a zero-HP run.
- if(!Number.isFinite(Number(d.hp))||Number(d.hp)<=0){reset();say('Your previous run had ended. A fresh run is ready!');return false}
- // Restore the full arsenal too, including fusion weapons crafted during this run.
+ try{const raw=safeStorage.getItem('monsterMayhemGoldEditionSaveV1');if(!raw){say('No saved run found yet.');return false}const d=JSON.parse(raw);
+ // Restore the full arsenal first, even if the previous run ended, so fused weapons and purchases survive death.
  if(Array.isArray(d.guns))guns.splice(0,guns.length,...d.guns);
  if(Array.isArray(d.melee))melee.splice(0,melee.length,...d.melee);
- gold=d.gold;score=d.score;if(d.secretShopUnlocked===true){secretShopUnlocked=true;localStorage.setItem('monsterMayhemSecretShopUnlocked','true')}evolutionTier=d.evolutionTier||0;eventT=d.eventT??75;worldBossT=d.worldBossT??70;invulnUntil=d.invulnUntil||0;if(d.unlockedRecipes){unlockedRecipes=new Set(d.unlockedRecipes);localStorage.setItem('monsterMayhemFusionRecipes',JSON.stringify([...unlockedRecipes]))}levels=d.levels||{guns:{},melee:{},skins:{},shields:{}};shieldHp=d.shieldHp??(shields[0].hp);shieldCooldown=d.shieldCooldown||0;hp=d.hp;maxHp=d.maxHp;px=d.px;py=d.py;bullets=d.bullets||[];enemyBullets=d.enemyBullets||[];enemies=d.enemies||[];loot=d.loot||[];healLoot=d.healLoot||[];chests=d.chests||[];spawnT=d.spawnT||0;chestT=d.chestT||0;bossT=d.bossT||0;gameTime=d.gameTime||0;weaponMode=d.weaponMode||'gun';bossesDefeated=d.bossesDefeated||0;
+ if(Array.isArray(d.skins))skins.splice(0,skins.length,...d.skins);
+ if(Array.isArray(d.shields))shields.splice(0,shields.length,...d.shields);
+ for(const [kind,arr] of [['guns',guns],['melee',melee]]){for(const item of arr){if(!item||!item.fused)continue;delete item.fusionAbility;if(item.sourceA&&item.sourceB){const baseA=arr.find(w=>w.name===item.sourceA&&!w.fused&&!w.secret),baseB=arr.find(w=>w.name===item.sourceB&&!w.fused&&!w.secret);if(baseA&&baseB){const fixed=createFusedWeapon(kind,baseA,baseB);Object.assign(item,fixed,{cost:Number(item.cost)||fixed.cost,originalPrice:Number(item.originalPrice??item.cost)||fixed.originalPrice});}}}}
+ if(d.unlocked)unlocked={guns:new Set(d.unlocked.guns||[0]),melee:new Set(d.unlocked.melee||[0]),skins:new Set(d.unlocked.skins||[0]),shields:new Set(d.unlocked.shields||[0]),secret:new Set(d.unlocked.secret||[])};
+ if(d.equipped)equipped={guns:0,melee:0,skins:0,shields:0,...d.equipped};
+ if(d.levels)levels=d.levels;
+ if(!Number.isFinite(Number(d.hp))||Number(d.hp)<=0){const carriedGold=Math.max(0,Number(d.gold)||0);reset();gold=carriedGold;updateHUD();renderShop();saveProgress(true);say('Your previous run ended. Your gold, merged weapons, arsenal, and upgrades are saved; a fresh run is ready!');return false}
+ gold=d.gold;score=d.score;if(d.secretShopUnlocked===true){secretShopUnlocked=true;safeStorage.setItem('monsterMayhemSecretShopUnlocked','true')}evolutionTier=d.evolutionTier||0;eventT=d.eventT??75;worldBossT=d.worldBossT??70;invulnUntil=d.invulnUntil||0;fusionSerial=d.fusionSerial||1;fusionCategory=d.fusionCategory||'guns';levels=d.levels||{guns:{},melee:{},skins:{},shields:{}};shieldHp=d.shieldHp??(shields[0].hp);shieldCooldown=d.shieldCooldown||0;hp=d.hp;maxHp=d.maxHp;px=d.px;py=d.py;bullets=d.bullets||[];enemyBullets=d.enemyBullets||[];enemies=d.enemies||[];loot=d.loot||[];healLoot=d.healLoot||[];chests=d.chests||[];spawnT=d.spawnT||0;chestT=d.chestT||0;bossT=d.bossT||0;gameTime=d.gameTime||0;weaponMode=d.weaponMode||'gun';bossesDefeated=d.bossesDefeated||0;
  if(d.unlocked){unlocked={guns:new Set(d.unlocked.guns||[0]),melee:new Set(d.unlocked.melee||[0]),skins:new Set(d.unlocked.skins||[0]),shields:new Set(d.unlocked.shields||[0]),secret:new Set(d.unlocked.secret||[])};for(const i of unlocked.secret){const w=secretWeapons[i];if(!w)continue;if(w.kind==='gun'&&!guns.some(g=>g.name===w.name))guns.push({...w,secret:true});if(w.kind==='melee'&&!melee.some(m=>m.name===w.name))melee.push({...w,secret:true});}}if(d.equipped)equipped={guns:0,melee:0,skins:0,shields:0,...d.equipped};if(!unlocked.shields.has(equipped.shields||0))unlocked.shields.add(equipped.shields||0);shieldHp=Math.min(shieldHp,shieldMax());
  gameOver=false;paused=false;$('overlay').style.display='none';$('pauseBtn').textContent='⏸ Pause';updateHUD();renderShop();say('Saved run loaded!');return true
  }catch(err){say('Save file could not be loaded.');return false}
 }
-function pauseGame(){if(gameOver)return;paused=!paused;$('pauseBtn').textContent=paused?'▶ Resume':'⏸ Pause';if(paused){$('modalTitle').textContent='PAUSED';$('finalscore').textContent='Score: '+Math.floor(score)+' · Gold: '+Math.floor(gold);$('modalHint').textContent='Your run saves automatically in this browser.';$('restart').style.display='none';$('resumeBtn').style.display='inline-block';$('overlay').style.display='flex'}else{$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';}last=performance.now()}
+function pauseGame(){if(gameOver)return;paused=!paused;$('pauseBtn').textContent=paused?'▶ Resume':'⏸ Pause';if(paused){$('modalTitle').textContent='PAUSED';$('finalscore').textContent='Score: '+Math.floor(score)+' · Gold: '+Math.floor(gold);$('modalHint').textContent='Your gold, arsenal, merged weapons, and upgrades remain saved after death.';$('restart').style.display='none';$('resumeBtn').style.display='inline-block';$('overlay').style.display='flex'}else{$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';}last=performance.now()}
 $('rulesBtn').addEventListener('click',()=>{$('rulesOverlay').style.display='flex';paused=true;last=performance.now()});$('closeRulesBtn').addEventListener('click',()=>{$('rulesOverlay').style.display='none';paused=false;$('pauseBtn').textContent='⏸ Pause';last=performance.now()});$('pauseBtn').addEventListener('click',pauseGame);$('newBtn').addEventListener('click',()=>{if(confirm('Start a new run? Your current run is already autosaved.')){reset();saveProgress(true);say('New run started.')}});$('resumeBtn').addEventListener('click',pauseGame);
 window.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(k==='escape'){if($('rulesOverlay').style.display==='flex'){$('rulesOverlay').style.display='none';paused=false;last=performance.now();return}pauseGame();return}if(paused)return;keys.add(k);if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k==='r'&&gameOver)reset();if(k==='q'){weaponMode=weaponMode==='gun'?'melee':'gun';say('Switched to '+weaponMode.toUpperCase()+' mode.');}});
 window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=(e.clientX-r.left)*W/r.width;mouse.y=(e.clientY-r.top)*H/r.height});
 canvas.addEventListener('mousedown',e=>{if(e.button===0)mouse.down=true;if(e.button===2)swing()});window.addEventListener('mouseup',()=>mouse.down=false);canvas.addEventListener('contextmenu',e=>e.preventDefault());
 function reset(){
- // Fusion weapons are run-only: remove them on every new run, while keeping permanent purchases and recipe unlocks.
- const fusedNames=new Set(fusionRecipes.map(r=>r.name));
- const previousGuns=guns.map((gun,index)=>({gun,index}));
- const previousEquippedGun=equipped.guns;
- const keptGuns=previousGuns.filter(entry=>!entry.gun.fused&&!fusedNames.has(entry.gun.name));
- const remap=new Map();keptGuns.forEach((entry,newIndex)=>remap.set(entry.index,newIndex));
- guns.splice(0,guns.length,...keptGuns.map(entry=>entry.gun));
- const previousMelee=melee.map((weapon,index)=>({weapon,index}));const previousEquippedMelee=equipped.melee;const keptMelee=previousMelee.filter(entry=>!entry.weapon.fused);const meleeRemap=new Map();keptMelee.forEach((entry,newIndex)=>meleeRemap.set(entry.index,newIndex));melee.splice(0,melee.length,...keptMelee.map(entry=>entry.weapon));unlocked.melee=new Set([...unlocked.melee].filter(index=>meleeRemap.has(index)).map(index=>meleeRemap.get(index)));equipped.melee=meleeRemap.has(previousEquippedMelee)?meleeRemap.get(previousEquippedMelee):0;
- unlocked.guns=new Set([...unlocked.guns].filter(index=>remap.has(index)).map(index=>remap.get(index)));
- equipped.guns=remap.has(previousEquippedGun)?remap.get(previousEquippedGun):0;
  gold=0;score=0;playerDisruptUntil=0;hp=maxHp=100;shieldHp=shieldMax();shieldCooldown=0;px=py=0;bullets=[];enemyBullets=[];enemies=[];loot=[];healLoot=[];chests=[];gameOver=false;paused=false;gameTime=0;playerBladeAngle=0;bossesDefeated=0;spawnT=.5;chestT=4;bossT=25;worldBossT=55+Math.random()*35;eventT=75+Math.random()*35;autoSaveT=3;invulnUntil=0;evolutionTier=0;weaponMode='gun';swingAnim=0;$('overlay').style.display='none';$('restart').style.display='inline-block';$('resumeBtn').style.display='none';$('pauseBtn').textContent='⏸ Pause';last=performance.now();updateHUD()}
-$('restart').addEventListener('click',reset);
-renderShop();reset();if(localStorage.getItem('monsterMayhemGoldEditionSaveV1'))loadProgress();window.addEventListener('pagehide',()=>saveProgress(true));document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgress(true)});requestAnimationFrame(loop);
+$('restart').addEventListener('click',()=>{reset();saveProgress(true);renderShop()});
+renderShop();reset();if(safeStorage.getItem('monsterMayhemGoldEditionSaveV1'))loadProgress();window.addEventListener('pagehide',()=>saveProgress(true));document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgress(true)});requestAnimationFrame(loop);
 })();
 </script>
 </body>
