@@ -33,7 +33,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 <main>
 <section class="gamewrap">
 <canvas id="game" width="1100" height="700"></canvas>
-<div class="gamecontrols"><button id="pauseBtn">⏸ Pause</button><button id="newBtn">↻ New Run</button><button id="rulesBtn">📖 Rules</button></div><div class="help">Move: <b>WASD / Arrow keys</b> · Aim: <b>Mouse (gun focus)</b> · Attack: <b>Hold left-click / Space</b> · Switch focus: <b>Q</b> · Secret Shop: <b>pay 100,000 gold to unlock</b><br>Gun focus: your gun fires toward the mouse at full damage; melee spins automatically at 75% damage. Melee focus: your gun automatically targets the nearest enemy at 75% damage without mouse aiming; hold left-click or Space to use melee at full damage. Death costs half your current gold (rounded down), but your arsenal and upgrades persist.</div>
+<div class="gamecontrols"><button id="pauseBtn">⏸ Pause</button><button id="newBtn">↻ New Run</button><button id="rulesBtn">📖 Rules</button></div><div class="help">Move: <b>WASD / Arrow keys</b> · Aim: <b>Mouse (gun focus)</b> · Attack: <b>Hold left-click / Space</b> · Switch focus: <b>Q</b> · Secret Shop: <b>pay 100,000 gold to unlock</b><br>Gun focus: your gun fires toward the mouse at full damage; melee spins automatically at 75% damage. Melee focus: your gun automatically targets the nearest enemy at 75% damage without mouse aiming; hold left-click or Space to use melee at full damage. Death resets your gold to 0, but your arsenal and upgrades persist.</div>
 </section>
 <aside class="shop">
 <div class="shophead"><h2>🛒 Arsenal & Skins</h2><p>Purchase once, then equip whenever you want. Your gold is only charged on a successful purchase.</p>
@@ -48,12 +48,12 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding:12p
 <h3>🪙 3. Gold, score, and drops</h3><p>Gold is the only spendable currency. Defeat enemies, collect their gold drops, open gold chests by shooting them, and take advantage of random events. Walk close to gold drops to collect them. Green pickups restore health. Score increases as enemies are defeated; your best score is tracked separately.</p>
 <h3>🛒 4. Equipment shop</h3><p><b>Guns:</b> buy and equip ranged weapons. <b>Melee:</b> buy and equip close-combat weapons. <b>Skins:</b> provide different character bonuses. <b>Shields:</b> absorb incoming damage before it reaches health. You keep one gun, one melee weapon, one skin, and one shield equipped at a time. Purchased equipment stays owned between runs unless you sell it.</p><p>Fused equipment appears only in the <b>Merged</b> section, not in the regular Guns, Melee, Skins, or Shields lists. Use Merged to equip or sell fused items.</p>
 <h3>⬆️ 5. Upgrades and full refunds</h3><p>The Upgrades section upgrades your currently equipped gun, melee weapon, skin, and shield. Each level costs gold and improves that item; the next upgrade costs more than the previous one. Selling an item refunds its full purchase price plus every gold coin spent upgrading it. The upgrade levels are removed when the item is sold.</p>
-<h3>⚗️ 6. Fusion Station and Merged equipment</h3><p>At the Fusion Station, choose a category—guns, melee weapons, skins, or shields—and combine <b>two different owned basic items from the same category</b> for a 1,000-gold fusion fee. Both ingredients are consumed and replaced by a unique fused item. You cannot use an item twice in the same recipe, or fuse already-fused or Secret Shop items. Fusion value carries the ingredients' purchase costs and their upgrade investments into the new item's resale value, along with the fusion fee. Fused equipment is listed in Merged, where you can equip it or sell it.</p>
+<h3>⚗️ 6. Fusion Station and Merged equipment</h3><p>At the Fusion Station, choose a category—guns, melee weapons, skins, or shields—and combine <b>two different owned non-fused items from the same category</b> for a 1,000-gold fusion fee. Both ingredients are consumed and replaced by a unique fused item. You cannot use an item twice in the same recipe or fuse already-fused items. Secret Shop items can be fused with other owned items of the same category. Fusion value carries the ingredients' purchase costs and their upgrade investments into the new item's resale value, along with the fusion fee. Fused equipment is listed in Merged, where you can equip it or sell it.</p>
 <h3>🛡️ 7. Shields and health</h3><p>Shield points absorb incoming damage before health. If a hit breaks the shield, any leftover damage carries over to health. After a shield is depleted, it begins a 10-second recharge; when the countdown finishes, it refills to its current maximum. Avoid contact damage and enemy projectiles, and collect green healing drops to restore health.</p>
 <h3>👾 8. Enemies, bosses, and evolution</h3><p>Enemies have different movement and attack patterns. Ranged enemies fire projectiles, while melee-weapon enemies—including Knife Stabbers, Swordfighters, Axe Maniacs, Hammer Brutes, Spear Guards, Dual-Blade Assassins, Reapers, and the original Blade Stalker—pursue you and attack at close range. Melee-weapon enemies are deliberately more common. Regular enemies grow tougher as score and survival time increase. Every 2.5 minutes, enemy evolution raises enemy strength and gold rewards. Boss versions of enemy types appear during the run, and world bosses are especially dangerous and pay larger rewards.</p>
 <h3>🌪️ 9. Random events and special objects</h3><p>Random events may grant bonus gold, create nearby treasure drops, heal you, or temporarily make you invincible. Gold chests appear around the arena; shoot a chest to open it and reveal a gold reward. Keep moving so enemies cannot surround you.</p>
-<h3>🌌 10. Secret Shop</h3><p>Pay 100,000 gold once to permanently unlock the Secret Shop in this browser. Its high-cost cosmic weapons are purchased with gold. Unlocking the shop is separate from buying its items.</p>
-<h3>💀 11. Death, saving, and survival</h3><p>When health reaches zero, the run ends and you keep <b>half of your current gold, rounded down</b>. Your purchased arsenal, merged equipment, and upgrade progress persist. The game autosaves in this browser, so reopening it in the same browser profile can restore your progress. Best score is tracked separately. Use Play Again to begin another run.</p>
+<h3>🌌 10. Secret Shop</h3><p>Open the Secret Shop tab and click <b>PAY 100,000 GOLD</b>. If you have enough gold, the fee is deducted immediately and the shop opens; if you do not, the game tells you how much more you need. Unlocking is permanent in this browser. Its expanded cosmic arsenal includes guns, melee weapons, skins, and shields; each item must still be purchased separately with gold. Secret Shop items can also be used at the Fusion Station.</p>
+<h3>💀 11. Death, saving, and survival</h3><p>When health reaches zero, the run ends and all carried gold is immediately lost: your gold becomes <b>0</b>. Starting another run does not restore it. Your purchased arsenal, merged equipment, and upgrade progress persist. The game autosaves in this browser, so reopening it in the same browser profile can restore your progress. Best score is tracked separately. Use Play Again to begin another run.</p>
 <div style="text-align:right"><button class="action" id="closeRulesBtn">Got it — let's play!</button></div></div></div>
 <div class="overlay" id="overlay"><div class="modal"><h2 id="modalTitle">GAME OVER</h2><p id="finalscore"></p><p id="modalHint">Ready to try for a new record?</p><button class="action" id="restart">Play Again</button><button class="action" id="resumeBtn" style="display:none;background:#267b5a">Resume</button></div></div>
 <script>
@@ -114,23 +114,40 @@ const extraMeleeBlueprints=[
  ['Hook Blades',72,220,76,2600,'Twin curved blades with quick sweeps.'],['War Pick',135,520,68,3200,'A pointed armor-breaking pick.'],['Glaive',115,340,118,3900,'A long polearm with a crescent edge.'],['Flail',145,490,96,4700,'A weighted head on a short chain.'],['Tonfa Pair',68,190,63,5400,'Fast defensive paired strikes.'],['Crystal Axe',185,570,82,7200,'A faceted crystal chopping head.'],['Thunder Staff',145,360,108,9000,'A crackling staff with long reach.'],['Twin Daggers',52,150,62,10200,'Very fast dual close-range blades.'],['Anchor Maul',265,780,72,12500,'A massive anchor-shaped hammer.'],['Moon Crescent',178,430,112,14800,'A curved blade with a wide arc.'],['Chain Whip',95,280,145,17000,'The longest regular reach.'],['Sawblade',205,420,84,19500,'A toothed spinning blade.'],['Frostbrand',230,380,102,22500,'A pale-blue ice sword.'],['Flame Knuckles',155,230,60,25500,'Heavy glowing fists.'],['Guardian Spear',245,470,145,29000,'A reinforced long spear.'],['Prism Scythe',310,510,125,33000,'A prismatic sweeping scythe.'],['Meteor Hammer',360,850,96,37000,'A heavy impact weapon.'],['Phase Katana',285,260,110,41500,'A blade with a violet afterimage.'],['Star Mace',395,700,82,46500,'A spiked celestial mace.'],['Aurora Edge',430,340,132,52000,'A luminous blade with shifting colors.']
 ];
 for(const [name,dmg,rate,range,cost,desc] of extraMeleeBlueprints) melee.push({name,dmg,rate,range,cost,desc});
-const secretWeapons=[];
+const secretItems=[];
 for(let i=0;i<18;i++){
  const tier=i+1;
- secretWeapons.push({kind:'gun',name:['WORLDENDER','BLACK HOLE','GODRAY','APOCALYPSE','REALITY RIPPER','INFINITY CANNON'][i%6]+' '+(Math.floor(i/6)+1),dmg:1800+tier*1200,rate:Math.max(18,110-tier*4),speed:700+tier*35,count:3+(tier%5),spread:.04, cost:250000+tier*175000,desc:'SECRET WEAPON · absurd damage and spectacular firepower.'});
+ secretItems.push({kind:'gun',name:['WORLDENDER','BLACK HOLE','GODRAY','APOCALYPSE','REALITY RIPPER','INFINITY CANNON'][i%6]+' '+(Math.floor(i/6)+1),dmg:1800+tier*1200,rate:Math.max(18,110-tier*4),speed:700+tier*35,count:3+(tier%5),spread:.04, cost:250000+tier*175000,desc:'SECRET WEAPON · absurd damage and spectacular firepower.'});
 }
 for(let i=0;i<12;i++){
  const tier=i+1;
- secretWeapons.push({kind:'melee',name:['VOID REAPER','STAR-SPLITTER','OMEGA BLADE','COSMIC MAUL'][i%4]+' '+(Math.floor(i/4)+1),dmg:3200+tier*2400,rate:Math.max(90,300-tier*12),range:180+tier*9,cost:300000+tier*250000,desc:'SECRET MELEE · a screen-clearing spinning weapon.'});
+ secretItems.push({kind:'melee',name:['VOID REAPER','STAR-SPLITTER','OMEGA BLADE','COSMIC MAUL'][i%4]+' '+(Math.floor(i/4)+1),dmg:3200+tier*2400,rate:Math.max(90,300-tier*12),range:180+tier*9,cost:300000+tier*250000,desc:'SECRET MELEE · a screen-clearing spinning weapon.'});
 }
 for(let i=0;i<24;i++){
  const tier=i+19;
- secretWeapons.push({kind:'gun',name:['ECLIPSE DRIVER','QUASAR STORM','NEBULA BREAKER','TIME SHATTER','VOID BLOOM','CELESTIAL ENGINE'][i%6]+' Ω-'+(Math.floor(i/6)+1),dmg:2600+tier*950,rate:Math.max(14,95-tier*2),speed:850+tier*28,count:2+(tier%6),spread:.035,cost:420000+tier*95000,desc:'SECRET GUN · a distinct cosmic weapon with escalating firepower.'});
+ secretItems.push({kind:'gun',name:['ECLIPSE DRIVER','QUASAR STORM','NEBULA BREAKER','TIME SHATTER','VOID BLOOM','CELESTIAL ENGINE'][i%6]+' Ω-'+(Math.floor(i/6)+1),dmg:2600+tier*950,rate:Math.max(14,95-tier*2),speed:850+tier*28,count:2+(tier%6),spread:.035,cost:420000+tier*95000,desc:'SECRET GUN · a distinct cosmic weapon with escalating firepower.'});
 }
 for(let i=0;i<16;i++){
  const tier=i+13;
- secretWeapons.push({kind:'melee',name:['DIMENSION CLEAVER','EVENT-HORIZON SCYTHE','NOVA MAUL','INFINITY FANG'][i%4]+' Ω-'+(Math.floor(i/4)+1),dmg:5200+tier*1750,rate:Math.max(75,260-tier*7),range:195+tier*5,cost:650000+tier*145000,desc:'SECRET MELEE · a cosmic weapon with a unique silhouette.'});
+ secretItems.push({kind:'melee',name:['DIMENSION CLEAVER','EVENT-HORIZON SCYTHE','NOVA MAUL','INFINITY FANG'][i%4]+' Ω-'+(Math.floor(i/4)+1),dmg:5200+tier*1750,rate:Math.max(75,260-tier*7),range:195+tier*5,cost:650000+tier*145000,desc:'SECRET MELEE · a cosmic weapon with a unique silhouette.'});
 }
+// Expanded Secret Shop: additional weapons, elite suits, and cosmic shields.
+const secretGunBlueprints=[
+ ['STAR-EATER',6800,44,1650,5,.08,3200000],['NULL CANNON',9200,95,1300,2,.02,3800000],['OMNIVERSE BREAKER',12500,150,1900,3,.01,4600000],['SUPERNOVA REPEATER',4200,18,1750,4,.12,2850000],['DARK-MATTER SIEGE',11000,180,780,2,.1,4300000],['CHRONO LANCE',15000,260,2200,1,0,5200000],['GOD PARTICLE ARRAY',7600,35,1800,6,.04,3500000],['REALITY COLLAPSE',18500,300,980,1,.02,6200000],['INFINITE SUNBURST',8700,58,1450,7,.22,4100000],['VOID SINGULARITY',22000,420,1150,1,0,7500000],['CELESTIAL DOOMDRUM',5900,24,1500,8,.18,3900000],['DIMENSIONAL FLAKSTORM',6400,80,1200,12,.6,4400000],['QUANTUM EXECUTIONER',19500,350,2400,1,0,6900000],['ENDTIME PROJECTOR',13500,120,1600,4,.08,5700000],['COSMIC HAILSTORM',4800,16,1700,5,.15,3300000],['ABSOLUTE ZERO RAY',10200,70,2000,2,.005,4900000],['INFINITY CASCADE',8200,32,1550,9,.2,5400000],['FINAL HORIZON',26000,500,2600,1,0,9000000]
+];
+for(let i=0;i<secretGunBlueprints.length;i++){const [name,dmg,rate,speed,count,spread,cost]=secretGunBlueprints[i];secretItems.push({kind:'gun',name,dmg,rate,speed,count,spread,cost,desc:'SECRET GUN · '+name+' tears through the late-game battlefield.',secretTier:2});}
+const secretMeleeBlueprints=[
+ ['WORLD-SPLITTER',9800,180,260,3600000],['ETERNAL NIGHT REAPER',11500,210,280,4200000],['GALAXY DEVOURER',14500,250,300,5100000],['OMEGA STARFORGE',17200,320,290,5900000],['TIMELINE CLEAVER',13300,170,340,4700000],['VOID EMPEROR FANG',16000,190,310,5500000],['APOCALYPSE HALBERD',18800,360,355,6700000],['INFINITY MAUL PRIME',22500,420,300,7800000],['CELESTIAL EXECUTION',20500,230,370,7200000],['REALITY-SUNDERING EDGE',25000,280,390,8800000],['DREADNOVA SCYTHE',17800,150,410,6500000],['LAST JUDGMENT AXE',28000,500,320,9800000]
+];
+for(const [name,dmg,rate,range,cost] of secretMeleeBlueprints)secretItems.push({kind:'melee',name,dmg,rate,range,cost,desc:'SECRET MELEE · a legendary cosmic weapon with overwhelming reach.',secretTier:2});
+const secretSkinBlueprints=[
+ ['Paradox Sovereign',1.55,.52,2.15,'#7c3aed','#f0abfc',1800000],['Void Emperor',1.45,.48,2.3,'#111827','#c084fc',2200000],['Genesis Prime',1.6,.55,2.05,'#fef08a','#22d3ee',2500000],['Abyssal Monarch',1.4,.5,2.4,'#312e81','#f472b6',2900000],['Quantum Seraph',1.7,.58,1.95,'#67e8f9','#ffffff',3200000],['Endless Eclipse',1.52,.42,2.25,'#1e1b4b','#fb7185',3700000],['Chrono Dragonlord',1.62,.5,2.35,'#b91c1c','#fde047',4200000],['Omniversal Champion',1.75,.45,2.5,'#4338ca','#f0abfc',5000000],['Star-Eater Mantle',1.58,.4,2.6,'#020617','#38bdf8',5800000],['Final Form: Eternity',1.8,.38,2.5,'#f8fafc','#a78bfa',7000000],['Neutron Phantom',1.68,.46,2.32,'#0f766e','#a7f3d0',4600000],['Apocalypse Avatar',1.5,.35,2.8,'#7f1d1d','#fb923c',6500000],['Primal Singularity',1.72,.4,2.65,'#581c87','#67e8f9',7600000],['The Last Constant',1.78,.36,2.7,'#0f172a','#fef08a',8500000],['Infinite Paragon',1.8,.34,2.8,'#1d4ed8','#f9a8d4',10000000]
+];
+for(const [name,speed,rate,dmg,color,accent,cost] of secretSkinBlueprints)secretItems.push({kind:'skin',name,speed,rate,dmg,color,accent,cost,desc:'SECRET SKIN · '+name+' grants elite movement and combat bonuses.',secretTier:2});
+const secretShieldBlueprints=[
+ ['Eventide Worldwall',6200,'#312e81','#c4b5fd',1500000],['Genesis Aegis',7600,'#0ea5e9','#fef08a',1900000],['Nullspace Bastion',9000,'#020617','#a78bfa',2400000],['Starheart Citadel',10800,'#f59e0b','#fff7ed',2900000],['Paradox Halo',12500,'#7c3aed','#67e8f9',3500000],['Eternal Dragon Ward',14800,'#991b1b','#fde047',4200000],['Omniversal Sanctuary',17200,'#4338ca','#f0abfc',5000000],['Last Light Fortress',19500,'#f8fafc','#22d3ee',5900000],['Singularity Crown',23000,'#111827','#e879f9',7000000],['Absolute Horizon',27500,'#1e1b4b','#c4b5fd',8200000],['Infinite Worldguard',32000,'#166534','#fef08a',9500000],['Omega Continuum',38000,'#0f172a','#38bdf8',11500000],['The Unbroken',45000,'#334155','#ffffff',14000000],['Reality Anchor',52000,'#581c87','#67e8f9',17000000],['Final Sanctuary',65000,'#030712','#fef08a',22000000]
+];
+for(const [name,hp,color,accent,cost] of secretShieldBlueprints)secretItems.push({kind:'shield',name,hp,color,accent,cost,desc:'SECRET SHIELD · '+name+' provides an immense protective barrier.',secretTier:2});
 const skins=[
 {name:'Normal',speed:1,rate:1,dmg:1,cost:0,desc:'Your standard look.'},
 {name:'Speed',speed:1.45,rate:1,dmg:1,cost:250,desc:'Move much faster.'},
@@ -202,11 +219,11 @@ let bestScore=Number(safeStorage.getItem('monsterMayhemBest')||0),highScores=[];
 let secretShopUnlocked=safeStorage.getItem('monsterMayhemSecretShopUnlocked')==='true';
 let activeTab='guns',gold=0,score=0,hp=100,maxHp=100,px=0,py=0,bullets=[],enemyBullets=[],enemies=[],loot=[],chests=[],keys=new Set(),mouse={x:W/2,y:H/2,down:false},gameOver=false,paused=false,last=performance.now(),spawnT=0,chestT=0,bossT=0,shootT=0,meleeT=0,swingAnim=0,weaponMode='gun',playerMoving=false,gameTime=0,playerBladeAngle=0,playerDisruptUntil=0,fusionSerial=1,fusionCategory='guns';
 function say(s){$('notice').textContent=s}
-function currentList(tab){const byPrice=(a,b)=>a.cost-b.cost;if(tab==='guns')return guns.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused).sort(byPrice);if(tab==='melee')return melee.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused).sort(byPrice);if(tab==='secret')return secretWeapons;if(tab==='shields')return shields.map((x,i)=>({...x,_index:i})).filter(x=>!x.fused).sort(byPrice);if(tab==='skins')return skins.map((x,i)=>({...x,_index:i})).filter(x=>!x.fused).sort(byPrice);return skins}
+function currentList(tab){const byPrice=(a,b)=>a.cost-b.cost;if(tab==='guns')return guns.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused).sort(byPrice);if(tab==='melee')return melee.map((x,i)=>({...x,_index:i})).filter(x=>!x.secret&&!x.fused).sort(byPrice);if(tab==='secret')return secretItems;if(tab==='shields')return shields.map((x,i)=>({...x,_index:i})).filter(x=>!x.fused).sort(byPrice);if(tab==='skins')return skins.map((x,i)=>({...x,_index:i})).filter(x=>!x.fused).sort(byPrice);return skins}
 function itemLabel(tab,i){return currentList(tab)[i].name}
 function isUnlocked(tab,i){return (unlocked[tab]||new Set()).has(i)}
 function select(tab,i){
- if(tab==='guns'||tab==='melee')equipped[tab]=currentList(tab)[i]._index??i;else if(tab==='skins')equipped.skins=currentList(tab)[i]._index??i;else if(tab==='shields'){equipped.shields=currentList(tab)[i]._index??i;shieldHp=shieldMax();shieldCooldown=0;}else if(tab==='secret'){const w=secretWeapons[i];if(w.kind==='gun'){const gi=guns.findIndex(g=>g.name===w.name);if(gi>=0)equipped.guns=gi;}else{const mi=melee.findIndex(m=>m.name===w.name);if(mi>=0)equipped.melee=mi;}}
+ if(tab==='guns'||tab==='melee')equipped[tab]=currentList(tab)[i]._index??i;else if(tab==='skins')equipped.skins=currentList(tab)[i]._index??i;else if(tab==='shields'){equipped.shields=currentList(tab)[i]._index??i;shieldHp=shieldMax();shieldCooldown=0;}else if(tab==='secret'){const w=secretItems[i];if(w.kind==='gun'){const gi=guns.findIndex(g=>g.secretIndex===i);if(gi>=0)equipped.guns=gi;}else if(w.kind==='melee'){const mi=melee.findIndex(m=>m.secretIndex===i);if(mi>=0)equipped.melee=mi;}else if(w.kind==='skin'){const si=skins.findIndex(x=>x.secretIndex===i);if(si>=0)equipped.skins=si;}else if(w.kind==='shield'){const si=shields.findIndex(x=>x.secretIndex===i);if(si>=0){equipped.shields=si;shieldHp=shieldMax();shieldCooldown=0;}}}
  say('Equipped '+itemLabel(tab,i)+'.');renderShop();
 }
 function levelOf(kind,index=equipped[kind]){return Number(levels[kind]?.[index]||0)}
@@ -221,39 +238,61 @@ function renderUpgrades(root){
  for(const kind of ['guns','melee','skins','shields']){const index=equipped[kind],item=kind==='guns'?guns[index]:kind==='melee'?melee[index]:kind==='skins'?skins[index]:shields[index],lvl=levelOf(kind,index),cost=levelCost(kind,index);const card=document.createElement('div');card.className='item';const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent=({guns:'🔫 Equipped Gun',melee:'⚔️ Equipped Melee',skins:'✨ Equipped Skin',shields:'🛡️ Equipped Shield'})[kind]+' · '+item.name;desc.className='desc';desc.textContent='Level '+lvl+' · '+({guns:'+7.5% damage per level',melee:'+7.5% damage and reach per level',skins:'+7.5% combat bonus per level',shields:'+7.5% shield capacity per level'})[kind];price.className='price';price.textContent='Upgrade cost: '+cost+' gold · You have '+Math.floor(gold)+' gold';info.append(name,desc,price);const btn=document.createElement('button');btn.className='action';btn.textContent='UPGRADE';btn.disabled=gold<cost;btn.addEventListener('click',()=>upgradeEquipped(kind));card.append(info,btn);root.append(card)}
 }
 function buyOrEquip(tab,i){
- const list=currentList(tab),item=list[i],actual=item._index??i;
- if(tab==='secret'&&!secretShopUnlocked){say('Secret Shop locked! Pay 100,000 gold to unlock it.');return}
- if(item.fused&&!isUnlocked(tab,actual)){say('Fused weapons can only be crafted at the Fusion station.');return}
- if(isUnlocked(tab,tab==='secret'?i:actual)){select(tab,i);return}
- if(gold<item.cost){say('Not enough gold for '+item.name+'. Need '+(item.cost-gold)+' more gold.');return}
- gold-=item.cost;unlocked[tab].add(tab==='secret'?i:actual);
- if(tab==='secret'){if(item.kind==='gun'){item.secret=true;const existing=guns.findIndex(g=>g.name===item.name);if(existing<0)guns.push({...item,secret:true});equipped.guns=existing>=0?existing:guns.length-1;}else{item.secret=true;const existing=melee.findIndex(m=>m.name===item.name);if(existing<0)melee.push({...item,secret:true});equipped.melee=existing>=0?existing:melee.length-1;}}else if(tab==='guns'||tab==='melee'){equipped[tab]=actual;}else if(tab==='shields'){equipped.shields=actual;shieldHp=shieldMax();shieldCooldown=0;}else equipped.skins=actual;
- say('Purchased '+item.name+' for '+item.cost+' gold!');updateHUD();renderShop();
+ const list=currentList(tab),item=list[i],actual=item?._index??i;
+ if(!item)return;
+ if(tab==='secret'&&!secretShopUnlocked){say('Secret Shop locked — click PAY 100,000 GOLD first.');return}
+ if(item.fused&&!isUnlocked(tab,actual)){say('Fused equipment is created at the Fusion Station.');return}
+ const ownershipIndex=tab==='secret'?i:actual;
+ if(isUnlocked(tab,ownershipIndex)){select(tab,i);return}
+ if(gold<Number(item.cost||0)){say('Not enough gold for '+item.name+'. Need '+Math.max(0,Number(item.cost||0)-gold)+' more gold.');return}
+ gold-=Number(item.cost||0);
+ if(tab==='secret'){
+  unlocked.secret.add(i);
+  const ownedItem={...item,secret:true,secretIndex:i,originalPrice:Number(item.cost)||0};
+  if(item.kind==='gun'){guns.push(ownedItem);const idx=guns.length-1;unlocked.guns.add(idx);equipped.guns=idx;}
+  else if(item.kind==='melee'){melee.push(ownedItem);const idx=melee.length-1;unlocked.melee.add(idx);equipped.melee=idx;}
+  else if(item.kind==='skin'){skins.push(ownedItem);const idx=skins.length-1;unlocked.skins.add(idx);equipped.skins=idx;}
+  else if(item.kind==='shield'){shields.push(ownedItem);const idx=shields.length-1;unlocked.shields.add(idx);equipped.shields=idx;shieldHp=shieldMax();shieldCooldown=0;}
+ }else{
+  unlocked[tab].add(actual);
+  if(tab==='guns'||tab==='melee')equipped[tab]=actual;
+  else if(tab==='shields'){equipped.shields=actual;shieldHp=shieldMax();shieldCooldown=0;}
+  else equipped.skins=actual;
+ }
+ say('Purchased '+item.name+' for '+Number(item.cost||0).toLocaleString()+' gold!');updateHUD();renderShop();saveProgress(true);
 }
+function unlockSecretShop(){
+ if(secretShopUnlocked){say('Secret Shop is already permanently unlocked.');renderShop();return}
+ const fee=100000;
+ if(gold<fee){say('Cannot unlock yet: need '+(fee-Math.floor(gold)).toLocaleString()+' more gold. You have '+Math.floor(gold).toLocaleString()+'.');return}
+ gold=Math.max(0,Math.floor(gold)-fee);secretShopUnlocked=true;
+ safeStorage.setItem('monsterMayhemSecretShopUnlocked','true');
+ updateHUD();saveProgress(true);say('🔓 SECRET SHOP UNLOCKED! 100,000 gold paid.');renderShop();
+}
+
 function sellWeapon(tab,i,providedItem=null){
  const list=currentList(tab),item=providedItem||list[i],actual=item?._index??i;
  if(!item||!['guns','melee','secret','skins','shields'].includes(tab))return;
- if(item.cost<=0){say('Your free starter item stays in your loadout.');return}
- let investmentKind=tab,investmentIndex=actual;
+ let kind=tab,index=actual;
  if(tab==='secret'){
-   investmentKind=item.kind==='gun'?'guns':'melee';
-   investmentIndex=(investmentKind==='guns'?guns:melee).findIndex(w=>w.name===item.name&&w.secret);
+  kind=item.kind==='gun'?'guns':item.kind==='melee'?'melee':item.kind==='skin'?'skins':'shields';
+  const arr=kind==='guns'?guns:kind==='melee'?melee:kind==='skins'?skins:shields;
+  index=arr.findIndex(x=>x.secretIndex===i);
  }
- const upgradesRefund=upgradeInvestment(investmentKind,investmentIndex);const salePrice=(Number(item.cost)||0)+upgradesRefund;
- if(tab==='secret'){
-   if(item.kind==='gun'){const idx=investmentIndex;if(idx>=0){if(equipped.guns===idx)equipped.guns=0;unlocked.guns.delete(idx);delete levels.guns[idx]}}
-   else{const idx=investmentIndex;if(idx>=0){if(equipped.melee===idx)equipped.melee=0;unlocked.melee.delete(idx);delete levels.melee[idx]}}
-   unlocked.secret.delete(i);
- }else if(tab==='guns'){if(equipped.guns===actual)equipped.guns=0;unlocked.guns.delete(actual);delete levels.guns[actual];}
- else if(tab==='melee'){if(equipped.melee===actual)equipped.melee=0;unlocked.melee.delete(actual);delete levels.melee[actual];}
- else if(tab==='skins'){if(equipped.skins===i)equipped.skins=0;unlocked.skins.delete(i);delete levels.skins[i];}
- else if(tab==='shields'){if(equipped.shields===i){equipped.shields=0;shieldHp=shieldMax();shieldCooldown=0;}unlocked.shields.delete(i);delete levels.shields[i];}
- gold+=salePrice;say('Sold '+item.name+' for '+salePrice+' gold, including '+upgradesRefund+' gold in upgrades.');updateHUD();renderShop();saveProgress(true);
+ const owned=unlocked[kind];
+ if(index<0||!owned?.has(index)){say('You do not own '+item.name+'.');return}
+ if(Number(item.cost||0)<=0){say('Your free starter item stays in your loadout.');return}
+ const refund=saleValue(kind,index,item),upgradesRefund=upgradeInvestment(kind,index),arr=kind==='guns'?guns:kind==='melee'?melee:kind==='skins'?skins:shields;
+ owned.delete(index);if(tab==='secret')unlocked.secret.delete(i);else if(item.secret&&Number.isInteger(item.secretIndex))unlocked.secret.delete(item.secretIndex);
+ if(equipped[kind]===index){equipped[kind]=0;if(kind==='shields'){shieldHp=shieldMax();shieldCooldown=0}}
+ delete levels[kind][index];fusionA=null;fusionB=null;gold+=refund;
+ say('Sold '+item.name+' for '+refund+' gold, including '+upgradesRefund+' gold in upgrades.');updateHUD();renderShop();saveProgress(true);
 }
+
 function ownedBasicWeapons(kind){
   const arr=kind==='guns'?guns:melee,owned=kind==='guns'?unlocked.guns:unlocked.melee;
   return arr.map((item,index)=>({item,index,label:item.name+' · '+item.dmg+' dmg'}))
-   .filter(x=>owned.has(x.index)&&!x.item.fused&&!x.item.secret);
+   .filter(x=>owned.has(x.index)&&!x.item.fused);
 }
 let fusionA=null,fusionB=null;
 function fusionPair(a,b){
@@ -264,37 +303,94 @@ function fusionSignature(kind,a,b){
   for(let i=0;i<key.length;i++){h^=key.charCodeAt(i);h=Math.imul(h,16777619)}
   return h>>>0;
 }
-const fusionNameA=['Aether','Nova','Tempest','Obsidian','Prism','Rift','Solar','Phantom','Thunder','Vortex','Starfall','Iron'];
-const fusionNameB=['weave','breaker','lance','fang','engine','reaver','burst','wraith','coil','crown','shard','storm'];
+const fusionRecipes={
+ 'Auto Shotgun|Laser Gun':'Photon Scattergun',
+ 'Laser Gun|Minigun':'Photon Storm',
+ 'Minigun|Shotgun':'Bullet Hurricane',
+ 'Railgun|Sniper':'Hypervelocity Railgun',
+ 'Grenade Launcher|Rocket Launcher':'Explosive Barrage',
+ 'Laser Gun|Plasma Rifle':'Plasma Beamstorm',
+ 'Assault Rifle|SMG':'Tactical Bulletstorm',
+ 'Auto Shotgun|Double-Barrel':'Hellfire Scatterstorm',
+ 'BFG|Minigun':'Annihilation Engine',
+ 'Revolver|Sniper':'Deadeye Magnum',
+ 'Burst Rifle|Minigun':'Bulletstorm Repeater',
+ 'Railgun|Rocket Launcher':'Hypervelocity Rocket Cannon',
+ 'Laser Gun|Tri-Laser':'Prismatic Laser Array',
+ 'Arc Caster|Shock Rifle':'Thunderstorm Cannon',
+ 'Grenade Launcher|Mortar':'Siege Bombardier',
+ 'Beam Emitter|Laser Gun':'Photon Beam Array',
+ 'Laser Gun|Prism Rifle':'Prismatic Photon Rifle',
+ 'Plasma Rifle|Pulse Carbine':'Plasma Pulse Carbine',
+ 'Flak Cannon|Shotgun':'Shrapnel Storm',
+ 'Auto Shotgun|Flak Cannon':'Shrapnel Hurricane',
+ 'Rocket Launcher|Seeker Launcher':'Homing Rocket Barrage',
+ 'BFG|Railgun':'Omega Rail Cannon',
+ 'BFG|Rocket Launcher':'Apocalypse Launcher',
+ 'Crossbow|Sniper':'Marksman Crossbow',
+ 'Dual Pistols|SMG':'Twin Bulletstorm',
+ 'Drum Cannon|Minigun':'Rotary Barrage Cannon',
+ 'Cryo Projector|Laser Gun':'Cryo-Photon Projector',
+ 'Sonic Driver|Shock Rifle':'Thunderwave Driver',
+ 'Meteor Gun|Rocket Launcher':'Meteor Barrage',
+ 'Ion Mortar|Plasma Rifle':'Ion-Plasma Bombardier'
+};
+function fusionCode(seed){
+  return 'MK-'+(seed>>>0).toString(36).toUpperCase().padStart(7,'0').slice(-5);
+}
+function fusionWeaponName(kind,a,b,seed){
+  const pair=[a.name,b.name].sort((x,y)=>x.localeCompare(y));
+  const key=pair.join('|');
+  if(fusionRecipes[key])return fusionRecipes[key];
+  const n=pair.join(' ').toLowerCase();
+  const adjectives=['Abyssal','Astral','Tempest','Eclipse','Runic','Spectral','Obsidian','Solar','Phantom','Riftborn','Stormforged','Voidtouched','Starfall','Quantum','Dreadnova','Prismatic','Thunderous','Celestial','Infernal','Glacial','Titanic','Nightfall','Hyperion','Singularity'];
+  if(kind==='melee'){
+    const nouns=['Executioner','Worldcleaver','Reaper','Doomfang','Starbreaker','Riftblade','Stormrender','Duskfang','Kingsbane','Voidcutter','Soulcarver','Oathkeeper','Skyshatter','Gravemaw','Dreadscythe','Aetherfang','Iron Tempest','Nova Edge','Eternity Splitter','Dragonbane','Nightpiercer','Warbringer','Chaos Talon','Last Judgment'];
+    return adjectives[seed%adjectives.length]+' '+nouns[Math.floor(seed/17)%nouns.length];
+  }
+  const energy=/laser|photon|plasma|beam|prism|pulse|ion|nova|arc caster|shock rifle|sonic|cryo|sunlance/.test(n);
+  const explosive=/rocket|grenade|mortar|meteor|bfg|explosive/.test(n);
+  const scatter=/shotgun|scatter|flak|double-barrel/.test(n);
+  const rapid=/minigun|smg|machine|lmg|overclock|repeater|drum cannon/.test(n);
+  const precision=/sniper|railgun|crossbow|hand cannon|revolver|marksman/.test(n);
+  const noun=explosive&&energy?'Fusion Cataclysm':explosive?'Siege Annihilator':energy&&precision?'Photon Railstorm':energy&&scatter?'Prism Scatterstorm':energy&&rapid?'Photon Tempest':energy?'Arcstorm Projector':scatter&&rapid?'Shrapnel Hurricane':scatter?'Scatterquake Cannon':precision&&rapid?'Rapidstrike Railcannon':precision?'Deadeye Accelerator':rapid?'Bulletstorm Engine':'Omnicore Repeater';
+  return adjectives[Math.floor(seed/11)%adjectives.length]+' '+noun;
+}
 function createFusedWeapon(kind,wa,wb){
   const [a,b]=fusionPair(wa,wb),seed=fusionSignature(kind,a,b),originalA=Number(a.originalPrice??a.cost)||0,originalB=Number(b.originalPrice??b.cost)||0;
   const hue1=seed%360,hue2=(hue1+95+(seed%71))%360;
   const palette=`hsl(${hue1} 88% 62%)`,accentColor=`hsl(${hue2} 95% 78%)`;
-  const properName=fusionNameA[(seed>>>4)%fusionNameA.length]+' '+fusionNameB[(seed>>>12)%fusionNameB.length]+' ('+a.name+' + '+b.name+')';
+  const baseName=fusionWeaponName(kind,a,b,seed);
+  const properName=baseName;
   const saleValue=1000+originalA+originalB;
   if(kind==='guns'){
     const count=Math.min(16,Math.max(1,(a.count||1)+(b.count||1)));
     const spread=Math.min(1.15,(((a.spread||0)+(b.spread||0))/2)+Math.abs((a.spread||0)-(b.spread||0))*.12);
-    return {name:properName,dmg:Math.max(1,Math.round((a.dmg+b.dmg)*.58)),rate:Math.max(25,Math.round(Math.sqrt(a.rate*b.rate)*.88)),speed:Math.round(((a.speed||800)+(b.speed||800))/2),count,spread,cost:saleValue,originalPrice:saleValue,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,fusionColor:palette,fusionAccent:accentColor,desc:'Unique fusion design forged from '+a.name+' and '+b.name+'. Signature: '+properName+'.'};
+    return {name:properName,dmg:Math.max(1,Math.round((a.dmg+b.dmg)*.58)),rate:Math.max(25,Math.round(Math.sqrt(a.rate*b.rate)*.88)),speed:Math.round(((a.speed||800)+(b.speed||800))/2),count,spread,cost:saleValue,originalPrice:saleValue,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,fusionColor:palette,fusionAccent:accentColor,desc:'Unique fusion design forged from '+a.name+' and '+b.name+'.'};
   }
-  return {name:properName,dmg:Math.max(1,Math.round((a.dmg+b.dmg)*.68)),rate:Math.max(100,Math.round(Math.sqrt(a.rate*b.rate)*.88)),range:Math.round(((a.range||60)+(b.range||60))/2*1.12),cost:saleValue,originalPrice:saleValue,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,fusionColor:palette,fusionAccent:accentColor,desc:'Unique melee design forged from '+a.name+' and '+b.name+'. Signature: '+properName+'.'};
+  return {name:properName,dmg:Math.max(1,Math.round((a.dmg+b.dmg)*.68)),rate:Math.max(100,Math.round(Math.sqrt(a.rate*b.rate)*.88)),range:Math.round(((a.range||60)+(b.range||60))/2*1.12),cost:saleValue,originalPrice:saleValue,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,fusionColor:palette,fusionAccent:accentColor,desc:'Unique melee design forged from '+a.name+' and '+b.name+'.'};
 }
 function ownedFusionItems(kind){
  const arr=kind==='guns'?guns:kind==='melee'?melee:kind==='skins'?skins:shields;
  const owned=unlocked[kind];
- return arr.map((item,index)=>({item,index,label:item.name})).filter(x=>owned.has(x.index)&&!x.item.fused&&!x.item.secret);
+ return arr.map((item,index)=>({item,index,label:item.name})).filter(x=>owned.has(x.index)&&!x.item.fused);
 }
 function createFusedCosmetic(kind,wa,wb){
  const [a,b]=fusionPair(wa,wb),seed=fusionSignature(kind,a,b),h1=seed%360,h2=(h1+105+(seed%67))%360;
  const color=`hsl(${h1} 82% 58%)`,accent=`hsl(${h2} 95% 78%)`;
- const first=fusionNameA[(seed>>>4)%fusionNameA.length],second=fusionNameB[(seed>>>12)%fusionNameB.length];
- const name=first+' '+(kind==='skins'?'Synthesis Suit':'Aegis')+' '+second+' ('+a.name+' + '+b.name+')';
+ const suitPrefixes=['Prismatic','Astral','Eclipse','Stormforged','Voidtouched','Solar','Phantom','Quantum','Obsidian','Starfall','Riftborn','Celestial','Nightfall','Aurora','Infernal','Glacial','Titan','Nova','Spectral','Chrono','Dragonfire','Nebula','Hyperion','Dreadnova'];
+ const suitNouns=['Vanguard','Warden','Strider','Sentinel','Champion','Pathfinder','Overlord','Ranger','Conqueror','Aegis','Revenant','Ascendant','Tempest','Paragon','Juggernaut','Starseer','Dynamo','Harbinger','Sovereign','Wayfarer','Colossus','Ronin','Paladin','Marauder'];
+ const shieldPrefixes=['Abyssal','Astral','Eclipse','Stormforged','Voidtouched','Solar','Phantom','Quantum','Obsidian','Starfall','Riftborn','Celestial','Nightfall','Aurora','Infernal','Glacial','Titan','Nova','Spectral','Chrono','Dragonfire','Nebula','Hyperion','Dreadnova'];
+ const shieldNouns=['Bastion','Worldguard','Starwall','Doomward','Citadel','Bulwark','Sanctuary','Aegis','Wardstone','Event Horizon','Fortress','Nullfield','Guardian Halo','Iron Covenant','Last Light','Singularity Wall','Eternity Guard','Stormvault','Cosmic Rampart','Phoenix Barrier','Rift Shelter','Crown of Worlds','Astral Keep','Omega Ward'];
+ const name=kind==='skins'
+   ? suitPrefixes[seed% suitPrefixes.length]+' '+suitNouns[Math.floor(seed/19)%suitNouns.length]+' Suit'
+   : shieldPrefixes[seed%shieldPrefixes.length]+' '+shieldNouns[Math.floor(seed/19)%shieldNouns.length];
  const cost=1000+(Number(a.originalPrice??a.cost)||0)+(Number(b.originalPrice??b.cost)||0);
  if(kind==='skins')return {name,speed:Math.min(1.8,Math.sqrt((a.speed||1)*(b.speed||1))*1.06),rate:Math.max(.45,Math.sqrt((a.rate||1)*(b.rate||1))*.94),dmg:Math.min(2.5,Math.sqrt((a.dmg||1)*(b.dmg||1))*1.08),cost,originalPrice:cost,color,accent,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,desc:'Unique fused suit combining '+a.name+' and '+b.name+'.'};
  return {name,hp:Math.round((a.hp+b.hp)*.68),cost,originalPrice:cost,color,accent,fused:true,sourceA:a.name,sourceB:b.name,fusionSeed:seed,shieldStyle:seed%4,desc:'Unique fused shield combining '+a.name+' and '+b.name+'.'};
 }
 function renderFusion(root){
-  const intro=document.createElement('div');intro.className='notice';intro.textContent='⚗️ Fuse two different owned basic items of the same category for 1,000 gold. Guns, melee weapons, skins, and shields each have fixed pairings; both ingredients are consumed.';root.append(intro);
+  const intro=document.createElement('div');intro.className='notice';intro.textContent='⚗️ Fuse two different owned non-fused items of the same category for 1,000 gold. Guns, melee weapons, skins, and shields each have fixed pairings; both ingredients are consumed.';root.append(intro);
   const modes=document.createElement('div');modes.style.cssText='display:flex;gap:8px;padding:4px;flex-wrap:wrap';
   [['guns','🔫 GUNS'],['melee','🗡️ MELEE'],['skins','✨ SKINS'],['shields','🛡️ SHIELDS']].forEach(([kind,label])=>{const b=document.createElement('button');b.className='action'+(fusionCategory===kind?' fuse':'');b.textContent=label;b.style.flex='1';b.addEventListener('click',()=>{fusionCategory=kind;fusionA=fusionB=null;renderShop()});modes.append(b)});root.append(modes);
   const owned=['guns','melee'].includes(fusionCategory)?ownedBasicWeapons(fusionCategory):ownedFusionItems(fusionCategory);
@@ -314,11 +410,13 @@ function renderFusion(root){
   btn.addEventListener('click',()=>{
    const arr=fusionCategory==='guns'?guns:fusionCategory==='melee'?melee:fusionCategory==='skins'?skins:shields,ownedSet=unlocked[fusionCategory];
    const wa=arr[fusionA],wb=arr[fusionB];
-   if(!wa||!wb||fusionA===fusionB||wa.secret||wb.secret||wa.fused||wb.fused||!ownedSet.has(fusionA)||!ownedSet.has(fusionB)||gold<1000){say('Choose two different owned basic '+({guns:'guns',melee:'melee weapons',skins:'skins',shields:'shields'}[fusionCategory])+'.');return}
+   if(!wa||!wb||fusionA===fusionB||wa.fused||wb.fused||!ownedSet.has(fusionA)||!ownedSet.has(fusionB)||gold<1000){say('Choose two different owned basic '+({guns:'guns',melee:'melee weapons',skins:'skins',shields:'shields'}[fusionCategory])+'.');return}
    const weapon=['guns','melee'].includes(fusionCategory)?createFusedWeapon(fusionCategory,wa,wb):createFusedCosmetic(fusionCategory,wa,wb);
    const spentA=(Number(wa.cost)||0)+upgradeInvestment(fusionCategory,fusionA),spentB=(Number(wb.cost)||0)+upgradeInvestment(fusionCategory,fusionB);
    weapon.cost=1000+spentA+spentB;weapon.originalPrice=weapon.cost;
    gold-=1000;ownedSet.delete(fusionA);ownedSet.delete(fusionB);
+   if(wa.secret&&Number.isInteger(wa.secretIndex))unlocked.secret.delete(wa.secretIndex);
+   if(wb.secret&&Number.isInteger(wb.secretIndex))unlocked.secret.delete(wb.secretIndex);
    delete levels[fusionCategory][fusionA];delete levels[fusionCategory][fusionB];
    if(fusionCategory==='guns'){if(equipped.guns===fusionA||equipped.guns===fusionB)equipped.guns=0;guns.push(weapon);const idx=guns.length-1;unlocked.guns.add(idx);equipped.guns=idx;}
    else if(fusionCategory==='melee'){if(equipped.melee===fusionA||equipped.melee===fusionB)equipped.melee=0;melee.push(weapon);const idx=melee.length-1;unlocked.melee.add(idx);equipped.melee=idx;}
@@ -344,7 +442,7 @@ function renderMerged(root){
    const card=document.createElement('div');card.className='item';const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');
    name.className='itemname';name.textContent=(kind==='skins'?'✨ ':'🛡️ ')+item.name;desc.className='desc';desc.textContent=item.desc+(kind==='shields'?' Shield capacity: '+item.hp+' HP.':' Speed ×'+item.speed.toFixed(2)+', fire rate ×'+item.rate.toFixed(2)+', damage ×'+item.dmg.toFixed(2)+'.');price.className='price';price.textContent='Sell value: '+saleValue(kind,index,item)+' gold (includes upgrades)';info.append(name,desc,price);
    const actions=document.createElement('div');actions.className='actiongroup';const equip=document.createElement('button');equip.className='action equip';equip.textContent=(equipped[kind]===index?'EQUIPPED':'EQUIP');equip.disabled=equipped[kind]===index;equip.addEventListener('click',()=>{equipped[kind]=index;if(kind==='shields'){shieldHp=shieldMax();shieldCooldown=0}say('Equipped '+item.name+'.');updateHUD();renderShop();saveProgress(true)});
-   const sell=document.createElement('button');sell.className='action sell';sell.textContent='SELL · '+item.cost;sell.addEventListener('click',()=>sellWeapon(kind,index));actions.append(equip,sell);card.append(info,actions);root.append(card);
+   const sell=document.createElement('button');sell.className='action sell';sell.textContent='SELL · '+item.cost;sell.addEventListener('click',()=>sellWeapon(kind,index,item));actions.append(equip,sell);card.append(info,actions);root.append(card);
   });
  }
  if(!count){const empty=document.createElement('div');empty.className='item';empty.textContent='No fused items yet. Visit the Fusion Station to combine weapons, skins, or shields!';root.append(empty)}
@@ -353,16 +451,16 @@ function renderShop(){
  const list=currentList(activeTab),root=$('items');root.innerHTML='';if(activeTab==='upgrades'){renderUpgrades(root);return}if(activeTab==='fusion'){renderFusion(root);return}if(activeTab==='merged'){renderMerged(root);return}
  if(activeTab==='secret'&&!secretShopUnlocked){
    const locked=document.createElement('div');locked.className='item';locked.style.gridTemplateColumns='minmax(0,1fr)';
-   const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent='🔒 Secret Shop Locked';desc.className='desc';desc.textContent='Pay once to permanently unlock the Secret Shop and access its cosmic arsenal.';price.className='price';price.textContent='Unlock fee: 100,000 gold · Your gold: '+Math.floor(gold);info.append(name,desc,price);
-   const btn=document.createElement('button');btn.className='action';btn.textContent='PAY 100,000 GOLD';btn.disabled=gold<100000;btn.addEventListener('click',()=>{if(secretShopUnlocked)return;if(gold<100000){say('You need '+(100000-gold)+' more gold to unlock the Secret Shop.');return}gold-=100000;secretShopUnlocked=true;safeStorage.setItem('monsterMayhemSecretShopUnlocked','true');say('🔓 SECRET SHOP PERMANENTLY UNLOCKED!');updateHUD();renderShop()});locked.append(info,btn);root.append(locked);return;
+   const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');name.className='itemname';name.textContent='🔒 Secret Shop Locked';desc.className='desc';desc.textContent='Pay once to permanently unlock the expanded cosmic arsenal: guns, melee weapons, skins, and shields.';price.className='price';price.textContent='Unlock fee: 100,000 gold · Your gold: '+Math.floor(gold);info.append(name,desc,price);
+   const btn=document.createElement('button');btn.className='action';btn.textContent='PAY 100,000 GOLD';btn.disabled=false;btn.addEventListener('click',unlockSecretShop);locked.append(info,btn);root.append(locked);return;
  }
  list.forEach((it,i)=>{
-  const actual=it._index??i;const unlockedNow=isUnlocked(activeTab,activeTab==='secret'?i:actual),equippedNow=unlockedNow&&(activeTab==='guns'?equipped.guns===actual:activeTab==='melee'?equipped.melee===actual:activeTab==='skins'?equipped.skins===actual:activeTab==='shields'?equipped.shields===actual:activeTab==='secret'?(it.kind==='gun'?equipped.guns===guns.findIndex(g=>g.name===it.name&&g.secret):equipped.melee===melee.findIndex(m=>m.name===it.name&&m.secret)):false);
+  const actual=it._index??i;const secretIndex=activeTab==='secret'?i:it.secretIndex;const unlockedNow=isUnlocked(activeTab,activeTab==='secret'?i:actual),equippedNow=unlockedNow&&(activeTab==='guns'?equipped.guns===actual:activeTab==='melee'?equipped.melee===actual:activeTab==='skins'?equipped.skins===actual:activeTab==='shields'?equipped.shields===actual:activeTab==='secret'?(it.kind==='gun'?equipped.guns===guns.findIndex(g=>g.secretIndex===i):it.kind==='melee'?equipped.melee===melee.findIndex(m=>m.secretIndex===i):it.kind==='skin'?equipped.skins===skins.findIndex(x=>x.secretIndex===i):equipped.shields===shields.findIndex(x=>x.secretIndex===i)):false);
   const card=document.createElement('div');card.className='item'+(equippedNow?' selected':'');
   const info=document.createElement('div'),name=document.createElement('div'),desc=document.createElement('div'),price=document.createElement('div');
-  name.className='itemname';name.textContent=(activeTab==='guns'?'🔫 ':activeTab==='melee'?'🗡️ ':activeTab==='shields'?'🛡️ ':activeTab==='secret'?(it.kind==='gun'?'🌌 ':'☄️ '):'✨ ')+it.name;
+  name.className='itemname';name.textContent=(activeTab==='guns'?'🔫 ':activeTab==='melee'?'🗡️ ':activeTab==='shields'?'🛡️ ':activeTab==='secret'?(it.kind==='gun'?'🌌 ':it.kind==='melee'?'☄️ ':it.kind==='shield'?'🛡️ ':'✨ '):'✨ ')+it.name;
   desc.className='desc';desc.textContent=it.desc;
-  price.className='price';const saleKind=activeTab==='secret'?(it.kind==='gun'?'guns':'melee'):activeTab;const saleIndex=activeTab==='secret'?(saleKind==='guns'?guns:melee).findIndex(w=>w.name===it.name&&w.secret):actual;const refundValue=saleValue(saleKind,saleIndex,it);price.textContent=it.cost===0?'FREE':(unlockedNow?(['guns','melee','secret','skins','shields'].includes(activeTab)?'OWNED · Sell for '+refundValue+' gold':'UNLOCKED'):'🪙 '+it.cost+' gold');
+  price.className='price';const saleKind=activeTab==='secret'?(it.kind==='gun'?'guns':it.kind==='melee'?'melee':it.kind==='skin'?'skins':'shields'):activeTab;const saleIndex=activeTab==='secret'?(saleKind==='guns'?guns:saleKind==='melee'?melee:saleKind==='skins'?skins:shields).findIndex(w=>w.secretIndex===i):actual;const refundValue=saleValue(saleKind,saleIndex,it);price.textContent=it.cost===0?'FREE':(unlockedNow?(['guns','melee','secret','skins','shields'].includes(activeTab)?'OWNED · Sell for '+refundValue+' gold':'UNLOCKED'):'🪙 '+it.cost+' gold');
   info.append(name,desc,price);
   const actions=document.createElement('div');actions.className='actiongroup';const btn=document.createElement('button');btn.className='action';
   if(equippedNow){btn.textContent='EQUIPPED';btn.classList.add('equipped');btn.disabled=true}
@@ -560,8 +658,8 @@ if(worldBossT<=0){worldBossT=70+Math.random()*65;spawnWorldBoss();say('🌋 WORL
  const pickup=skins[equipped.skins].name==='Magnet'?85:26;
  loot=loot.filter(l=>{if(Math.hypot(px-l.x,py-l.y)<pickup){gold+=l.v;return false}return true});
  healLoot=healLoot.filter(l=>{if(Math.hypot(px-l.x,py-l.y)<30){hp=Math.min(maxHp,hp+l.v);say('Picked up a green heal: +'+l.v+' HP!');return false}return true});
- if(hp<=0){hp=0;gameOver=true;const goldBeforeDeath=Math.max(0,Math.floor(gold));gold=Math.floor(goldBeforeDeath/2);highScores.push({score:Math.floor(score),gold:Math.floor(gold),date:new Date().toLocaleDateString()});highScores.sort((a,b)=>b.score-a.score);highScores=highScores.slice(0,10);safeStorage.setItem('monsterMayhemHighScores',JSON.stringify(highScores));saveProgress(true);$('finalscore').textContent='Final score: '+Math.floor(score)+' · Gold collected: '+Math.floor(gold)+'\n\n🏆 LOCAL TOP SCORES\n'+highScores.slice(0,5).map((r,i)=>(i+1)+'. '+r.score+' points · '+r.date).join('\n');$('overlay').style.display='flex'}
- if(activeTab==='secret')renderShop();updateHUD();
+ if(hp<=0){hp=0;gameOver=true;const goldLost=Math.max(0,Math.floor(gold));gold=0;highScores.push({score:Math.floor(score),gold:0,date:new Date().toLocaleDateString()});highScores.sort((a,b)=>b.score-a.score);highScores=highScores.slice(0,10);safeStorage.setItem('monsterMayhemHighScores',JSON.stringify(highScores));saveProgress(true);$('finalscore').textContent='Final score: '+Math.floor(score)+' · Gold after death: 0\nGold lost: '+goldLost+'\n\n🏆 LOCAL TOP SCORES\n'+highScores.slice(0,5).map((r,i)=>(i+1)+'. '+r.score+' points · '+r.date).join('\n');$('overlay').style.display='flex'}
+ updateHUD();
 }
 function loop(t){const dt=Math.min(.033,(t-last)/1000);last=t;update(dt);draw();if(paused){ctx.fillStyle='#020617b8';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font='bold 52px system-ui';ctx.fillText('PAUSED',W/2,H/2);ctx.font='18px system-ui';ctx.fillText('Your run saves automatically · press Resume to continue',W/2,H/2+38);ctx.textAlign='left'}requestAnimationFrame(loop)}
 function saveProgress(silent=false){
@@ -575,13 +673,14 @@ function loadProgress(){
  if(Array.isArray(d.melee))melee.splice(0,melee.length,...d.melee);
  if(Array.isArray(d.skins))skins.splice(0,skins.length,...d.skins);
  if(Array.isArray(d.shields))shields.splice(0,shields.length,...d.shields);
- for(const [kind,arr] of [['guns',guns],['melee',melee]]){for(const item of arr){if(!item||!item.fused)continue;delete item.fusionAbility;if(item.sourceA&&item.sourceB){const baseA=arr.find(w=>w.name===item.sourceA&&!w.fused&&!w.secret),baseB=arr.find(w=>w.name===item.sourceB&&!w.fused&&!w.secret);if(baseA&&baseB){const fixed=createFusedWeapon(kind,baseA,baseB);Object.assign(item,fixed,{cost:Number(item.cost)||fixed.cost,originalPrice:Number(item.originalPrice??item.cost)||fixed.originalPrice});}}}}
+ for(const [kind,arr] of [['guns',guns],['melee',melee]]){for(const item of arr){if(!item||!item.fused)continue;delete item.fusionAbility;if(item.sourceA&&item.sourceB){const seed=Number.isFinite(Number(item.fusionSeed))?Number(item.fusionSeed):fusionSignature(kind,{name:item.sourceA},{name:item.sourceB});item.fusionSeed=seed;item.name=fusionWeaponName(kind,{name:item.sourceA},{name:item.sourceB},seed);}}}
+ for(const [kind,arr] of [['skins',skins],['shields',shields]]){for(const item of arr){if(!item||!item.fused||!item.sourceA||!item.sourceB)continue;const seed=Number.isFinite(Number(item.fusionSeed))?Number(item.fusionSeed):fusionSignature(kind,{name:item.sourceA},{name:item.sourceB});item.fusionSeed=seed;const h1=seed%360,h2=(h1+105+(seed%67))%360;const prefixes=kind==='skins'?['Prismatic','Astral','Eclipse','Stormforged','Voidtouched','Solar','Phantom','Quantum','Obsidian','Starfall','Riftborn','Celestial','Nightfall','Aurora','Infernal','Glacial','Titan','Nova','Spectral','Chrono','Dragonfire','Nebula','Hyperion','Dreadnova']:['Abyssal','Astral','Eclipse','Stormforged','Voidtouched','Solar','Phantom','Quantum','Obsidian','Starfall','Riftborn','Celestial','Nightfall','Aurora','Infernal','Glacial','Titan','Nova','Spectral','Chrono','Dragonfire','Nebula','Hyperion','Dreadnova'];const nouns=kind==='skins'?['Vanguard','Warden','Strider','Sentinel','Champion','Pathfinder','Overlord','Ranger','Conqueror','Aegis','Revenant','Ascendant','Tempest','Paragon','Juggernaut','Starseer','Dynamo','Harbinger','Sovereign','Wayfarer','Colossus','Ronin','Paladin','Marauder']:['Bastion','Worldguard','Starwall','Doomward','Citadel','Bulwark','Sanctuary','Aegis','Wardstone','Event Horizon','Fortress','Nullfield','Guardian Halo','Iron Covenant','Last Light','Singularity Wall','Eternity Guard','Stormvault','Cosmic Rampart','Phoenix Barrier','Rift Shelter','Crown of Worlds','Astral Keep','Omega Ward'];item.name=prefixes[seed%prefixes.length]+' '+nouns[Math.floor(seed/19)%nouns.length]+(kind==='skins'?' Suit':'');item.color=item.color||`hsl(${h1} 82% 58%)`;item.accent=item.accent||`hsl(${h2} 95% 78%)`;}}
  if(d.unlocked)unlocked={guns:new Set(d.unlocked.guns||[0]),melee:new Set(d.unlocked.melee||[0]),skins:new Set(d.unlocked.skins||[0]),shields:new Set(d.unlocked.shields||[0]),secret:new Set(d.unlocked.secret||[])};
  if(d.equipped)equipped={guns:0,melee:0,skins:0,shields:0,...d.equipped};
  if(d.levels)levels=d.levels;
  if(!Number.isFinite(Number(d.hp))||Number(d.hp)<=0){const carriedGold=Math.max(0,Number(d.gold)||0);reset();gold=carriedGold;updateHUD();renderShop();saveProgress(true);say('Your previous run ended. Your gold, merged weapons, arsenal, and upgrades are saved; a fresh run is ready!');return false}
  gold=d.gold;score=d.score;if(d.secretShopUnlocked===true){secretShopUnlocked=true;safeStorage.setItem('monsterMayhemSecretShopUnlocked','true')}evolutionTier=d.evolutionTier||0;eventT=d.eventT??75;worldBossT=d.worldBossT??70;invulnUntil=d.invulnUntil||0;fusionSerial=d.fusionSerial||1;fusionCategory=d.fusionCategory||'guns';levels=d.levels||{guns:{},melee:{},skins:{},shields:{}};shieldHp=d.shieldHp??(shields[0].hp);shieldCooldown=d.shieldCooldown||0;hp=d.hp;maxHp=d.maxHp;px=d.px;py=d.py;bullets=d.bullets||[];enemyBullets=d.enemyBullets||[];enemies=d.enemies||[];loot=d.loot||[];healLoot=d.healLoot||[];chests=d.chests||[];spawnT=d.spawnT||0;chestT=d.chestT||0;bossT=d.bossT||0;gameTime=d.gameTime||0;weaponMode=d.weaponMode||'gun';bossesDefeated=d.bossesDefeated||0;
- if(d.unlocked){unlocked={guns:new Set(d.unlocked.guns||[0]),melee:new Set(d.unlocked.melee||[0]),skins:new Set(d.unlocked.skins||[0]),shields:new Set(d.unlocked.shields||[0]),secret:new Set(d.unlocked.secret||[])};for(const i of unlocked.secret){const w=secretWeapons[i];if(!w)continue;if(w.kind==='gun'&&!guns.some(g=>g.name===w.name))guns.push({...w,secret:true});if(w.kind==='melee'&&!melee.some(m=>m.name===w.name))melee.push({...w,secret:true});}}if(d.equipped)equipped={guns:0,melee:0,skins:0,shields:0,...d.equipped};if(!unlocked.shields.has(equipped.shields||0))unlocked.shields.add(equipped.shields||0);shieldHp=Math.min(shieldHp,shieldMax());
+ if(d.unlocked){unlocked={guns:new Set(d.unlocked.guns||[0]),melee:new Set(d.unlocked.melee||[0]),skins:new Set(d.unlocked.skins||[0]),shields:new Set(d.unlocked.shields||[0]),secret:new Set(d.unlocked.secret||[])};for(const i of unlocked.secret){const w=secretItems[i];if(!w)continue;const kind=w.kind==='gun'?'guns':w.kind==='melee'?'melee':w.kind==='skin'?'skins':'shields',arr=kind==='guns'?guns:kind==='melee'?melee:kind==='skins'?skins:shields;let existing=arr.find(x=>x.secretIndex===i);if(!existing){existing=arr.find(x=>x.name===w.name&&x.secret);if(existing)existing.secretIndex=i;else{existing={...w,secret:true,secretIndex:i,originalPrice:Number(w.cost)||0};arr.push(existing)}}unlocked[kind].add(arr.indexOf(existing));}}if(d.equipped)equipped={guns:0,melee:0,skins:0,shields:0,...d.equipped};if(!unlocked.shields.has(equipped.shields||0))unlocked.shields.add(equipped.shields||0);shieldHp=Math.min(shieldHp,shieldMax());
  gameOver=false;paused=false;$('overlay').style.display='none';$('pauseBtn').textContent='⏸ Pause';updateHUD();renderShop();say('Saved run loaded!');return true
  }catch(err){say('Save file could not be loaded.');return false}
 }
